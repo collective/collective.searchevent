@@ -123,9 +123,19 @@ class Paths(object):
         self.paths = paths
 
     def __call__(self, context):
+        portal_path = getToolByName(context, 'portal_url').getPortalPath()
+        res = []
+        for path in self.paths:
+            if not isinstance(path, str):
+                path = '{0}/{1}'.format(
+                    portal_path,
+                    path.id,
+                )
+            res.append(path)
+        self.paths = res
         catalog = getToolByName(context, 'portal_catalog')
         terms = []
-        for path in list(self.paths):
+        for path in self.paths:
             query = {
                 'path': {
                     'query': path,
@@ -185,32 +195,37 @@ class SearchEventForm(Form):
         cid = self.data.collections
         if cid:
             registry = getUtility(IRegistry)
-            collections = registry['collective.searchevent.collections']
-            collection = [col for col in collections if col['id'] == cid][0]
-            tags = collection.get('tags')
-            if tags:
-                field = schema.Set(
-                    title=self.data.tags,
-                    required=False,
-                    value_type=schema.Choice(
-                        source=Tags(tags),
-                    ),
-                )
-                field.__name__ = 'tags'
-                self.fields += Fields(field)
-                self.fields['tags'].widgetFactory = CheckBoxFieldWidget
-            paths = collection.get('paths')
-            if paths:
-                field = schema.Set(
-                    title=self.data.folders,
-                    required=False,
-                    value_type=schema.Choice(
-                        source=Paths(paths),
-                    ),
-                )
-                field.__name__ = 'paths'
-                self.fields += Fields(field)
-                self.fields['paths'].widgetFactory = CheckBoxFieldWidget
+            collections = [
+                col for col in registry[
+                    'collective.searchevent.collections'
+                ] if col['id'] == cid
+            ]
+            if collections:
+                collection = collections[0]
+                tags = collection.get('tags')
+                if tags:
+                    field = schema.Set(
+                        title=self.data.tags,
+                        required=False,
+                        value_type=schema.Choice(
+                            source=Tags(tags),
+                        ),
+                    )
+                    field.__name__ = 'tags'
+                    self.fields += Fields(field)
+                    self.fields['tags'].widgetFactory = CheckBoxFieldWidget
+                paths = collection.get('paths')
+                if paths:
+                    field = schema.Set(
+                        title=self.data.folders,
+                        required=False,
+                        value_type=schema.Choice(
+                            source=Paths(paths),
+                        ),
+                    )
+                    field.__name__ = 'paths'
+                    self.fields += Fields(field)
+                    self.fields['paths'].widgetFactory = CheckBoxFieldWidget
 
     def updateWidgets(self):
         super(self.__class__, self).updateWidgets()

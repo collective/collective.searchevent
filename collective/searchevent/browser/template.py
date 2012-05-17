@@ -85,6 +85,16 @@ class SearchEventControlPanelForm(crud.CrudForm):
         registry = getUtility(IRegistry)
         collections = registry['collective.searchevent.collections']
         collections = [collection for collection in collections if collection['id'] != data['id']]
+        # paths = data.get('paths')
+        # if paths:
+        #     res = []
+        #     for path in paths:
+        #         if not isinstance(path, str):
+        #             path = '/'.join(path.getPhysicalPath())
+        #             res.append(path)
+        #     if res:
+        #         paths = res
+        #         data.update({'paths': paths})
         collections.append(data)
         registry['collective.searchevent.collections'] = collections
 
