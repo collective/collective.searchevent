@@ -368,7 +368,7 @@ Go to registry to set tags::
 Add Col01::
 
     >>> browser.getControl(name="crud-add.form.widgets.id").value = 'Col01'
-    >>> browser.getControl(name="crud-add.form.widgets.tags:list").value = ['Tag01']
+    >>> browser.getControl(name="crud-add.form.widgets.tags:list").value = ['0']
     >>> browser.getControl(name="crud-add.form.buttons.add").click()
 
 Go to portlet to set tags::
@@ -489,7 +489,7 @@ Go to registry to set tags::
 
 Add Tag01 Col01::
 
-    >>> browser.getControl(name="crud-edit.Col01.widgets.tags:list").value = ['Tag01', 'Tag02']
+    >>> browser.getControl(name="crud-edit.Col01.widgets.tags:list").value = ['0', '1']
     >>> browser.getControl(name="crud-edit.form.buttons.edit").click()
 
 Set Folder01 as path::

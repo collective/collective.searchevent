@@ -23,8 +23,8 @@ class TagsVocabulary(object):
             items = [item[0] for item in subjects.items()]
             terms = [
                 SimpleTerm(
-                    # value=items.index(item),
                     value=item,
+                    token=items.index(item),
                     title=safe_unicode(item),
                 ) for item in items
             ]
