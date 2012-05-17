@@ -1,0 +1,17 @@
+<tal:block i18n:domain="collective.searchevent">
+  <dl class="portlet collectiveSearchEventPortlet">
+    <dt class="portletHeader">
+      <span class="portletTopLeft"></span>
+      <a href="#"
+         class="tile"
+         tal:attributes="href view/search_results_url"
+         tal:content="view/title"
+         tal:condition="view/title"
+         >Events</a>
+      <span class="portletTopRight"></span>
+    </dt>
+    <dd class="portletItem">
+      <form tal:replace="structure view/form_wrapper" />
+    </dd>
+  </dl>
+</tal:block>

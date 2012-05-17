@@ -1,0 +1,8 @@
+collective/searchevent/docs/_build/*
+*.egg-info
+*.mo
+*.pyc
+*.pyo
+*~
+.DS_Store
+dist

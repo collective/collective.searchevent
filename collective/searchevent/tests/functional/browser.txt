@@ -1,0 +1,389 @@
+Log in as the portal owner::
+
+    >>> from plone.app.testing import TEST_USER_NAME, TEST_USER_PASSWORD
+    >>> browser.login(TEST_USER_NAME, TEST_USER_PASSWORD)
+
+Go to portal_url::
+
+    >>> browser.open(portal_url)
+
+Click Manage portlets::
+
+    >>> browser.getLink('Manage portlets').click()
+    >>> 'Events</a>' in browser.contents
+    False
+
+Select Event search portlet::
+
+    >>> url = '{0}{1}'.format(portal_url, "/++contextportlets++plone.leftcolumn/+/collective.searchevent.SearchEvent")
+    >>> browser.open(url)
+
+Input Values::
+
+    >>> browser.getControl(name="form.header").value = 'Search Events'
+    >>> browser.getControl(name="form.actions.save").click()
+    >>> 'Events</a>' in browser.contents
+    True
+
+    >>> browser.getLink('Events').click()
+    >>> events_portlet_url = browser.url
+
+Got to portal_url::
+
+    >>> browser.open(portal_url)
+    >>> 'Events</a>' in browser.contents
+    True
+    >>> '@@event-results' in browser.contents
+    True
+    >>> 'Folders' in browser.contents
+    False
+    >>> 'Categories' in browser.contents
+    False
+ 
+Create Event01 2012/05/01-10:00 AM - 2012/05/01 11:00 AM::
+
+    >>> browser.getLink('Event').click()
+
+    >>> browser.getControl(name="title").value = 'Event01'
+    >>> browser.getControl(name="startDate_year").value = ['2012']
+    >>> browser.getControl(name="startDate_month").value = ['05']
+    >>> browser.getControl(name="startDate_day").value = ['01']
+    >>> browser.getControl(name="startDate_hour").value = ['10']
+    >>> browser.getControl(name="startDate_minute").value = ['00']
+    >>> browser.getControl(name="startDate_ampm").value = ['AM']
+    >>> browser.getControl(name="endDate_year").value = ['2012']
+    >>> browser.getControl(name="endDate_month").value = ['05']
+    >>> browser.getControl(name="endDate_day").value = ['01']
+    >>> browser.getControl(name="endDate_hour").value = ['11']
+    >>> browser.getControl(name="endDate_minute").value = ['00']
+    >>> browser.getControl(name="endDate_ampm").value = ['AM']
+    >>> browser.getControl(name="form.button.save").click()
+
+Search Event with empty field::
+
+    >>> browser.getControl(name="form.buttons.search").click()
+
+    >>> print browser.bycss("#search-results")
+    --- 1 ---
+    <article id="search-results"><h1>Search Results</h1>
+    <dl><dt>
+    <a href="http://nohost/plone/event01" title="Event01">Event01</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    May 01, 2012 10:00 AM - May 01, 2012 11:00 AM
+    </span>
+    </dd>
+    </dl></article>
+
+Search - 2012/04/30::
+
+    >>> browser.getControl(name="form.widgets.before_date-day").value = '30'
+    >>> browser.getControl(name="form.widgets.before_date-month").value = ['4']
+    >>> browser.getControl(name="form.widgets.before_date-year").value = '2012'
+    >>> browser.getControl(name="form.buttons.search").click()
+
+    >>> print browser.bycss("#search-results")
+    --- 1 ---
+    <article id="search-results"><h1>Search Results</h1>
+    <p>There are no search results found.</p>
+    </article>
+
+Search - 2012/05/01::
+
+    >>> browser.getControl(name="form.widgets.before_date-day").value = '1'
+    >>> browser.getControl(name="form.widgets.before_date-month").value = ['5']
+    >>> browser.getControl(name="form.widgets.before_date-year").value = '2012'
+    >>> browser.getControl(name="form.buttons.search").click()
+
+    >>> print browser.bycss("#search-results")
+    --- 1 ---
+    <article id="search-results"><h1>Search Results</h1>
+    <dl><dt>
+    <a href="http://nohost/plone/event01" title="Event01">Event01</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    May 01, 2012 10:00 AM - May 01, 2012 11:00 AM
+    </span>
+    </dd>
+    </dl></article>
+
+Search without year::
+
+    >>> browser.getControl(name="form.widgets.before_date-year").value = ''
+    >>> browser.getControl(name="form.buttons.search").click()
+
+    >>> print browser.bycss("#search-results")
+    --- 1 ---
+    <article id="search-results"><h1>Search Results</h1>
+    <dl><dt>
+    <a href="http://nohost/plone/event01" title="Event01">Event01</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    May 01, 2012 10:00 AM - May 01, 2012 11:00 AM
+    </span>
+    </dd>
+    </dl></article>
+
+Search 2012/05/02 -::
+
+    >>> browser.getControl(name="form.widgets.after_date-day").value = '2'
+    >>> browser.getControl(name="form.widgets.after_date-month").value = ['5']
+    >>> browser.getControl(name="form.widgets.after_date-year").value = '2012'
+    >>> browser.getControl(name="form.buttons.search").click()
+
+    >>> print browser.bycss("#search-results")
+    --- 1 ---
+    <article id="search-results"><h1>Search Results</h1>
+    <p>There are no search results found.</p>
+    </article>
+
+Search 2012/05/01 -::
+
+    >>> browser.getControl(name="form.widgets.after_date-day").value = '1'
+    >>> browser.getControl(name="form.widgets.after_date-month").value = ['5']
+    >>> browser.getControl(name="form.widgets.after_date-year").value = '2012'
+    >>> browser.getControl(name="form.buttons.search").click()
+
+    >>> print browser.bycss("#search-results")
+    --- 1 ---
+    <article id="search-results"><h1>Search Results</h1>
+    <dl><dt>
+    <a href="http://nohost/plone/event01" title="Event01">Event01</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    May 01, 2012 10:00 AM - May 01, 2012 11:00 AM
+    </span>
+    </dd>
+    </dl></article>
+
+Search 2012/04/30 -::
+
+    >>> browser.getControl(name="form.widgets.after_date-day").value = '30'
+    >>> browser.getControl(name="form.widgets.after_date-month").value = ['4']
+    >>> browser.getControl(name="form.widgets.after_date-year").value = '2012'
+    >>> browser.getControl(name="form.buttons.search").click()
+
+    >>> print browser.bycss("#search-results")
+    --- 1 ---
+    <article id="search-results"><h1>Search Results</h1>
+    <dl><dt>
+    <a href="http://nohost/plone/event01" title="Event01">Event01</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    May 01, 2012 10:00 AM - May 01, 2012 11:00 AM
+    </span>
+    </dd>
+    </dl></article>
+
+Search 2012/04/30 - 2012/04/30::
+
+    >>> browser.getControl(name="form.widgets.before_date-day").value = '30'
+    >>> browser.getControl(name="form.widgets.before_date-month").value = ['4']
+    >>> browser.getControl(name="form.widgets.before_date-year").value = '2012'
+    >>> browser.getControl(name="form.buttons.search").click()
+
+    >>> print browser.bycss("#search-results")
+    --- 1 ---
+    <article id="search-results"><h1>Search Results</h1>
+    <p>There are no search results found.</p>
+    </article>
+
+Search 2012/04/30 - 2012/05/01::
+
+    >>> browser.getControl(name="form.widgets.before_date-day").value = '1'
+    >>> browser.getControl(name="form.widgets.before_date-month").value = ['5']
+    >>> browser.getControl(name="form.buttons.search").click()
+
+    >>> print browser.bycss("#search-results")
+    --- 1 ---
+    <article id="search-results"><h1>Search Results</h1>
+    <dl><dt>
+    <a href="http://nohost/plone/event01" title="Event01">Event01</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    May 01, 2012 10:00 AM - May 01, 2012 11:00 AM
+    </span>
+    </dd>
+    </dl></article>
+
+Search 2012/04/30 - 2012/05/02::
+
+    >>> browser.getControl(name="form.widgets.before_date-day").value = '2'
+    >>> browser.getControl(name="form.buttons.search").click()
+
+    >>> print browser.bycss("#search-results")
+    --- 1 ---
+    <article id="search-results"><h1>Search Results</h1>
+    <dl><dt>
+    <a href="http://nohost/plone/event01" title="Event01">Event01</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    May 01, 2012 10:00 AM - May 01, 2012 11:00 AM
+    </span>
+    </dd>
+    </dl></article>
+
+Search 2012/04/30 - 2012/05/02 with words AAA::
+
+    >>> browser.getControl(name="form.widgets.words").value = 'AAA'
+    >>> browser.getControl(name="form.buttons.search").click()
+
+    >>> print browser.bycss("#search-results")
+    --- 1 ---
+    <article id="search-results"><h1>Search Results</h1>
+    <p>There are no search results found.</p>
+    </article>
+
+Search 2012/04/30 - 2012/05/02 with words Event01::
+
+    >>> browser.getControl(name="form.widgets.words").value = 'Event01'
+    >>> browser.getControl(name="form.buttons.search").click()
+
+    >>> print browser.bycss("#search-results")
+    --- 1 ---
+    <article id="search-results"><h1>Search Results</h1>
+    <dl><dt>
+    <a href="http://nohost/plone/event01" title="Event01">Event01</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    May 01, 2012 10:00 AM - May 01, 2012 11:00 AM
+    </span>
+    </dd>
+    </dl></article>
+
+Search only with words Event01::
+
+    >>> browser.getControl(name="form.widgets.words").value = 'Event01'
+    >>> browser.getControl(name="form.widgets.after_date-year").value = ''
+    >>> browser.getControl(name="form.widgets.before_date-year").value = ''
+    >>> browser.getControl(name="form.buttons.search").click()
+
+    >>> print browser.bycss("#search-results")
+    --- 1 ---
+    <article id="search-results"><h1>Search Results</h1>
+    <dl><dt>
+    <a href="http://nohost/plone/event01" title="Event01">Event01</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    May 01, 2012 10:00 AM - May 01, 2012 11:00 AM
+    </span>
+    </dd>
+    </dl></article>
+
+Create Event02 2012/05/02-10:00 AM - 2012/05/03 10:00 AM::
+
+    >>> browser.open('/createObject?type_name=Event')
+
+    >>> browser.getControl(name="title").value = 'Event02'
+    >>> browser.getControl(name="startDate_year").value = ['2012']
+    >>> browser.getControl(name="startDate_month").value = ['05']
+    >>> browser.getControl(name="startDate_day").value = ['02']
+    >>> browser.getControl(name="startDate_hour").value = ['10']
+    >>> browser.getControl(name="startDate_minute").value = ['00']
+    >>> browser.getControl(name="startDate_ampm").value = ['AM']
+    >>> browser.getControl(name="endDate_year").value = ['2012']
+    >>> browser.getControl(name="endDate_month").value = ['05']
+    >>> browser.getControl(name="endDate_day").value = ['03']
+    >>> browser.getControl(name="endDate_hour").value = ['10']
+    >>> browser.getControl(name="endDate_minute").value = ['00']
+    >>> browser.getControl(name="endDate_ampm").value = ['AM']
+    >>> browser.getControl(name="form.button.save").click()
+
+Search only with words Event01::
+
+    >>> browser.getControl(name="form.widgets.words").value = 'Event01'
+    >>> browser.getControl(name="form.buttons.search").click()
+
+    >>> print browser.bycss("#search-results")
+    --- 1 ---
+    <article id="search-results"><h1>Search Results</h1>
+    <dl><dt>
+    <a href="http://nohost/plone/event01" title="Event01">Event01</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    May 01, 2012 10:00 AM - May 01, 2012 11:00 AM
+    </span>
+    </dd>
+    </dl></article>
+
+Search with empy fields::
+
+    >>> browser.getControl(name="form.widgets.words").value = ''
+    >>> browser.getControl(name="form.buttons.search").click()
+
+    >>> print browser.bycss("#search-results")
+    --- 1 ---
+    <article id="search-results"><h1>Search Results</h1>
+    <dl><dt>
+    <a href="http://nohost/plone/event02" title="Event02">Event02</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    May 02, 2012 10:00 AM - May 03, 2012 10:00 AM
+    </span>
+    </dd>
+    <dt>
+    <a href="http://nohost/plone/event01" title="Event01">Event01</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    May 01, 2012 10:00 AM - May 01, 2012 11:00 AM
+    </span>
+    </dd>
+    </dl></article>
+
+Create Folder01::
+
+    >>> browser.open('/createObject?type_name=Folder')
+
+    >>> browser.getControl(name="title").value = 'Folder01'
+    >>> browser.getControl(name="form.button.save").click()
+
+Create Event03 2012/05/04-10:00 AM - 2012/05/04 11:00 AM under Folder01::
+
+    >>> browser.open('/folder01/createObject?type_name=Event')
+
+    >>> browser.getControl(name="title").value = 'Event03'
+    >>> browser.getControl(name="startDate_year").value = ['2012']
+    >>> browser.getControl(name="startDate_month").value = ['05']
+    >>> browser.getControl(name="startDate_day").value = ['04']
+    >>> browser.getControl(name="startDate_hour").value = ['10']
+    >>> browser.getControl(name="startDate_minute").value = ['00']
+    >>> browser.getControl(name="startDate_ampm").value = ['AM']
+    >>> browser.getControl(name="endDate_year").value = ['2012']
+    >>> browser.getControl(name="endDate_month").value = ['05']
+    >>> browser.getControl(name="endDate_day").value = ['04']
+    >>> browser.getControl(name="endDate_hour").value = ['11']
+    >>> browser.getControl(name="endDate_minute").value = ['00']
+    >>> browser.getControl(name="endDate_ampm").value = ['AM']
+    >>> browser.getControl(name="subject_keywords:lines").value = 'Tag01'
+    >>> browser.getControl(name="form.button.save").click()
+
+Go to registry to set tags::
+
+    >>> browser.open('/@@searchevent-controlpanel')
+
+Add Col01::
+
+    >>> browser.getControl(name="crud-add.form.widgets.id").value = 'Col01'
+    >>> browser.getControl(name="crud-add.form.widgets.tags:list").value = ['0']
+    >>> browser.getControl(name="crud-add.form.buttons.add").click()
+
+Go to portlet to set tags::
+
+    >>> browser.open('/++contextportlets++plone.leftcolumn/search-events/edit?referer=http%3A//nohost/plone/%40%40manage-portlets')
+    >>> browser.getControl(name="form.collections").value = ['Col01']
+    >>> browser.getControl(name="form.actions.save").click()
+
+    >>> browser.open(portal_url)
+    >>> browser.getLink('Manage portlets').click()

@@ -1,0 +1,23 @@
+<configure
+  i18n_domain="collective.searchevent"
+  xmlns:browser="http://namespaces.zope.org/browser"
+  xmlns="http://namespaces.zope.org/zope"
+  >
+
+  <browser:page
+    class=".template.SearchResultsView"
+    for="*"
+    layer=".interfaces.ISearchEventLayer"
+    name="search-results"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    class=".template.SearchEventControlPanelView"
+    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    layer=".interfaces.ISearchEventLayer"
+    name="searchevent-controlpanel"
+    permission="cmf.ManagePortal"
+    />
+
+</configure>

@@ -1,0 +1,73 @@
+Log in as the portal owner::
+
+    >>> from plone.app.testing import TEST_USER_NAME, TEST_USER_PASSWORD
+    >>> browser.login(TEST_USER_NAME, TEST_USER_PASSWORD)
+
+Go to regitsty::
+
+    >>> browser.open(controlpanel_url)
+    >>> browser.getLink('Search Event Collections').click()
+
+Add the first collection::
+
+    >>> 'ID01' in browser.contents
+    False
+
+    >>> browser.getControl(name="crud-add.form.widgets.id").value = 'ID01'
+    >>> browser.getControl(name="crud-add.form.buttons.add").click()
+
+    >>> 'ID01' in browser.contents
+    True
+
+Add another collection with ID01 wnich should be ignored::
+
+    >>> 'value="20"' in browser.contents
+    False
+
+    >>> browser.getControl(name="crud-add.form.widgets.id").value = 'ID01'
+    >>> browser.getControl(name="crud-add.form.widgets.limit").value = '20'
+    >>> browser.getControl(name="crud-add.form.buttons.add").click()
+
+    >>> 'value="20"' in browser.contents
+    False
+    >>> 'You cannot add another collection with the same ID.' in browser.contents
+    True
+
+Add the other collection with different ID::
+
+    >>> browser.getControl(name="crud-add.form.widgets.id").value = 'ID02'
+    >>> browser.getControl(name="crud-add.form.widgets.limit").value = '20'
+    >>> browser.getControl(name="crud-add.form.buttons.add").click()
+
+    >>> 'value="20"' in browser.contents
+    True
+
+Update ID01::
+
+    >>> 'value="30"' in browser.contents
+    False
+
+    >>> browser.getControl(name="crud-edit.ID01.widgets.limit").value = '30'
+    >>> browser.getControl(name="crud-edit.form.buttons.edit").click()
+
+    >>> 'value="30"' in browser.contents
+    True
+
+Remove ID01::
+
+    >>> browser.getControl(name="crud-edit.ID01.widgets.select:list").value = True
+    >>> browser.getControl(name="crud-edit.form.buttons.delete").click()
+
+    >>> 'value="30"' in browser.contents
+    False
+
+Add the other collection with Tags::
+
+    >>> browser.getControl(name="crud-add.form.widgets.id").value = 'ID03'
+    >>> browser.getControl(name="crud-add.form.widgets.limit").value = '40'
+    >>> browser.getControl(name="crud-add.form.widgets.tags:list").value = ['1', '2']
+    >>> browser.getControl(name="crud-add.form.buttons.add").click()
+
+    >>> print browser.bycss('#crud-edit-ID03-widgets-tags')
+    --- 1 ---
+    <select id="crud-edit-ID03-widgets-tags" name="crud-edit.ID03.widgets.tags:list" class="select-widget set-field" multiple size="5"><option id="crud-edit-ID03-widgets-tags-0" value="0">Tag01</option><option id="crud-edit-ID03-widgets-tags-1" value="1" selected>Tag02</option><option id="crud-edit-ID03-widgets-tags-2" value="2" selected>Tag03</option></select>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<portlets
+  i18n:domain="collective.searchevent"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  >
+
+ <!-- Portlet type registrations -->
+
+  <portlet
+    addview="collective.searchevent.SearchEvent"
+    title="Search Event portlet"
+    description="A portlet which displays event search form."
+    i18n:attributes="
+      title;
+      description;
+    "
+   />
+
+</portlets>

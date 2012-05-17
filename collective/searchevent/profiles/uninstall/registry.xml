@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<registry>
+  <record name="collective.searchevent.collections" delete="true" />
+  <!-- <record name="collective.searchevent.batch_size" delete="true" /> -->
+</registry>

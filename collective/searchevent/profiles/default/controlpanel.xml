@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<object
+  i18n:domain="collective.searchevent"
+  name="portal_controlpanel"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  >
+
+  <configlet
+    action_id="searchevent_collection_registry"
+    appId="collective.searchevent"
+    category="Products"
+    condition_expr=""
+    i18n:attributes="title"
+    icon_expr="string:${portal_url}/maintenance_icon.png"
+    title="Search Event Collections"
+    url_expr="string:${portal_url}/@@searchevent-controlpanel"
+    visible="True"
+    >
+    <permission>Manage portal</permission>
+  </configlet>
+
+</object>

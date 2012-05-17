@@ -1,0 +1,25 @@
+<configure
+  i18n_domain="collective.searchevent"
+  xmlns:i18n="http://namespaces.zope.org/i18n"
+  xmlns:plone="http://namespaces.plone.org/plone"
+  xmlns="http://namespaces.zope.org/zope"
+  >
+
+  <permission
+    id="collective.searchevent.AddSearchEventPortlet"
+    title="collective.searchevent: Add event search portlet"
+    />
+
+  <!-- Register the portlet -->
+  <plone:portlet
+    addview=".search.AddForm"
+    assignment=".search.Assignment"
+    edit_permission="collective.searchevent.AddSearchEventPortlet"
+    editview=".search.EditForm"
+    interface=".search.ISearchEventPortlet"
+    name="collective.searchevent.SearchEvent"
+    renderer=".search.Renderer"
+    view_permission="zope2.View"
+    />
+
+</configure>
