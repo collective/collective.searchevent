@@ -1,10 +1,10 @@
 from Products.CMFPlone.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from collective.searchevent import _
-from plone.app.form.widgets.uberselectionwidget import UberSelectionWidget
+from five import grok
 from plone.app.portlets.portlets import base
-from plone.app.vocabularies.catalog import SearchableTextSourceBinder
 from plone.portlets.interfaces import IPortletDataProvider
+from plone.registry.interfaces import IRegistry
 from plone.z3cform.layout import FormWrapper
 from z3c.form import button
 from z3c.form.browser.checkbox import CheckBoxFieldWidget
@@ -12,13 +12,11 @@ from z3c.form.field import Fields
 from z3c.form.form import Form
 from zope import schema
 from zope.component import getMultiAdapter
+from zope.component import getUtility
 from zope.formlib import form
 from zope.interface import Interface
 from zope.interface import implements
-from zope.site.hooks import getSite
-from plone.registry.interfaces import IRegistry
-from zope.component import getUtility
-from zope.schema.vocabulary import SimpleTerm
+from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.vocabulary import SimpleVocabulary
 
 
@@ -39,22 +37,24 @@ class ISearchEventPortlet(IPortletDataProvider):
         default=True,
     )
 
-    # collections = schema.Set(
-    #     title=_(u"Collections"),
-    #     description=_(u"Select the collections for filtering search."),
-    #     required=False,
-    #     value_type=schema.Choice(
-    #         source="collective.searchevent.RegistryCollections",
-    #     )
-    # )
-
     collections = schema.Choice(
         title=_(u"Collections"),
         description=_(u"Select the collections for filtering search."),
         required=False,
         source="collective.searchevent.RegistryCollections",
     )
-
+    tags = schema.TextLine(
+        title=_(u"Tags"),
+        description=_(u"Label of tags field."),
+        required=False,
+        default=_(u'Tags'),
+    )
+    folders = schema.TextLine(
+        title=_(u"Folders"),
+        description=_(u"Label of folders field."),
+        required=False,
+        default=_(u'Folders'),
+    )
 
 
 class Assignment(base.Assignment):
@@ -69,16 +69,22 @@ class Assignment(base.Assignment):
     collections = None
     header = None
     show_header = True
+    tags = _(u'Tags')
+    folders = _(u'Folders')
 
     def __init__(
         self,
         header=None,
         show_header=True,
-        collections = None,
+        collections=None,
+        tags=_(u'Tags'),
+        folders=_(u'Folders'),
     ):
         self.collections = collections
         self.header = header
         self.show_header = show_header
+        self.tags = tags
+        self.folders = folders
 
     @property
     def title(self):
@@ -96,6 +102,48 @@ class PortletFormView(FormWrapper):
     index = ViewPageTemplateFile("formwrapper.pt")
 
 
+class Tags(object):
+    grok.implements(IContextSourceBinder)
+
+    def __init__(self, tags):
+        self.tags = tags
+
+    def __call__(self, context):
+        terms = [
+            SimpleVocabulary.createTerm(tag, str(tag), tag) for tag in list(self.tags)
+        ]
+        return SimpleVocabulary(terms)
+
+
+class Paths(object):
+
+    grok.implements(IContextSourceBinder)
+
+    def __init__(self, paths):
+        self.paths = paths
+
+    def __call__(self, context):
+        catalog = getToolByName(context, 'portal_catalog')
+        terms = []
+        for path in list(self.paths):
+            query = {
+                'path': {
+                    'query': path,
+                    'depth': 0,
+                }
+            }
+            brain = catalog(query)[0]
+            title_or_id = brain.Title or brain.id
+            terms.append(
+                SimpleVocabulary.createTerm(
+                    path,
+                    str(path),
+                    title_or_id,
+                )
+            )
+        return SimpleVocabulary(terms)
+
+
 class ISearchEventForm(Interface):
 
     after_date = schema.Date(
@@ -107,22 +155,6 @@ class ISearchEventForm(Interface):
         title=_(u'To'),
         required=False,
     )
-
-    # categories = schema.Set(
-    #     title=_(u'Categories'),
-    #     required=False,
-    #     value_type=schema.Choice(
-    #         source="collective.searchevent.SelectedCategories",
-    #     ),
-    # )
-
-    # folders = schema.Set(
-    #     title=_(u'Folders'),
-    #     required=False,
-    #     value_type=schema.Choice(
-    #         source="collective.searchevent.SelectedFolders",
-    #     ),
-    # )
 
     words = schema.TextLine(
         title=_(u"Search Words"),
@@ -150,77 +182,39 @@ class SearchEventForm(Form):
 
         self.data = data
 
-        portal = getSite()
-        catalog = getToolByName(portal, 'portal_catalog')
-        reference = getToolByName(portal, 'reference_catalog')
-        registry = getUtility(IRegistry)
-        collections = registry['collective.searchevent.collections']
-        # for uid in self.data.collections:
-        #     collection = [col for col in collections if col.get('collection') == uid][0]
-        #     criteria = collection.get('criteria')
-        #     if criteria:
-        #         query = {
-        #             'UID': uid,
-        #         }
-        #         obj = reference.lookupObject(uid)
-        #         if criteria == 'Location':
-        #             crit = obj['crit__path_ATPathCriterion']
-        #             terms = [
-        #                 SimpleTerm(
-        #                     value='path:{0}'.format('/'.join(ob.getPhysicalPath())),
-        #                     title=ob.Title(),
-        #                 ) for ob in crit.Value()
-        #             ]
-        #         if criteria == 'Tags':
-        #             crit = obj['crit__Subject_ATSelectionCriterion']
-        #             terms = [
-        #                 SimpleTerm(
-        #                     value=tag,
-        #                     title=tag,
-        #                 ) for tag in crit.Value()
-        #             ]
-        #         vocabulary = SimpleVocabulary(terms)
-        #         field = schema.Set(
-        #             title=unicode(obj.Title()),
-        #             required=False,
-        #             value_type=schema.Choice(
-        #                 vocabulary=vocabulary,
-        #             ),
-        #         )
-        #         field.__name__ = obj.id
-        #         self.fields += Fields(field)
-        #         self.fields[obj.id].widgetFactory = CheckBoxFieldWidget
+        cid = self.data.collections
+        if cid:
+            registry = getUtility(IRegistry)
+            collections = registry['collective.searchevent.collections']
+            collection = [col for col in collections if col['id'] == cid][0]
+            tags = collection.get('tags')
+            if tags:
+                field = schema.Set(
+                    title=self.data.tags,
+                    required=False,
+                    value_type=schema.Choice(
+                        source=Tags(tags),
+                    ),
+                )
+                field.__name__ = 'tags'
+                self.fields += Fields(field)
+                self.fields['tags'].widgetFactory = CheckBoxFieldWidget
+            paths = collection.get('paths')
+            if paths:
+                field = schema.Set(
+                    title=self.data.folders,
+                    required=False,
+                    value_type=schema.Choice(
+                        source=Paths(paths),
+                    ),
+                )
+                field.__name__ = 'paths'
+                self.fields += Fields(field)
+                self.fields['paths'].widgetFactory = CheckBoxFieldWidget
 
     def updateWidgets(self):
         super(self.__class__, self).updateWidgets()
-
-        # for uid in self.data.collections:
-        #     import pdb; pdb.set_trace() 
-        #     self.widgets[uid] = self.widgets['words']
-
-        # if not len(self.data.categories):
-        #     del self.widgets['categories']
-        # if not len(self.data.folders):
-        #     del self.widgets['folders']
-
-        # category_name = self.data.category_name
-        # if self.widgets.get('categories') and category_name:
-        #     self.widgets['categories'].label = category_name
-
-        # folder_name = self.data.folder_name
-        # if self.widgets.get('folders') and folder_name:
-        #     self.widgets['folders'].label = folder_name
-
         self.widgets['words'].size = 20
-
-    # def update(self):
-    #     super(self.__class__, self).update()
-    #     email = schema.TextLine(title=u'E-Mail')
-    #     email.__name__ = 'email'
-    #     import pdb; pdb.set_trace()
-    #     self.fields += Fields(email)
-        # fields['categories'].widgetFactory = CheckBoxFieldWidget
-        # fields['folders'].widgetFactory = CheckBoxFieldWidget
 
     @property
     def action(self):

@@ -3,20 +3,15 @@ Log in as the portal owner::
     >>> from plone.app.testing import TEST_USER_NAME, TEST_USER_PASSWORD
     >>> browser.login(TEST_USER_NAME, TEST_USER_PASSWORD)
 
-Go to portal_url::
+Go to @@manage-portlets::
 
-    >>> browser.open(portal_url)
-
-Click Manage portlets::
-
-    >>> browser.getLink('Manage portlets').click()
+    >>> browser.open('/@@manage-portlets')
     >>> 'Events</a>' in browser.contents
     False
 
 Select Event search portlet::
 
-    >>> url = '{0}{1}'.format(portal_url, "/++contextportlets++plone.leftcolumn/+/collective.searchevent.SearchEvent")
-    >>> browser.open(url)
+    >>> browser.open("/++contextportlets++plone.leftcolumn/+/collective.searchevent.SearchEvent")
 
 Input Values::
 
@@ -24,9 +19,6 @@ Input Values::
     >>> browser.getControl(name="form.actions.save").click()
     >>> 'Events</a>' in browser.contents
     True
-
-    >>> browser.getLink('Events').click()
-    >>> events_portlet_url = browser.url
 
 Got to portal_url::
 
@@ -37,9 +29,9 @@ Got to portal_url::
     True
     >>> 'Folders' in browser.contents
     False
-    >>> 'Categories' in browser.contents
+    >>> 'Tags' in browser.contents
     False
- 
+
 Create Event01 2012/05/01-10:00 AM - 2012/05/01 11:00 AM::
 
     >>> browser.getLink('Event').click()
@@ -376,7 +368,7 @@ Go to registry to set tags::
 Add Col01::
 
     >>> browser.getControl(name="crud-add.form.widgets.id").value = 'Col01'
-    >>> browser.getControl(name="crud-add.form.widgets.tags:list").value = ['0']
+    >>> browser.getControl(name="crud-add.form.widgets.tags:list").value = ['Tag01']
     >>> browser.getControl(name="crud-add.form.buttons.add").click()
 
 Go to portlet to set tags::
@@ -386,4 +378,160 @@ Go to portlet to set tags::
     >>> browser.getControl(name="form.actions.save").click()
 
     >>> browser.open(portal_url)
-    >>> browser.getLink('Manage portlets').click()
+
+    >>> 'Tags' in browser.contents
+    True
+    >>> 'Folders' in browser.contents
+    False
+
+Set Folder01 as path::
+
+    >>> from zope.component import getUtility
+    >>> from plone.registry.interfaces import IRegistry
+    >>> registry = getUtility(IRegistry)
+    >>> collections = registry['collective.searchevent.collections']
+    >>> path = '/'.join(portal['folder01'].getPhysicalPath())
+    >>> collections[0].update({'paths': [path]})
+    >>> registry['collective.searchevent.collections'] = collections
+    >>> import transaction
+    >>> transaction.commit()
+
+Go to portal_url::
+
+    >>> browser.open(portal_url)
+
+    >>> 'Tags' in browser.contents
+    True
+    >>> 'Folders' in browser.contents
+    True
+
+Search with empy fields::
+
+    >>> browser.getControl(name="form.buttons.search").click()
+
+    >>> print browser.bycss("#search-results")
+    --- 1 ---
+    <article id="search-results"><h1>Search Results</h1>
+    <dl><dt>
+    <a href="http://nohost/plone/folder01/event03" title="Event03">Event03</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    May 04, 2012 10:00 AM - May 04, 2012 11:00 AM
+    </span>
+    </dd>
+    <dt>
+    <a href="http://nohost/plone/event02" title="Event02">Event02</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    May 02, 2012 10:00 AM - May 03, 2012 10:00 AM
+    </span>
+    </dd>
+    <dt>
+    <a href="http://nohost/plone/event01" title="Event01">Event01</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    May 01, 2012 10:00 AM - May 01, 2012 11:00 AM
+    </span>
+    </dd>
+    </dl></article>
+
+Search with tag::
+
+    >>> browser.getControl(name="form.widgets.tags:list").value = ['Tag01']
+    >>> browser.getControl(name="form.buttons.search").click()
+
+    >>> print browser.bycss("#search-results")
+    --- 1 ---
+    <article id="search-results"><h1>Search Results</h1>
+    <dl><dt>
+    <a href="http://nohost/plone/folder01/event03" title="Event03">Event03</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    May 04, 2012 10:00 AM - May 04, 2012 11:00 AM
+    </span>
+    </dd>
+    </dl></article>
+
+Create Folder02::
+
+    >>> browser.open('/createObject?type_name=Folder')
+
+    >>> browser.getControl(name="title").value = 'Folder02'
+    >>> browser.getControl(name="form.button.save").click()
+
+Create Event04 2012/05/05-10:00 AM - 2012/05/06 10:00 AM under Folder02::
+
+    >>> browser.open('/folder02/createObject?type_name=Event')
+
+    >>> browser.getControl(name="title").value = 'Event04'
+    >>> browser.getControl(name="startDate_year").value = ['2012']
+    >>> browser.getControl(name="startDate_month").value = ['05']
+    >>> browser.getControl(name="startDate_day").value = ['05']
+    >>> browser.getControl(name="startDate_hour").value = ['10']
+    >>> browser.getControl(name="startDate_minute").value = ['00']
+    >>> browser.getControl(name="startDate_ampm").value = ['AM']
+    >>> browser.getControl(name="endDate_year").value = ['2012']
+    >>> browser.getControl(name="endDate_month").value = ['05']
+    >>> browser.getControl(name="endDate_day").value = ['06']
+    >>> browser.getControl(name="endDate_hour").value = ['10']
+    >>> browser.getControl(name="endDate_minute").value = ['00']
+    >>> browser.getControl(name="endDate_ampm").value = ['AM']
+    >>> browser.getControl(name="subject_keywords:lines").value = 'Tag02'
+    >>> browser.getControl(name="form.button.save").click()
+
+Go to registry to set tags::
+
+    >>> browser.open('/@@searchevent-controlpanel')
+
+Add Tag01 Col01::
+
+    >>> browser.getControl(name="crud-edit.Col01.widgets.tags:list").value = ['Tag01', 'Tag02']
+    >>> browser.getControl(name="crud-edit.form.buttons.edit").click()
+
+Set Folder01 as path::
+
+    >>> collections = registry['collective.searchevent.collections']
+    >>> path = '/'.join(portal['folder02'].getPhysicalPath())
+    >>> paths = collections[0]['paths']
+    >>> paths.append(path)
+    >>> collections[0].update({'paths': paths})
+    >>> registry['collective.searchevent.collections'] = collections
+    >>> transaction.commit()
+
+Go to portal_url::
+
+    >>> browser.open(portal_url)
+
+Search from Folder02::
+
+    >>> browser.getControl(name="form.widgets.paths:list").value = path
+    >>> browser.getControl(name="form.buttons.search").click()
+
+    >>> print browser.bycss("#search-results")
+    --- 1 ---
+    <article id="search-results"><h1>Search Results</h1>
+    <dl><dt>
+    <a href="http://nohost/plone/folder02/event04" title="Event04">Event04</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    May 05, 2012 10:00 AM - May 06, 2012 10:00 AM
+    </span>
+    </dd>
+    </dl></article>
+
+Seach from Folder02 but also with Tag01::
+
+    >>> browser.getControl(name="form.widgets.tags:list").value = ['Tag01']
+    >>> browser.getControl(name="form.widgets.paths:list").value = path
+    >>> browser.getControl(name="form.buttons.search").click()
+
+    >>> print browser.bycss("#search-results")
+    --- 1 ---
+    <article id="search-results"><h1>Search Results</h1>
+    <p>There are no search results found.</p>
+    </article>

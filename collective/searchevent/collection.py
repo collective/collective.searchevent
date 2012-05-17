@@ -1,8 +1,6 @@
 from Products.ATContentTypes.interfaces.folder import IATFolder
 from collective.searchevent import _
-from plone.app.relationfield.source import CMFContentSearchSource
 from plone.formwidget.contenttree import ObjPathSourceBinder
-from plone.formwidget.contenttree import UUIDSourceBinder
 from z3c.relationfield.schema import RelationChoice
 from z3c.relationfield.schema import RelationList
 from zope.interface import Interface
@@ -10,9 +8,7 @@ from zope.interface import implements
 from zope.schema import ASCIILine
 from zope.schema import Choice
 from zope.schema import Int
-from zope.schema import List
 from zope.schema import Set
-from zope.schema import TextLine
 
 
 class ICollection(Interface):

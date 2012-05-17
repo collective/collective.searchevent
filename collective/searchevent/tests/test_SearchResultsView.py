@@ -58,8 +58,8 @@ class TestSearchResultsView(unittest.TestCase):
         instance.request.form = mock.MagicMock()
         instance.request.form = {
             'form.widgets.words': 'words',
-            'form.widgets.categories': 'Subject',
-            'form.widgets.folders': ['folder']
+            'form.widgets.tags': 'Subject',
+            'form.widgets.paths': ['path']
         }
         from DateTime import DateTime
         date = DateTime()
@@ -94,8 +94,8 @@ class TestSearchResultsView(unittest.TestCase):
         instance.request.form = mock.MagicMock()
         instance.request.form = {
             'form.widgets.words': 'words',
-            'form.widgets.categories': None,
-            'form.widgets.folders': ['folder']
+            'form.widgets.tags': None,
+            'form.widgets.paths': ['path']
         }
         from DateTime import DateTime
         date = DateTime()
@@ -129,7 +129,7 @@ class TestSearchResultsView(unittest.TestCase):
         instance.request.form = mock.MagicMock()
         instance.request.form = {
             'form.widgets.words': 'words',
-            'form.widgets.categories': 'Subject',
+            'form.widgets.tags': 'Subject',
             'form.widgets.folders': None
         }
         from DateTime import DateTime

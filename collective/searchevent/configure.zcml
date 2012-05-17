@@ -11,6 +11,7 @@
   <include package="plone.behavior" file="meta.zcml" />
   <includeDependencies package="." />
   <grok:grok package="." />
+  <five:registerPackage package="." initialize=".initialize" />
   <i18n:registerTranslations directory="locales" />
   
   <genericsetup:registerProfile

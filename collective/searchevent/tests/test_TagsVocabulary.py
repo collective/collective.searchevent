@@ -15,9 +15,7 @@ class TestTagsVocabulary(unittest.TestCase):
 
     @mock.patch('collective.searchevent.vocabulary.SimpleVocabulary')
     @mock.patch('collective.searchevent.vocabulary.getToolByName')
-    @mock.patch('collective.searchevent.vocabulary.aq_parent')
-    @mock.patch('collective.searchevent.vocabulary.aq_inner')
-    def test__call(self, aq_inner, aq_parent, getToolByName, SimpleVocabulary):
+    def test__call(self, getToolByName, SimpleVocabulary):
         getToolByName().Indexes = {'Subject': {'Category01': None, 'Category01': None}}
         instance = self.createInstance()
         context = mock.Mock()

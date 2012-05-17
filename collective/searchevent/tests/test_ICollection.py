@@ -41,7 +41,6 @@ class TestICollection(unittest.TestCase):
 
     def test_tags__value_type__vocabularyName(self):
         field = self.createField('tags')
-        from zope.schema import Choice
         self.assertEqual(
             field.value_type.vocabularyName,
             'collective.searchevent.Tags'

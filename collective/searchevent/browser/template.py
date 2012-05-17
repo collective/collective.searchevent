@@ -148,17 +148,11 @@ class SearchResultsView(BrowserView):
                 'range': 'min',
             }
         )
-        Subject = form.get('form.widgets.categories')
+        Subject = form.get('form.widgets.tags', None)
         if Subject:
             query.update({'Subject': Subject})
-        folders = form.get('form.widgets.folders')
-        if folders:
-            paths = []
-            for folder in folders:
-                reference = getToolByName(context, 'reference_catalog')
-                obj = reference.lookupObject(folder)
-                obj_path = '/'.join(obj.getPhysicalPath())
-                paths.append(obj_path)
+        paths = form.get('form.widgets.paths', None)
+        if paths:
             query.update({'path': paths})
         return catalog(query)
 

@@ -65,9 +65,9 @@ Add the other collection with Tags::
 
     >>> browser.getControl(name="crud-add.form.widgets.id").value = 'ID03'
     >>> browser.getControl(name="crud-add.form.widgets.limit").value = '40'
-    >>> browser.getControl(name="crud-add.form.widgets.tags:list").value = ['1', '2']
+    >>> browser.getControl(name="crud-add.form.widgets.tags:list").value = ['Tag02', 'Tag03']
     >>> browser.getControl(name="crud-add.form.buttons.add").click()
 
     >>> print browser.bycss('#crud-edit-ID03-widgets-tags')
     --- 1 ---
-    <select id="crud-edit-ID03-widgets-tags" name="crud-edit.ID03.widgets.tags:list" class="select-widget set-field" multiple size="5"><option id="crud-edit-ID03-widgets-tags-0" value="0">Tag01</option><option id="crud-edit-ID03-widgets-tags-1" value="1" selected>Tag02</option><option id="crud-edit-ID03-widgets-tags-2" value="2" selected>Tag03</option></select>
+    <select id="crud-edit-ID03-widgets-tags" name="crud-edit.ID03.widgets.tags:list" class="select-widget set-field" multiple size="5"><option id="crud-edit-ID03-widgets-tags-0" value="Tag01">Tag01</option><option id="crud-edit-ID03-widgets-tags-1" value="Tag02" selected>Tag02</option><option id="crud-edit-ID03-widgets-tags-2" value="Tag03" selected>Tag03</option></select>

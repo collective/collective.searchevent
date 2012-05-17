@@ -73,48 +73,6 @@ class TestCase(IntegrationTestCase):
         from plone.registry.field import Dict
         self.assertTrue(isinstance(field.value_type, Dict))
 
-    # def test_registry__batch_size(self):
-    #     from zope.component import getUtility
-    #     from plone.registry.interfaces import IRegistry
-    #     registry = getUtility(IRegistry)
-    #     self.assertEqual(
-    #         registry['collective.searchevent.batch_size'],
-    #         10
-    #     )
-
-    # def test_registry__batch_size__instance(self):
-    #     from zope.component import getUtility
-    #     from plone.registry.interfaces import IRegistry
-    #     field = getUtility(IRegistry).records[
-    #         'collective.searchevent.batch_size'
-    #     ].field
-    #     from plone.registry.field import Int
-    #     self.assertTrue(isinstance(field, Int))
-
-    # def test_registry__batch_size__title(self):
-    #     from zope.component import getUtility
-    #     from plone.registry.interfaces import IRegistry
-    #     field = getUtility(IRegistry).records[
-    #         'collective.searchevent.batch_size'
-    #     ].field
-    #     self.assertEqual(field.title, u'Batch Size')
-
-    # def test_registry__batch_size__description(self):
-    #     from zope.component import getUtility
-    #     from plone.registry.interfaces import IRegistry
-    #     field = getUtility(IRegistry).records[
-    #         'collective.searchevent.batch_size'
-    #     ].field
-    #     self.assertEqual(field.description, u'Batch size for the search results.')
-
-    # def test_registry__batch_size__min(self):
-    #     from zope.component import getUtility
-    #     from plone.registry.interfaces import IRegistry
-    #     field = getUtility(IRegistry).records[
-    #         'collective.searchevent.batch_size'
-    #     ].field
-    #     self.assertEqual(field.min, 1)
-
     def test_uninstall__package(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         installer.uninstallProducts(['collective.searchevent'])
@@ -139,23 +97,10 @@ class TestCase(IntegrationTestCase):
     def test_unintall__registry__collections(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         installer.uninstallProducts(['collective.searchevent'])
-        # setup = getToolByName(self.portal, 'portal_setup')
-        # setup.runAllImportStepsFromProfile('profile-collective.searchevent:uninstall', purge_old=False)
         from zope.component import getUtility
         from plone.registry.interfaces import IRegistry
         registry = getUtility(IRegistry)
         self.assertRaises(
             KeyError,
-            lambda: registry['']
+            lambda: registry['collective.searchevent.collections']
         )
-
-    # def test_uninstall__registry__batch_size(self):
-    #     setup = getToolByName(self.portal, 'portal_setup')
-    #     setup.runAllImportStepsFromProfile('profile-collective.searchevent:uninstall', purge_old=False)
-    #     from zope.component import getUtility
-    #     from plone.registry.interfaces import IRegistry
-    #     registry = getUtility(IRegistry)
-    #     self.assertRaises(
-    #         KeyError,
-    #         lambda: registry['']
-    #     )
