@@ -30,6 +30,7 @@ setup(
         'hexagonit.testing',
         'plone.app.portlets',
         'plone.app.relationfield',
+        'plone.behavior',
         'plone.browserlayer',
         'plone.formwidget.datetime',
         'setuptools',
