@@ -8,14 +8,4 @@
     </field>
     <value />
   </record>
-  <!-- <record name="collective.searchevent.batch_size">
-    <field type="plone.registry.field.Int">
-      <title>Batch Size</title>
-      <description>Batch size for the search results.</description>
-      <min>1</min>
-    </field>
-    <value>
-      10
-    </value>
-  </record> -->
 </registry>

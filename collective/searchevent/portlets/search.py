@@ -239,7 +239,7 @@ class SearchEventForm(Form):
         make sure the form is posted through the same view always,
         instead of making HTTP POST to the page where the form was rendered.
         """
-        return self.context.portal_url() + "/@@search-results"
+        return self.context.absolute_url() + "/@@search-results"
 
     @button.buttonAndHandler(_('Search Events'), name='search')
     def search(self, action):
