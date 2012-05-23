@@ -85,16 +85,6 @@ class SearchEventControlPanelForm(crud.CrudForm):
         registry = getUtility(IRegistry)
         collections = registry['collective.searchevent.collections']
         collections = [collection for collection in collections if collection['id'] != data['id']]
-        # paths = data.get('paths')
-        # if paths:
-        #     res = []
-        #     for path in paths:
-        #         if not isinstance(path, str):
-        #             path = '/'.join(path.getPhysicalPath())
-        #             res.append(path)
-        #     if res:
-        #         paths = res
-        #         data.update({'paths': paths})
         collections.append(data)
         registry['collective.searchevent.collections'] = collections
 
@@ -144,11 +134,12 @@ class SearchResultsView(BrowserView):
         before_date = self.date(before_year, before_month, before_day)
         if before_date:
             before_date += 1
+        if not (before_date or after_date):
+            after_date = DateTime()
         query = dict(
             object_provides=IATEvent.__identifier__,
             SearchableText=form.get('form.widgets.words', ''),
             sort_on='start',
-            sort_order='reverse',
             start={
                 'query': [before_date, ],
                 'range': 'max',

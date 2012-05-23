@@ -72,7 +72,6 @@ class TestSearchResultsView(unittest.TestCase):
                 'object_provides': 'identifier',
                 'SearchableText': 'words',
                 'sort_on': 'start',
-                'sort_order': 'reverse',
                 'start': {
                     'query': [date + 1, ],
                     'range': 'max',
@@ -108,7 +107,6 @@ class TestSearchResultsView(unittest.TestCase):
                 'object_provides': 'identifier',
                 'SearchableText': 'words',
                 'sort_on': 'start',
-                'sort_order': 'reverse',
                 'start': {
                     'query': [date + 1, ],
                     'range': 'max',
@@ -142,7 +140,6 @@ class TestSearchResultsView(unittest.TestCase):
                 'object_provides': 'identifier',
                 'SearchableText': 'words',
                 'sort_on': 'start',
-                'sort_order': 'reverse',
                 'start': {
                     'query': [date + 1, ],
                     'range': 'max',
