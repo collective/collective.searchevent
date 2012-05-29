@@ -7,7 +7,8 @@
       i18n:domain="collective.searchevent">
   <body>
     <div metal:fill-slot="main">
-      <section id="search-results" tal:define="batch view/batch;">
+      <!-- <section id="search-results" tal:define="batch view/batch;"> -->
+      <section id="search-results">
         <h1 i18n:translate="">Search Results</h1>
         <p tal:condition="not: view/results"
            i18n:translate="">
@@ -18,7 +19,8 @@
                                toLocalizedTime nocall:plone_view/toLocalizedTime;
                                ">
           <dl>
-            <tal:results repeat="item batch">
+            <!-- <tal:results repeat="item batch"> -->
+            <tal:results repeat="item view/results">
               <dt>
                 <a tal:attributes="href item/getURL;
                                    title item/Title"
@@ -36,7 +38,7 @@
             </tal:results>
           </dl>
         </tal:block>
-        <div metal:use-macro="context/batch_macros/macros/navigation" />
+        <!-- <div metal:use-macro="context/batch_macros/macros/navigation" /> -->
       </section>
     </div>
   </body>
