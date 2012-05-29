@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='collective.searchevent',
-    version=0.1,
+    version='0.1',
     description="Search Event",
     long_description=open("README.rst").read(),
     # Get more strings from
