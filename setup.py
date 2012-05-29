@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='collective.searchevent',
-    version=0.0,
+    version=0.1,
     description="Search Event",
     long_description=open("README.rst").read(),
     # Get more strings from
@@ -19,7 +19,7 @@ setup(
     keywords='',
     author='Taito Horiuchi',
     author_email='taito.horiuchi@gmail.com',
-    url='',
+    url='https://github.com/collective/collective.searchevent',
     license='BSD',
     packages=find_packages(exclude=['ez_setup']),
     namespace_packages=['collective'],
