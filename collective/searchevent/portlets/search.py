@@ -1,10 +1,10 @@
 from Products.CMFPlone.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from collective.searchevent import _
+from collective.searchevent.interfaces import ISearchEventCollection
 from five import grok
 from plone.app.portlets.portlets import base
 from plone.portlets.interfaces import IPortletDataProvider
-from plone.registry.interfaces import IRegistry
 from plone.z3cform.layout import FormWrapper
 from z3c.form import button
 from z3c.form.browser.checkbox import CheckBoxFieldWidget
@@ -194,14 +194,8 @@ class SearchEventForm(Form):
 
         cid = self.data.collections
         if cid:
-            registry = getUtility(IRegistry)
-            collections = [
-                col for col in registry[
-                    'collective.searchevent.collections'
-                ] if col['id'] == cid
-            ]
-            if collections:
-                collection = collections[0]
+            collection = getUtility(ISearchEventCollection)(cid)
+            if collection:
                 tags = collection.get('tags')
                 if tags:
                     field = schema.Set(
@@ -239,7 +233,14 @@ class SearchEventForm(Form):
         make sure the form is posted through the same view always,
         instead of making HTTP POST to the page where the form was rendered.
         """
-        return self.context.absolute_url() + "/@@search-results"
+        url = '{0}/@@search-results'.format(self.context.absolute_url())
+        cid = self.data.collections
+        if cid:
+            collection = getUtility(ISearchEventCollection)(cid)
+            if collection:
+                limit = collection['limit'] or 10
+                url = '{0}?b_size={1}'.format(url, limit)
+        return url
 
     @button.buttonAndHandler(_('Search Events'), name='search')
     def search(self, action):
@@ -288,8 +289,7 @@ class Renderer(base.Renderer):
     @property
     def search_results_url(self):
         context_state = getMultiAdapter((self.context, self.request), name=u'plone_context_state')
-        url = '{0}/@@event-results'.format(context_state.object_url())
-        return url
+        return '{0}/@@search-results'.format(context_state.object_url())
 
 
 class AddForm(base.AddForm):

@@ -1,9 +1,9 @@
 from Products.ATContentTypes.interfaces.folder import IATFolder
 from collective.searchevent import _
+from plone.directives.form import Schema
 from plone.formwidget.contenttree import ObjPathSourceBinder
 from z3c.relationfield.schema import RelationChoice
 from z3c.relationfield.schema import RelationList
-from zope.interface import Interface
 from zope.interface import implements
 from zope.schema import ASCIILine
 from zope.schema import Choice
@@ -11,7 +11,7 @@ from zope.schema import Int
 from zope.schema import Set
 
 
-class ICollection(Interface):
+class ICollection(Schema):
 
     id = ASCIILine(
         title=_(u'ID'),
@@ -28,7 +28,7 @@ class ICollection(Interface):
         required=False,
         value_type=RelationChoice(
             source=ObjPathSourceBinder(
-                {'object_provides': IATFolder.__identifier__}
+                object_provides=IATFolder.__identifier__
             ),
         ),
     )

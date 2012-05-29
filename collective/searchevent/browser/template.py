@@ -97,7 +97,7 @@ SearchEventControlPanelView = wrap_form(
 
 class SearchResultsView(BrowserView):
 
-    index = ViewPageTemplateFile('templates/event_results.pt')
+    index = ViewPageTemplateFile('templates/search_results.pt')
 
     def __call__(self):
         self.request.set('disable_border', True)
@@ -160,8 +160,7 @@ class SearchResultsView(BrowserView):
     def batch(self):
         form = self.request.form
         b_start = form.get('b_start', 0)
-        ## Make this dynamic...
-        b_size = 10
+        b_size = int(form.get('b_size', '10'))
         return Batch(
             self.results(),
             b_size,

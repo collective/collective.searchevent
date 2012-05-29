@@ -25,7 +25,7 @@ Got to portal_url::
     >>> browser.open(portal_url)
     >>> 'Events</a>' in browser.contents
     True
-    >>> '@@event-results' in browser.contents
+    >>> '@@search-results' in browser.contents
     True
     >>> 'Folders' in browser.contents
     False
@@ -60,7 +60,7 @@ Search Event with empty field::
 
     >>> print browser.bycss("#search-results")
     --- 1 ---
-    <article id="search-results"><h1>Search Results</h1>
+    <section id="search-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -69,7 +69,7 @@ Search Event with empty field::
     May 01, ... 10:00 AM - May 01, ... 11:00 AM
     </span>
     </dd>
-    </dl></article>
+    </dl></section>
 
 Search - FutureYear/04/30::
 
@@ -80,9 +80,9 @@ Search - FutureYear/04/30::
 
     >>> print browser.bycss("#search-results")
     --- 1 ---
-    <article id="search-results"><h1>Search Results</h1>
+    <section id="search-results"><h1>Search Results</h1>
     <p>There are no search results found.</p>
-    </article>
+    </section>
 
 Search - FutureYear/05/01::
 
@@ -93,7 +93,7 @@ Search - FutureYear/05/01::
 
     >>> print browser.bycss("#search-results")
     --- 1 ---
-    <article id="search-results"><h1>Search Results</h1>
+    <section id="search-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -102,7 +102,7 @@ Search - FutureYear/05/01::
     May 01, ... 10:00 AM - May 01, ... 11:00 AM
     </span>
     </dd>
-    </dl></article>
+    </dl></section>
 
 Search without year::
 
@@ -111,7 +111,7 @@ Search without year::
 
     >>> print browser.bycss("#search-results")
     --- 1 ---
-    <article id="search-results"><h1>Search Results</h1>
+    <section id="search-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -120,7 +120,7 @@ Search without year::
     May 01, ... 10:00 AM - May 01, ... 11:00 AM
     </span>
     </dd>
-    </dl></article>
+    </dl></section>
 
 Search FutureYear/05/02 -::
 
@@ -131,9 +131,9 @@ Search FutureYear/05/02 -::
 
     >>> print browser.bycss("#search-results")
     --- 1 ---
-    <article id="search-results"><h1>Search Results</h1>
+    <section id="search-results"><h1>Search Results</h1>
     <p>There are no search results found.</p>
-    </article>
+    </section>
 
 Search FutureYear/05/01 -::
 
@@ -144,7 +144,7 @@ Search FutureYear/05/01 -::
 
     >>> print browser.bycss("#search-results")
     --- 1 ---
-    <article id="search-results"><h1>Search Results</h1>
+    <section id="search-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -153,7 +153,7 @@ Search FutureYear/05/01 -::
     May 01, ... 10:00 AM - May 01, ... 11:00 AM
     </span>
     </dd>
-    </dl></article>
+    </dl></section>
 
 Search FutureYear/04/30 -::
 
@@ -164,7 +164,7 @@ Search FutureYear/04/30 -::
 
     >>> print browser.bycss("#search-results")
     --- 1 ---
-    <article id="search-results"><h1>Search Results</h1>
+    <section id="search-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -173,7 +173,7 @@ Search FutureYear/04/30 -::
     May 01, ... 10:00 AM - May 01, ... 11:00 AM
     </span>
     </dd>
-    </dl></article>
+    </dl></section>
 
 Search FutureYear/04/30 - FutureYear/04/30::
 
@@ -184,9 +184,9 @@ Search FutureYear/04/30 - FutureYear/04/30::
 
     >>> print browser.bycss("#search-results")
     --- 1 ---
-    <article id="search-results"><h1>Search Results</h1>
+    <section id="search-results"><h1>Search Results</h1>
     <p>There are no search results found.</p>
-    </article>
+    </section>
 
 Search FutureYear/04/30 - FutureYear/05/01::
 
@@ -196,7 +196,7 @@ Search FutureYear/04/30 - FutureYear/05/01::
 
     >>> print browser.bycss("#search-results")
     --- 1 ---
-    <article id="search-results"><h1>Search Results</h1>
+    <section id="search-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -205,7 +205,7 @@ Search FutureYear/04/30 - FutureYear/05/01::
     May 01, ... 10:00 AM - May 01, ... 11:00 AM
     </span>
     </dd>
-    </dl></article>
+    </dl></section>
 
 Search FutureYear/04/30 - FutureYear/05/02::
 
@@ -214,7 +214,7 @@ Search FutureYear/04/30 - FutureYear/05/02::
 
     >>> print browser.bycss("#search-results")
     --- 1 ---
-    <article id="search-results"><h1>Search Results</h1>
+    <section id="search-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -223,7 +223,7 @@ Search FutureYear/04/30 - FutureYear/05/02::
     May 01, ... 10:00 AM - May 01, ... 11:00 AM
     </span>
     </dd>
-    </dl></article>
+    </dl></section>
 
 Search FutureYear/04/30 - FutureYear/05/02 with words AAA::
 
@@ -232,9 +232,9 @@ Search FutureYear/04/30 - FutureYear/05/02 with words AAA::
 
     >>> print browser.bycss("#search-results")
     --- 1 ---
-    <article id="search-results"><h1>Search Results</h1>
+    <section id="search-results"><h1>Search Results</h1>
     <p>There are no search results found.</p>
-    </article>
+    </section>
 
 Search FutureYear/04/30 - FutureYear/05/02 with words Event01::
 
@@ -243,7 +243,7 @@ Search FutureYear/04/30 - FutureYear/05/02 with words Event01::
 
     >>> print browser.bycss("#search-results")
     --- 1 ---
-    <article id="search-results"><h1>Search Results</h1>
+    <section id="search-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -252,7 +252,7 @@ Search FutureYear/04/30 - FutureYear/05/02 with words Event01::
     May 01, ... 10:00 AM - May 01, ... 11:00 AM
     </span>
     </dd>
-    </dl></article>
+    </dl></section>
 
 Search only with words Event01::
 
@@ -263,7 +263,7 @@ Search only with words Event01::
 
     >>> print browser.bycss("#search-results")
     --- 1 ---
-    <article id="search-results"><h1>Search Results</h1>
+    <section id="search-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -272,7 +272,7 @@ Search only with words Event01::
     May 01, ... 10:00 AM - May 01, ... 11:00 AM
     </span>
     </dd>
-    </dl></article>
+    </dl></section>
 
 Create Event02 FutureYear/05/02-10:00 AM - FutureYear/05/03 10:00 AM::
 
@@ -300,7 +300,7 @@ Search only with words Event01::
 
     >>> print browser.bycss("#search-results")
     --- 1 ---
-    <article id="search-results"><h1>Search Results</h1>
+    <section id="search-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -309,7 +309,7 @@ Search only with words Event01::
     May 01, ... 10:00 AM - May 01, ... 11:00 AM
     </span>
     </dd>
-    </dl></article>
+    </dl></section>
 
 Search with empy fields::
 
@@ -318,7 +318,7 @@ Search with empy fields::
 
     >>> print browser.bycss("#search-results")
     --- 1 ---
-    <article id="search-results"><h1>Search Results</h1>
+    <section id="search-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -335,7 +335,7 @@ Search with empy fields::
     May 02, ... 10:00 AM - May 03, ... 10:00 AM
     </span>
     </dd>
-    </dl></article>
+    </dl></section>
 
 Create Folder01::
 
@@ -414,7 +414,7 @@ Search with empy fields::
 
     >>> print browser.bycss("#search-results")
     --- 1 ---
-    <article id="search-results"><h1>Search Results</h1>
+    <section id="search-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -439,7 +439,7 @@ Search with empy fields::
     May 04, ... 10:00 AM - May 04, ... 11:00 AM
     </span>
     </dd>
-    </dl></article>
+    </dl></section>
 
 Search with tag::
 
@@ -448,7 +448,7 @@ Search with tag::
 
     >>> print browser.bycss("#search-results")
     --- 1 ---
-    <article id="search-results"><h1>Search Results</h1>
+    <section id="search-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/folder01/event03" title="Event03">Event03</a>
     </dt>
@@ -457,7 +457,7 @@ Search with tag::
     May 04, ... 10:00 AM - May 04, ... 11:00 AM
     </span>
     </dd>
-    </dl></article>
+    </dl></section>
 
 Create Folder02::
 
@@ -516,7 +516,7 @@ Search from Folder02::
 
     >>> print browser.bycss("#search-results")
     --- 1 ---
-    <article id="search-results"><h1>Search Results</h1>
+    <section id="search-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/folder02/event04" title="Event04">Event04</a>
     </dt>
@@ -525,7 +525,7 @@ Search from Folder02::
     May 05, ... 10:00 AM - May 06, ... 10:00 AM
     </span>
     </dd>
-    </dl></article>
+    </dl></section>
 
 Seach from Folder02 but also with Tag01::
 
@@ -535,6 +535,140 @@ Seach from Folder02 but also with Tag01::
 
     >>> print browser.bycss("#search-results")
     --- 1 ---
-    <article id="search-results"><h1>Search Results</h1>
+    <section id="search-results"><h1>Search Results</h1>
     <p>There are no search results found.</p>
-    </article>
+    </section>
+
+
+Search Event with empty field::
+
+    >>> browser.getControl(name="form.widgets.tags:list").value = []
+    >>> browser.getControl(name="form.widgets.paths:list").value = []
+    >>> browser.getControl(name="form.buttons.search").click()
+
+    >>> print browser.bycss("#search-results")
+    --- 1 ---
+    <section id="search-results"><h1>Search Results</h1>
+    <dl><dt>
+    <a href="http://nohost/plone/event01" title="Event01">Event01</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    ...
+    </span>
+    </dd>
+    <dt>
+    <a href="http://nohost/plone/event02" title="Event02">Event02</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    ...
+    </span>
+    </dd>
+    <dt>
+    <a href="http://nohost/plone/folder01/event03" title="Event03">Event03</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    ...
+    </span>
+    </dd>
+    <dt>
+    <a href="http://nohost/plone/folder02/event04" title="Event04">Event04</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    ...
+    </span>
+    </dd>
+    </dl></section>
+
+Set batch size into 2::
+
+    >>> collections = registry['collective.searchevent.collections']
+    >>> collections[0].update({'limit': 2})
+    >>> registry['collective.searchevent.collections'] = collections
+    >>> transaction.commit()
+
+Reload the browser::
+
+    >>> browser.reload()
+
+Search::
+
+    >>> browser.getControl(name="form.buttons.search").click()
+
+    >>> print browser.bycss("#search-results")
+    --- 1 ---
+    <section id="search-results"><h1>Search Results</h1>
+    <dl><dt>
+    <a href="http://nohost/plone/event01" title="Event01">Event01</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    ...
+    </span>
+    </dd>
+    <dt>
+    <a href="http://nohost/plone/event02" title="Event02">Event02</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    ...
+    </span>
+    </dd>
+    </dl><div class="listingBar">
+    <span class="next">
+    ...
+
+Go to Next 2 items::
+
+    >>> browser.getLink('Next 2 items').click()
+    >>> print browser.bycss("#search-results")
+    --- 1 ---
+    <section id="search-results"><h1>Search Results</h1>
+    <dl><dt>
+    <a href="http://nohost/plone/folder01/event03" title="Event03">Event03</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    ...
+    </span>
+    </dd>
+    <dt>
+    <a href="http://nohost/plone/folder02/event04" title="Event04">Event04</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    ...
+    </span>
+    </dd>
+    </dl><div class="listingBar">
+    <span class="previous">
+    ...
+
+Go to Previous 2 items::
+
+    >>> browser.getLink('Previous 2 items').click()
+    >>> print browser.bycss("#search-results")
+    --- 1 ---
+    <section id="search-results"><h1>Search Results</h1>
+    <dl><dt>
+    <a href="http://nohost/plone/event01" title="Event01">Event01</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    ...
+    </span>
+    </dd>
+    <dt>
+    <a href="http://nohost/plone/event02" title="Event02">Event02</a>
+    </dt>
+    <dd>
+    <span class="dates">
+    ...
+    </span>
+    </dd>
+    </dl><div class="listingBar">
+    <span class="next">
+    ...

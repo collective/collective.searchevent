@@ -7,7 +7,7 @@
       i18n:domain="collective.searchevent">
   <body>
     <div metal:fill-slot="main">
-      <article id="search-results" tal:define="batch view/batch;">
+      <section id="search-results" tal:define="batch view/batch;">
         <h1 i18n:translate="">Search Results</h1>
         <p tal:condition="not: view/results"
            i18n:translate="">
@@ -37,7 +37,7 @@
           </dl>
         </tal:block>
         <div metal:use-macro="context/batch_macros/macros/navigation" />
-      </article>
+      </section>
     </div>
   </body>
 </html>

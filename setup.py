@@ -32,6 +32,7 @@ setup(
         'plone.app.relationfield',
         'plone.behavior',
         'plone.browserlayer',
+        'plone.directives.form',
         'plone.formwidget.datetime',
         'setuptools',
         'zope.i18nmessageid',

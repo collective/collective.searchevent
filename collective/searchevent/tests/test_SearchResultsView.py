@@ -24,7 +24,7 @@ class TestSearchResultsView(unittest.TestCase):
         instance = self.createInstance()
         self.assertEqual(
             instance.index.filename.split('/')[-1],
-            'event_results.pt'
+            'search_results.pt'
         )
 
     def test___call__(self):
