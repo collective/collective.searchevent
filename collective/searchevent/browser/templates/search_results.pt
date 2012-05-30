@@ -8,7 +8,6 @@
   <body>
     <div metal:fill-slot="main">
       <section id="search-results" tal:define="batch view/batch;">
-      <!-- <section id="search-results"> -->
         <h1 i18n:translate="">Search Results</h1>
         <p tal:condition="not: view/results"
            i18n:translate="">
@@ -20,7 +19,6 @@
                                ">
           <dl>
             <tal:results repeat="item batch">
-            <!-- <tal:results repeat="item view/results"> -->
               <dt>
                 <a tal:attributes="href item/getURL;
                                    title item/Title"
@@ -33,7 +31,10 @@
                 <span class="dates" tal:condition="python: item.start == item.end">
                   <span tal:replace="python: toLocalizedTime(item.start, long_format=True)" />
                 </span>
-                <tal:description tal:content="item/Description" />
+                <p 
+                  tal:condition="item/Description"
+                  tal:content="item/Description"
+                  />
               </dd>
             </tal:results>
           </dl>
