@@ -5,14 +5,15 @@ from Products.CMFPlone.PloneBatch import Batch
 from Products.CMFPlone.utils import getToolByName
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from Products.statusmessages.interfaces import IStatusMessage
 from collective.searchevent import _
 from collective.searchevent.collection import Collection
 from collective.searchevent.collection import ICollection
+from plone.app.contentlisting.interfaces import IContentListing
 from plone.app.z3cform.layout import wrap_form
 from plone.registry.interfaces import IRegistry
 from plone.z3cform.crud import crud
 from zope.component import getUtility
-from Products.statusmessages.interfaces import IStatusMessage
 
 
 class SearchEventControlPanelForm(crud.CrudForm):
@@ -155,7 +156,7 @@ class SearchResultsView(BrowserView):
         paths = form.get('form.widgets.paths', None)
         if paths:
             query.update({'path': paths})
-        return catalog(query)
+        return IContentListing(catalog(query))
 
     def batch(self):
         form = self.request.form

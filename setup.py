@@ -28,6 +28,7 @@ setup(
     install_requires=[
         'five.grok',
         'hexagonit.testing',
+        'plone.app.contentlisting',
         'plone.app.portlets',
         'plone.app.relationfield',
         'plone.behavior',

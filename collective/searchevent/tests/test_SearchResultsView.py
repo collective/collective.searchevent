@@ -50,10 +50,11 @@ class TestSearchResultsView(unittest.TestCase):
         instance.date(2011, 10, 20)
         DateTime.assert_called_with('2011/10/20')
 
+    @mock.patch('collective.searchevent.browser.template.IContentListing')
     @mock.patch('collective.searchevent.browser.template.IATEvent')
     @mock.patch('collective.searchevent.browser.template.getToolByName')
     @mock.patch('collective.searchevent.browser.template.aq_inner')
-    def test_results(self, aq_inner, getToolByName, IATEvent):
+    def test_results(self, aq_inner, getToolByName, IATEvent, IContentListing):
         instance = self.createInstance()
         instance.request.form = mock.MagicMock()
         instance.request.form = {
@@ -85,10 +86,11 @@ class TestSearchResultsView(unittest.TestCase):
             }
         )
 
+    @mock.patch('collective.searchevent.browser.template.IContentListing')
     @mock.patch('collective.searchevent.browser.template.IATEvent')
     @mock.patch('collective.searchevent.browser.template.getToolByName')
     @mock.patch('collective.searchevent.browser.template.aq_inner')
-    def test_results__without_subject(self, aq_inner, getToolByName, IATEvent):
+    def test_results__without_subject(self, aq_inner, getToolByName, IATEvent, IContentListing):
         instance = self.createInstance()
         instance.request.form = mock.MagicMock()
         instance.request.form = {
@@ -119,10 +121,11 @@ class TestSearchResultsView(unittest.TestCase):
             }
         )
 
+    @mock.patch('collective.searchevent.browser.template.IContentListing')
     @mock.patch('collective.searchevent.browser.template.IATEvent')
     @mock.patch('collective.searchevent.browser.template.getToolByName')
     @mock.patch('collective.searchevent.browser.template.aq_inner')
-    def test_results_without_folders(self, aq_inner, getToolByName, IATEvent):
+    def test_results_without_folders(self, aq_inner, getToolByName, IATEvent, IContentListing):
         instance = self.createInstance()
         instance.request.form = mock.MagicMock()
         instance.request.form = {

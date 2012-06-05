@@ -11,7 +11,7 @@
         <h1 i18n:translate="">Search Results</h1>
         <p tal:condition="not: view/results"
            i18n:translate="">
-          There are no search results found.  
+          There are no search results found.
         </p>
         <tal:block tal:condition="view/results"
                    tal:define="plone_view context/@@plone;
