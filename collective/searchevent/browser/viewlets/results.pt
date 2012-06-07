@@ -1,0 +1,43 @@
+<tal:block
+  i18n:domain="collective.searchevent"
+  tal:define="batch viewlet/batch;"
+  >
+  <p tal:condition="not: viewlet/batch"
+     i18n:translate="">
+    There are no search results found.
+  </p>
+  <tal:block
+    tal:condition="viewlet/batch"
+    tal:define="
+      plone_view context/@@plone;
+      toLocalizedTime nocall:plone_view/toLocalizedTime;
+    "
+  >
+    <dl>
+      <tal:results repeat="item batch">
+        <dt>
+          <a 
+            tal:attributes="
+              href item/getURL;
+              title item/Title
+            "
+             tal:content="item/Title"
+             />
+        </dt>
+        <dd>
+          <span class="dates" tal:condition="python: item.start != item.end">
+            <span tal:replace="python: toLocalizedTime(item.start, long_format=True)" /> - <span tal:replace="python: toLocalizedTime(item.end, long_format=True)" />
+          </span>
+          <span class="dates" tal:condition="python: item.start == item.end">
+            <span tal:replace="python: toLocalizedTime(item.start, long_format=True)" />
+          </span>
+          <p 
+            tal:condition="item/Description"
+            tal:content="item/Description"
+            />
+        </dd>
+      </tal:results>
+    </dl>
+    <div metal:use-macro="context/batch_macros/macros/navigation" />
+  </tal:block>
+</tal:block>

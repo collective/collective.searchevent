@@ -1,45 +1,16 @@
 <html 
-      lang="en"
-      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
-      xmlns:tal="http://xml.zope.org/namespaces/tal"
-      metal:use-macro="here/main_template/macros/master"
-      i18n:domain="collective.searchevent">
+  i18n:domain="collective.searchevent"
+  lang="en"
+  metal:use-macro="here/main_template/macros/master"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  >
   <body>
     <div metal:fill-slot="main">
-      <section id="search-results" tal:define="batch view/batch;">
+      <section id="search-results">
         <h1 i18n:translate="">Search Results</h1>
-        <p tal:condition="not: view/results"
-           i18n:translate="">
-          There are no search results found.
-        </p>
-        <tal:block tal:condition="view/results"
-                   tal:define="plone_view context/@@plone;
-                               toLocalizedTime nocall:plone_view/toLocalizedTime;
-                               ">
-          <dl>
-            <tal:results repeat="item batch">
-              <dt>
-                <a tal:attributes="href item/getURL;
-                                   title item/Title"
-                   tal:content="item/Title" />
-              </dt>
-              <dd>
-                <span class="dates" tal:condition="python: item.start != item.end">
-                  <span tal:replace="python: toLocalizedTime(item.start, long_format=True)" /> - <span tal:replace="python: toLocalizedTime(item.end, long_format=True)" />
-                </span>
-                <span class="dates" tal:condition="python: item.start == item.end">
-                  <span tal:replace="python: toLocalizedTime(item.start, long_format=True)" />
-                </span>
-                <p 
-                  tal:condition="item/Description"
-                  tal:content="item/Description"
-                  />
-              </dd>
-            </tal:results>
-          </dl>
-        </tal:block>
-        <div metal:use-macro="context/batch_macros/macros/navigation" />
+        <div tal:replace="structure provider:collective.searchevent.results.manager" />
       </section>
     </div>
   </body>
