@@ -109,7 +109,7 @@ msgstr ""
 
 #: ./browser/templates/event_results.pt:12
 msgid "There are no search results found."
-msgstr "Hakutokoksia ei löydy."
+msgstr "Hakutuloksia ei löydy."
 
 #: ./portlets/search.py:300
 msgid "This portlet displays a form to search events."
