@@ -361,7 +361,7 @@ Create Event03 FutureYear/05/04-10:00 AM - FutureYear/05/04 11:00 AM under Folde
     >>> browser.getControl(name="endDate_hour").value = ['11']
     >>> browser.getControl(name="endDate_minute").value = ['00']
     >>> browser.getControl(name="endDate_ampm").value = ['AM']
-    >>> browser.getControl(name="subject_keywords:lines").value = 'Tag01'
+    >>> browser.getControl(name="subject_keywords:lines").value = 'Täg01'
     >>> browser.getControl(name="form.button.save").click()
 
 Go to registry to set tags::
@@ -370,8 +370,12 @@ Go to registry to set tags::
 
 Add Col01::
 
+    >>> from binascii import b2a_qp
+    >>> tag01 = b2a_qp('Täg01')
+    >>> tag02 = b2a_qp('Tög02')
+
     >>> browser.getControl(name="crud-add.form.widgets.id").value = 'Col01'
-    >>> browser.getControl(name="crud-add.form.widgets.tags:list").value = ['0']
+    >>> browser.getControl(name="crud-add.form.widgets.tags:list").value = [tag01]
     >>> browser.getControl(name="crud-add.form.buttons.add").click()
 
 Go to portlet to set tags::
@@ -443,7 +447,7 @@ Search with empy fields::
 
 Search with tag::
 
-    >>> browser.getControl(name="form.widgets.tags:list").value = ['Tag01']
+    >>> browser.getControl(name="form.widgets.tags:list").value = ['Täg01']
     >>> browser.getControl(name="form.buttons.search").click()
 
     >>> print browser.bycss("#search-results")
@@ -483,7 +487,7 @@ Create Event04 FutureYear/05/05-10:00 AM - FutureYear/05/06 10:00 AM under Folde
     >>> browser.getControl(name="endDate_hour").value = ['10']
     >>> browser.getControl(name="endDate_minute").value = ['00']
     >>> browser.getControl(name="endDate_ampm").value = ['AM']
-    >>> browser.getControl(name="subject_keywords:lines").value = 'Tag02'
+    >>> browser.getControl(name="subject_keywords:lines").value = 'Tög02'
     >>> browser.getControl(name="form.button.save").click()
 
 Go to registry to set tags::
@@ -492,7 +496,7 @@ Go to registry to set tags::
 
 Add Tag01 Col01::
 
-    >>> browser.getControl(name="crud-edit.Col01.widgets.tags:list").value = ['0', '1']
+    >>> browser.getControl(name="crud-edit.Col01.widgets.tags:list").value = [tag01, tag02]
     >>> browser.getControl(name="crud-edit.form.buttons.edit").click()
 
 Set Folder01 as path::
@@ -529,7 +533,7 @@ Search from Folder02::
 
 Seach from Folder02 but also with Tag01::
 
-    >>> browser.getControl(name="form.widgets.tags:list").value = ['Tag01']
+    >>> browser.getControl(name="form.widgets.tags:list").value = ['Täg01']
     >>> browser.getControl(name="form.widgets.paths:list").value = path
     >>> browser.getControl(name="form.buttons.search").click()
 

@@ -1,4 +1,4 @@
-import unittest2 as unittest
+import unittest
 
 
 class TestISearchEventForm(unittest.TestCase):
@@ -23,34 +23,6 @@ class TestISearchEventForm(unittest.TestCase):
         self.assertTrue(isinstance(field, schema))
         self.assertEqual(field.title, u'To')
         self.assertFalse(field.required)
-
-    # def test_categories(self):
-    #     from zope.schema import Set as schema
-    #     from collective.searchevent.portlets.search import ISearchEventForm as interface
-    #     field = interface.get('categories')
-    #     self.assertTrue(isinstance(field, schema))
-    #     self.assertEqual(field.title, u'Categories')
-    #     self.assertFalse(field.required)
-    #     from zope.schema import Choice
-    #     self.assertTrue(isinstance(field.value_type, Choice))
-    #     self.assertEqual(
-    #         field.value_type.vocabularyName,
-    #         'collective.searchevent.SelectedCategories'
-    #     )
-
-    # def test_folders(self):
-    #     from zope.schema import Set as schema
-    #     from collective.searchevent.portlets.search import ISearchEventForm as interface
-    #     field = interface.get('folders')
-    #     self.assertTrue(isinstance(field, schema))
-    #     self.assertEqual(field.title, u'Folders')
-    #     self.assertFalse(field.required)
-    #     from zope.schema import Choice
-    #     self.assertTrue(isinstance(field.value_type, Choice))
-    #     self.assertEqual(
-    #         field.value_type.vocabularyName,
-    #         'collective.searchevent.SelectedFolders'
-    #     )
 
     def test_words(self):
         from zope.schema import TextLine as schema

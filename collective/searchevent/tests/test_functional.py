@@ -12,7 +12,7 @@ import manuel.doctest
 import manuel.testing
 import re
 import transaction
-import unittest2 as unittest
+import unittest
 
 FLAGS = doctest.NORMALIZE_WHITESPACE | doctest.ELLIPSIS | doctest.REPORT_NDIFF | doctest.REPORT_ONLY_FIRST_FAILURE
 
@@ -41,7 +41,7 @@ def setUp(self):
 
     setRoles(portal, TEST_USER_ID, ['Manager'])
 
-    self.globs['controlpanel_url'] = '{0}/@@overview-controlpanel'.format(portal_url)
+    self.globs['controlpanel_url'] = '{}/@@overview-controlpanel'.format(portal_url)
 
     folder = portal[
         portal.invokeFactory(

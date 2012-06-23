@@ -1,4 +1,4 @@
-import unittest2 as unittest
+import unittest
 
 
 class TestICollection(unittest.TestCase):
@@ -21,6 +21,10 @@ class TestICollection(unittest.TestCase):
         field = self.createField('id')
         self.assertEqual(field.title, u'ID')
 
+    def test_id__description(self):
+        field = self.createField('id')
+        self.assertEqual(field.description, u'Shown when managing search event portlet.')
+
     def test_tags__instance(self):
         from zope.schema import Set
         field = self.createField('tags')
@@ -29,6 +33,10 @@ class TestICollection(unittest.TestCase):
     def test_tags_title(self):
         field = self.createField('tags')
         self.assertEqual(field.title, u'Tags')
+
+    def test_tags_description(self):
+        field = self.createField('tags')
+        self.assertEqual(field.description, u'Select tags to be filtered when searching events.')
 
     def test_tags_required(self):
         field = self.createField('tags')
@@ -43,8 +51,7 @@ class TestICollection(unittest.TestCase):
         field = self.createField('tags')
         self.assertEqual(
             field.value_type.vocabularyName,
-            'collective.searchevent.Tags'
-        )
+            u'plone.app.vocabularies.Keywords')
 
     def test_paths__instance(self):
         from z3c.relationfield.schema import RelationList
@@ -54,6 +61,10 @@ class TestICollection(unittest.TestCase):
     def test_paths__title(self):
         field = self.createField('paths')
         self.assertEqual(field.title, u'Paths')
+
+    def test_paths__description(self):
+        field = self.createField('paths')
+        self.assertEqual(field.description, u'Select paths to be filtered when searching events. Only top level folders can be used.')
 
     def test_paths__required(self):
         field = self.createField('paths')

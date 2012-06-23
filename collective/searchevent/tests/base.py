@@ -2,8 +2,9 @@ from plone.app.testing import FunctionalTesting
 from plone.app.testing import IntegrationTesting
 from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
+from plone.testing import z2
 
-import unittest2 as unittest
+import unittest
 
 
 class CollectiveEvent_Search_PortletLayer(PloneSandboxLayer):
@@ -15,6 +16,7 @@ class CollectiveEvent_Search_PortletLayer(PloneSandboxLayer):
         # Load ZCML
         import collective.searchevent
         self.loadZCML(package=collective.searchevent)
+        z2.installProduct(app, 'collective.searchevent')
 
     def setUpPloneSite(self, portal):
         """Set up Plone."""
@@ -23,6 +25,7 @@ class CollectiveEvent_Search_PortletLayer(PloneSandboxLayer):
 
     def tearDownZope(self, app):
         """Tear down Zope."""
+        z2.uninstallProduct(app, 'collective.searchevent')
 
 
 FIXTURE = CollectiveEvent_Search_PortletLayer()

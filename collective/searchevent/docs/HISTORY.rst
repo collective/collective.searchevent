@@ -1,7 +1,7 @@
 Changelog
-=========
+---------
 
-0.0 (XXXX-XX-XX)
-----------------
+0.1 (2012-06-23)
+================
 
-- Initial release
+- Initial release. [taito]

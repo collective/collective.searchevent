@@ -30,13 +30,13 @@ class SearchEventResultsViewlet(grok.Viewlet):
         date = None
         if year:
             if day:
-                date = '{0}/{1}/{2}'.format(
+                date = '{}/{}/{}'.format(
                     year,
                     month,
                     day,
                 )
             else:
-                date = '{0}/{1}/01'.format(
+                date = '{}/{}/01'.format(
                     year,
                     month,
                 )

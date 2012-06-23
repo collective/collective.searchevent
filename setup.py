@@ -1,19 +1,34 @@
 from setuptools import find_packages
 from setuptools import setup
 
+import os
+
+
+def read(*rnames):
+    return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
+
+
+long_description = (
+    read('collective', 'searchevent', 'docs', 'README.rst') + "\n" +
+    read('collective', 'searchevent', 'docs', 'HISTORY.rst') + "\n" +
+    read('collective', 'searchevent', 'docs', 'CONTRIBUTORS.rst') + "\n" +
+    read('collective', 'searchevent', 'docs', 'CREDITS.rst')
+)
+
 
 setup(
     name='collective.searchevent',
     version='0.1',
     description="Search Event",
-    long_description=open("README.rst").read(),
+    long_description=long_description,
     # Get more strings from
     # http://pypi.python.org/pypi?:action=list_classifiers
     classifiers=[
         "Framework :: Plone",
-        "Framework :: Plone :: 4.1"
-        "Framework :: Plone :: 4.2"
-        "Framework :: Plone :: 4.3"
+        "Framework :: Plone :: 4.1",
+        "Framework :: Plone :: 4.2",
+        "Framework :: Plone :: 4.3",
+        "License :: OSI Approved :: BSD License",
         "Programming Language :: Python",
     ],
     keywords='',

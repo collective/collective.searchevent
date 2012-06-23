@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
-import unittest2 as unittest
+import unittest
+import mock
 
 
 class TestCollection(unittest.TestCase):
 
-    def createInstance(self, id="ID", tags=["TAG01", "TAG02"], paths=['PATH01', 'PATH02'], limit=10):
+    @mock.patch('collective.searchevent.collection.getToolByName')
+    def createInstance(self, getToolByName, id="ID", tags=["TAG01", "TAG02"], paths=['PATH01', 'PATH02'], limit=10):
         from collective.searchevent.collection import Collection
         return Collection(id, tags, paths, limit)
 

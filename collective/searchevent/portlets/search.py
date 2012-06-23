@@ -127,7 +127,7 @@ class Paths(object):
         res = []
         for path in self.paths:
             if not isinstance(path, str):
-                path = '{0}/{1}'.format(
+                path = '{}/{}'.format(
                     portal_path,
                     path.id,
                 )
@@ -233,13 +233,13 @@ class SearchEventForm(Form):
         make sure the form is posted through the same view always,
         instead of making HTTP POST to the page where the form was rendered.
         """
-        url = '{0}/@@search-results'.format(self.context.absolute_url())
+        url = '{}/@@search-results'.format(self.context.absolute_url())
         cid = self.data.collections
         if cid:
             collection = getUtility(ISearchEventCollection)(cid)
             if collection:
                 limit = collection['limit'] or 10
-                url = '{0}?b_size={1}'.format(url, limit)
+                url = '{}?b_size={}'.format(url, limit)
         return url
 
     @button.buttonAndHandler(_('Search Events'), name='search')
@@ -289,7 +289,7 @@ class Renderer(base.Renderer):
     @property
     def search_results_url(self):
         context_state = getMultiAdapter((self.context, self.request), name=u'plone_context_state')
-        return '{0}/@@search-results'.format(context_state.object_url())
+        return '{}/@@search-results'.format(context_state.object_url())
 
 
 class AddForm(base.AddForm):
