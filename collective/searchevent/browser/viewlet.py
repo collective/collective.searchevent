@@ -135,9 +135,9 @@ class SearchEventResultsViewlet(grok.Viewlet):
                 dt = start_dt
             else:
                 end_time = ulocalized_time(end, time_only=True)
-                dt = '{} - {}'.format(start_dt, end_time)
+                dt = u'{} - {}'.format(start_dt, end_time)
         else:
             end_dt = ulocalized_time(end, long_format=True, context=self.context)
-            dt = '{} - {}'.format(start_dt, end_dt)
+            dt = u'{} - {}'.format(start_dt, end_dt)
 
         return dt
