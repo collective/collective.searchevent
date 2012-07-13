@@ -16,7 +16,7 @@
     <dl>
       <tal:results repeat="item batch">
         <dt>
-          <a 
+          <a
             tal:attributes="
               href item/getURL;
               title item/Title
@@ -31,7 +31,7 @@
           <span class="dates" tal:condition="python: item.start == item.end">
             <span tal:replace="python: toLocalizedTime(item.start, long_format=True)" />
           </span>
-          <p 
+          <p
             tal:condition="item/Description"
             tal:content="item/Description"
             />

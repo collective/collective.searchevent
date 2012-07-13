@@ -25,12 +25,11 @@ setup(
     # http://pypi.python.org/pypi?:action=list_classifiers
     classifiers=[
         "Framework :: Plone",
-        "Framework :: Plone :: 4.1",
         "Framework :: Plone :: 4.2",
         "Framework :: Plone :: 4.3",
         "License :: OSI Approved :: BSD License",
         "Programming Language :: Python",
-    ],
+        "Programming Language :: Python :: 2.7"],
     keywords='',
     author='Taito Horiuchi',
     author_email='taito.horiuchi@gmail.com',
@@ -51,12 +50,10 @@ setup(
         'plone.directives.form',
         'plone.formwidget.datetime',
         'setuptools',
-        'zope.i18nmessageid',
-    ],
+        'zope.i18nmessageid'],
     entry_points="""
     # -*- Entry points: -*-
 
     [z3c.autoinclude.plugin]
     target = plone
-    """,
-)
+    """)

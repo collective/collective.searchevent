@@ -82,12 +82,13 @@ class TestSearchEventResultsViewlet(IntegrationTestCase):
         catalog.return_value = [mock.Mock(), mock.Mock(), mock.Mock()]
         viewlet = self.createViewlet()
         viewlet.results(limit=2)
-        getToolByName().assert_called_with(
-            {
-                'SearchableText': '',
-                'end': {'query': [DateTime()], 'range': 'min'},
-                'object_provides': 'Products.ATContentTypes.interfaces.event.IATEvent',
-                'sort_limit': 2,
-                'sort_on': 'start',
-                'start': {'query': [None], 'range': 'max'},
-            })
+        getToolByName().assert_called_with({
+            'SearchableText': '',
+            'end': {'query': [DateTime()], 'range': 'min'},
+            'object_provides': 'Products.ATContentTypes.interfaces.event.IATEvent',
+            'sort_limit': 2,
+            'sort_on': 'start',
+            'start': {'query': [None], 'range': 'max'},
+            'b_start': 1,
+            'b_size': 11,
+        })
