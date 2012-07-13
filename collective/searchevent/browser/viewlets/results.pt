@@ -1,18 +1,11 @@
 <tal:block
   i18n:domain="collective.searchevent"
-  tal:define="batch viewlet/batch;"
-  >
-  <p tal:condition="not: viewlet/batch"
+  tal:define="batch viewlet/batch;">
+  <p tal:condition="not: batch"
      i18n:translate="">
     There are no search results found.
   </p>
-  <tal:block
-    tal:condition="viewlet/batch"
-    tal:define="
-      plone_view context/@@plone;
-      toLocalizedTime nocall:plone_view/toLocalizedTime;
-    "
-  >
+  <tal:block tal:condition="batch">
     <dl>
       <tal:results repeat="item batch">
         <dt>
