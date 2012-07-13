@@ -6,6 +6,7 @@ from Products.CMFPlone.PloneBatch import Batch
 from five import grok
 from plone.app.contentlisting.interfaces import IContentListing
 from plone.app.viewletmanager.manager import OrderedViewletManager
+from plone.memoize.instance import memoize
 from zope.interface import Interface
 
 
@@ -114,3 +115,29 @@ class SearchEventResultsViewlet(grok.Viewlet):
             b_size,
             start=b_start,
             orphan=b_orphan)
+
+    @memoize
+    def _ulocalized_time(self):
+        """Return ulocalized_time method.
+
+        :rtype: method
+        """
+        translation_service = getToolByName(self.context, 'translation_service')
+        return translation_service.ulocalized_time
+
+    def datetime(self, item):
+        start = item.start
+        end = item.end
+        ulocalized_time = self._ulocalized_time()
+        start_dt = ulocalized_time(start, long_format=True, context=self.context)
+        if start.Date() == end.Date():
+            if start == end:
+                dt = start_dt
+            else:
+                end_time = ulocalized_time(end, time_only=True)
+                dt = '{} - {}'.format(start_dt, end_time)
+        else:
+            end_dt = ulocalized_time(end, long_format=True, context=self.context)
+            dt = '{} - {}'.format(start_dt, end_dt)
+
+        return dt

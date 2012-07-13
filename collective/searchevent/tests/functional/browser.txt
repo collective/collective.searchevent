@@ -65,9 +65,7 @@ Search Event with empty field::
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
-    <span class="dates">
-    May 01, ... 10:00 AM - May 01, ... 11:00 AM
-    </span>
+    <span class="datetime">May 01, ... 10:00 AM - 11:00 AM</span>
     </dd>
     </dl></section>
 
@@ -98,9 +96,7 @@ Search - FutureYear/05/01::
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
-    <span class="dates">
-    May 01, ... 10:00 AM - May 01, ... 11:00 AM
-    </span>
+    <span class="datetime">May 01, ... 10:00 AM - 11:00 AM</span>
     </dd>
     </dl></section>
 
@@ -116,9 +112,7 @@ Search without year::
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
-    <span class="dates">
-    May 01, ... 10:00 AM - May 01, ... 11:00 AM
-    </span>
+    <span class="datetime">May 01, ... 10:00 AM - 11:00 AM</span>
     </dd>
     </dl></section>
 
@@ -149,9 +143,7 @@ Search FutureYear/05/01 -::
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
-    <span class="dates">
-    May 01, ... 10:00 AM - May 01, ... 11:00 AM
-    </span>
+    <span class="datetime">May 01, ... 10:00 AM - 11:00 AM</span>
     </dd>
     </dl></section>
 
@@ -169,9 +161,7 @@ Search FutureYear/04/30 -::
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
-    <span class="dates">
-    May 01, ... 10:00 AM - May 01, ... 11:00 AM
-    </span>
+    <span class="datetime">May 01, ... 10:00 AM - 11:00 AM</span>
     </dd>
     </dl></section>
 
@@ -201,9 +191,7 @@ Search FutureYear/04/30 - FutureYear/05/01::
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
-    <span class="dates">
-    May 01, ... 10:00 AM - May 01, ... 11:00 AM
-    </span>
+    <span class="datetime">May 01, ... 10:00 AM - 11:00 AM</span>
     </dd>
     </dl></section>
 
@@ -219,9 +207,7 @@ Search FutureYear/04/30 - FutureYear/05/02::
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
-    <span class="dates">
-    May 01, ... 10:00 AM - May 01, ... 11:00 AM
-    </span>
+    <span class="datetime">May 01, ... 10:00 AM - 11:00 AM</span>
     </dd>
     </dl></section>
 
@@ -248,9 +234,7 @@ Search FutureYear/04/30 - FutureYear/05/02 with words Event01::
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
-    <span class="dates">
-    May 01, ... 10:00 AM - May 01, ... 11:00 AM
-    </span>
+    <span class="datetime">May 01, ... 10:00 AM - 11:00 AM</span>
     </dd>
     </dl></section>
 
@@ -268,9 +252,7 @@ Search only with words Event01::
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
-    <span class="dates">
-    May 01, ... 10:00 AM - May 01, ... 11:00 AM
-    </span>
+    <span class="datetime">May 01, ... 10:00 AM - 11:00 AM</span>
     </dd>
     </dl></section>
 
@@ -305,9 +287,7 @@ Search only with words Event01::
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
-    <span class="dates">
-    May 01, ... 10:00 AM - May 01, ... 11:00 AM
-    </span>
+    <span class="datetime">May 01, ... 10:00 AM - 11:00 AM</span>
     </dd>
     </dl></section>
 
@@ -323,17 +303,13 @@ Search with empy fields::
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
-    <span class="dates">
-    May 01, ... 10:00 AM - May 01, ... 11:00 AM
-    </span>
+    <span class="datetime">May 01, ... 10:00 AM - 11:00 AM</span>
     </dd>
     <dt>
     <a href="http://nohost/plone/event02" title="Event02">Event02</a>
     </dt>
     <dd>
-    <span class="dates">
-    May 02, ... 10:00 AM - May 03, ... 10:00 AM
-    </span>
+    <span class="datetime">May 02, ... 10:00 AM - May 03, ... 10:00 AM</span>
     </dd>
     </dl></section>
 
@@ -423,25 +399,19 @@ Search with empy fields::
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
-    <span class="dates">
-    May 01, ... 10:00 AM - May 01, ... 11:00 AM
-    </span>
+    <span class="datetime">May 01, ... 10:00 AM - 11:00 AM</span>
     </dd>
     <dt>
     <a href="http://nohost/plone/event02" title="Event02">Event02</a>
     </dt>
     <dd>
-    <span class="dates">
-    May 02, ... 10:00 AM - May 03, ... 10:00 AM
-    </span>
+    <span class="datetime">May 02, ... 10:00 AM - May 03, ... 10:00 AM</span>
     </dd>
     <dt>
     <a href="http://nohost/plone/folder01/event03" title="Event03">Event03</a>
     </dt>
     <dd>
-    <span class="dates">
-    May 04, ... 10:00 AM - May 04, ... 11:00 AM
-    </span>
+    <span class="datetime">May 04, ... 10:00 AM - 11:00 AM</span>
     </dd>
     </dl></section>
 
@@ -457,9 +427,7 @@ Search with tag::
     <a href="http://nohost/plone/folder01/event03" title="Event03">Event03</a>
     </dt>
     <dd>
-    <span class="dates">
-    May 04, ... 10:00 AM - May 04, ... 11:00 AM
-    </span>
+    <span class="datetime">May 04, ... 10:00 AM - 11:00 AM</span>
     </dd>
     </dl></section>
 
@@ -525,9 +493,7 @@ Search from Folder02::
     <a href="http://nohost/plone/folder02/event04" title="Event04">Event04</a>
     </dt>
     <dd>
-    <span class="dates">
-    May 05, ... 10:00 AM - May 06, ... 10:00 AM
-    </span>
+    <span class="datetime">May 05, ... 10:00 AM - May 06, ... 10:00 AM</span>
     </dd>
     </dl></section>
 
@@ -557,33 +523,25 @@ Search Event with empty field::
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
-    <span class="dates">
-    ...
-    </span>
+    <span class="datetime">...</span>
     </dd>
     <dt>
     <a href="http://nohost/plone/event02" title="Event02">Event02</a>
     </dt>
     <dd>
-    <span class="dates">
-    ...
-    </span>
+    <span class="datetime">...</span>
     </dd>
     <dt>
     <a href="http://nohost/plone/folder01/event03" title="Event03">Event03</a>
     </dt>
     <dd>
-    <span class="dates">
-    ...
-    </span>
+    <span class="datetime">...</span>
     </dd>
     <dt>
     <a href="http://nohost/plone/folder02/event04" title="Event04">Event04</a>
     </dt>
     <dd>
-    <span class="dates">
-    ...
-    </span>
+    <span class="datetime">...</span>
     </dd>
     </dl></section>
 
@@ -609,17 +567,13 @@ Search::
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
-    <span class="dates">
-    ...
-    </span>
+    <span class="datetime">...</span>
     </dd>
     <dt>
     <a href="http://nohost/plone/event02" title="Event02">Event02</a>
     </dt>
     <dd>
-    <span class="dates">
-    ...
-    </span>
+    <span class="datetime">...</span>
     </dd>
     </dl><div class="listingBar">
     <span class="next">
@@ -635,17 +589,13 @@ Go to Next 2 items::
     <a href="http://nohost/plone/folder01/event03" title="Event03">Event03</a>
     </dt>
     <dd>
-    <span class="dates">
-    ...
-    </span>
+    <span class="datetime">...</span>
     </dd>
     <dt>
     <a href="http://nohost/plone/folder02/event04" title="Event04">Event04</a>
     </dt>
     <dd>
-    <span class="dates">
-    ...
-    </span>
+    <span class="datetime">...</span>
     </dd>
     </dl><div class="listingBar">
     <span class="previous">
@@ -661,17 +611,13 @@ Go to Previous 2 items::
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
-    <span class="dates">
-    ...
-    </span>
+    <span class="datetime">...</span>
     </dd>
     <dt>
     <a href="http://nohost/plone/event02" title="Event02">Event02</a>
     </dt>
     <dd>
-    <span class="dates">
-    ...
-    </span>
+    <span class="datetime">...</span>
     </dd>
     </dl><div class="listingBar">
     <span class="next">

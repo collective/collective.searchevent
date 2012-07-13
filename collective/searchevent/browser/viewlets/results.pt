@@ -25,12 +25,7 @@
              />
         </dt>
         <dd>
-          <span class="dates" tal:condition="python: item.start != item.end">
-            <span tal:replace="python: toLocalizedTime(item.start, long_format=True)" /> - <span tal:replace="python: toLocalizedTime(item.end, long_format=True)" />
-          </span>
-          <span class="dates" tal:condition="python: item.start == item.end">
-            <span tal:replace="python: toLocalizedTime(item.start, long_format=True)" />
-          </span>
+          <span class="datetime" tal:content="python: viewlet.datetime(item)" />
           <p
             tal:condition="item/Description"
             tal:content="item/Description"
