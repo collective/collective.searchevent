@@ -89,6 +89,6 @@ class TestSearchEventResultsViewlet(IntegrationTestCase):
             'sort_limit': 2,
             'sort_on': 'start',
             'start': {'query': [None], 'range': 'max'},
-            'b_start': 1,
+            'b_start': 0,
             'b_size': 11,
         })

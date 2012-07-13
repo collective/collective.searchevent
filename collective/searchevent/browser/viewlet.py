@@ -43,11 +43,22 @@ class SearchEventResultsViewlet(grok.Viewlet):
             date = DateTime(date)
         return date
 
-    def results(self, limit=0, b_start=1, b_size=11):
+    def results(self, limit=0, b_start=0, b_size=10, b_orphan=1):
         """Returns limited number of brains.
 
         :param limit: Integer number.
         :type limit: int
+
+        :param b_start: batching start.
+        :type b_start: int
+
+        :param b_size: batch size.
+        :type b_size: int
+
+        :param b_orphan: batch orphan.
+        :type b_orphan: int
+
+        :rtype: plone.app.contentlisting.contentlisting.ContentListing
         """
         context = aq_inner(self.context)
         catalog = getToolByName(context, 'portal_catalog')
@@ -87,7 +98,7 @@ class SearchEventResultsViewlet(grok.Viewlet):
             query.update({'sort_limit': limit})
         # Add b_start and b_size to the query.
         query['b_start'] = b_start
-        query['b_size'] = b_size
+        query['b_size'] = b_size + b_orphan
         brains = catalog(query)
         if limit:
             brains = brains[:limit]
@@ -97,8 +108,9 @@ class SearchEventResultsViewlet(grok.Viewlet):
         form = self.request.form
         b_start = int(form.get('b_start', '0'))
         b_size = int(form.get('b_size', '10'))
+        b_orphan = 1
         return Batch(
             self.results(b_start=b_start, b_size=b_size),
             b_size,
             start=b_start,
-            orphan=1)
+            orphan=b_orphan)
