@@ -58,9 +58,9 @@ Search Event with empty field::
 
     >>> browser.getControl(name="form.buttons.search").click()
 
-    >>> print browser.bycss("#search-results")
+    >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
-    <section id="search-results"><h1>Search Results</h1>
+    <section id="collective-search-event-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -76,9 +76,9 @@ Search - FutureYear/04/30::
     >>> browser.getControl(name="form.widgets.before_date-year").value = FutureYear
     >>> browser.getControl(name="form.buttons.search").click()
 
-    >>> print browser.bycss("#search-results")
+    >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
-    <section id="search-results"><h1>Search Results</h1>
+    <section id="collective-search-event-results"><h1>Search Results</h1>
     <p>There are no search results found.</p>
     </section>
 
@@ -89,9 +89,9 @@ Search - FutureYear/05/01::
     >>> browser.getControl(name="form.widgets.before_date-year").value = FutureYear
     >>> browser.getControl(name="form.buttons.search").click()
 
-    >>> print browser.bycss("#search-results")
+    >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
-    <section id="search-results"><h1>Search Results</h1>
+    <section id="collective-search-event-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -105,9 +105,9 @@ Search without year::
     >>> browser.getControl(name="form.widgets.before_date-year").value = ''
     >>> browser.getControl(name="form.buttons.search").click()
 
-    >>> print browser.bycss("#search-results")
+    >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
-    <section id="search-results"><h1>Search Results</h1>
+    <section id="collective-search-event-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -123,9 +123,9 @@ Search FutureYear/05/02 -::
     >>> browser.getControl(name="form.widgets.after_date-year").value = FutureYear
     >>> browser.getControl(name="form.buttons.search").click()
 
-    >>> print browser.bycss("#search-results")
+    >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
-    <section id="search-results"><h1>Search Results</h1>
+    <section id="collective-search-event-results"><h1>Search Results</h1>
     <p>There are no search results found.</p>
     </section>
 
@@ -136,9 +136,9 @@ Search FutureYear/05/01 -::
     >>> browser.getControl(name="form.widgets.after_date-year").value = FutureYear
     >>> browser.getControl(name="form.buttons.search").click()
 
-    >>> print browser.bycss("#search-results")
+    >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
-    <section id="search-results"><h1>Search Results</h1>
+    <section id="collective-search-event-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -154,9 +154,9 @@ Search FutureYear/04/30 -::
     >>> browser.getControl(name="form.widgets.after_date-year").value = FutureYear
     >>> browser.getControl(name="form.buttons.search").click()
 
-    >>> print browser.bycss("#search-results")
+    >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
-    <section id="search-results"><h1>Search Results</h1>
+    <section id="collective-search-event-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -172,9 +172,9 @@ Search FutureYear/04/30 - FutureYear/04/30::
     >>> browser.getControl(name="form.widgets.before_date-year").value = FutureYear
     >>> browser.getControl(name="form.buttons.search").click()
 
-    >>> print browser.bycss("#search-results")
+    >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
-    <section id="search-results"><h1>Search Results</h1>
+    <section id="collective-search-event-results"><h1>Search Results</h1>
     <p>There are no search results found.</p>
     </section>
 
@@ -184,9 +184,9 @@ Search FutureYear/04/30 - FutureYear/05/01::
     >>> browser.getControl(name="form.widgets.before_date-month").value = ['5']
     >>> browser.getControl(name="form.buttons.search").click()
 
-    >>> print browser.bycss("#search-results")
+    >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
-    <section id="search-results"><h1>Search Results</h1>
+    <section id="collective-search-event-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -200,9 +200,9 @@ Search FutureYear/04/30 - FutureYear/05/02::
     >>> browser.getControl(name="form.widgets.before_date-day").value = '2'
     >>> browser.getControl(name="form.buttons.search").click()
 
-    >>> print browser.bycss("#search-results")
+    >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
-    <section id="search-results"><h1>Search Results</h1>
+    <section id="collective-search-event-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -216,9 +216,9 @@ Search FutureYear/04/30 - FutureYear/05/02 with words AAA::
     >>> browser.getControl(name="form.widgets.words").value = 'AAA'
     >>> browser.getControl(name="form.buttons.search").click()
 
-    >>> print browser.bycss("#search-results")
+    >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
-    <section id="search-results"><h1>Search Results</h1>
+    <section id="collective-search-event-results"><h1>Search Results</h1>
     <p>There are no search results found.</p>
     </section>
 
@@ -227,9 +227,9 @@ Search FutureYear/04/30 - FutureYear/05/02 with words Event01::
     >>> browser.getControl(name="form.widgets.words").value = 'Event01'
     >>> browser.getControl(name="form.buttons.search").click()
 
-    >>> print browser.bycss("#search-results")
+    >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
-    <section id="search-results"><h1>Search Results</h1>
+    <section id="collective-search-event-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -245,9 +245,9 @@ Search only with words Event01::
     >>> browser.getControl(name="form.widgets.before_date-year").value = ''
     >>> browser.getControl(name="form.buttons.search").click()
 
-    >>> print browser.bycss("#search-results")
+    >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
-    <section id="search-results"><h1>Search Results</h1>
+    <section id="collective-search-event-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -280,9 +280,9 @@ Search only with words Event01::
     >>> browser.getControl(name="form.widgets.words").value = 'Event01'
     >>> browser.getControl(name="form.buttons.search").click()
 
-    >>> print browser.bycss("#search-results")
+    >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
-    <section id="search-results"><h1>Search Results</h1>
+    <section id="collective-search-event-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -296,9 +296,9 @@ Search with empy fields::
     >>> browser.getControl(name="form.widgets.words").value = ''
     >>> browser.getControl(name="form.buttons.search").click()
 
-    >>> print browser.bycss("#search-results")
+    >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
-    <section id="search-results"><h1>Search Results</h1>
+    <section id="collective-search-event-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -392,9 +392,9 @@ Search with empy fields::
 
     >>> browser.getControl(name="form.buttons.search").click()
 
-    >>> print browser.bycss("#search-results")
+    >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
-    <section id="search-results"><h1>Search Results</h1>
+    <section id="collective-search-event-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -420,9 +420,9 @@ Search with tag::
     >>> browser.getControl(name="form.widgets.tags:list").value = ['Täg01']
     >>> browser.getControl(name="form.buttons.search").click()
 
-    >>> print browser.bycss("#search-results")
+    >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
-    <section id="search-results"><h1>Search Results</h1>
+    <section id="collective-search-event-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/folder01/event03" title="Event03">Event03</a>
     </dt>
@@ -486,9 +486,9 @@ Search from Folder02::
     >>> browser.getControl(name="form.widgets.paths:list").value = path
     >>> browser.getControl(name="form.buttons.search").click()
 
-    >>> print browser.bycss("#search-results")
+    >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
-    <section id="search-results"><h1>Search Results</h1>
+    <section id="collective-search-event-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/folder02/event04" title="Event04">Event04</a>
     </dt>
@@ -503,9 +503,9 @@ Seach from Folder02 but also with Tag01::
     >>> browser.getControl(name="form.widgets.paths:list").value = path
     >>> browser.getControl(name="form.buttons.search").click()
 
-    >>> print browser.bycss("#search-results")
+    >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
-    <section id="search-results"><h1>Search Results</h1>
+    <section id="collective-search-event-results"><h1>Search Results</h1>
     <p>There are no search results found.</p>
     </section>
 
@@ -516,9 +516,9 @@ Search Event with empty field::
     >>> browser.getControl(name="form.widgets.paths:list").value = []
     >>> browser.getControl(name="form.buttons.search").click()
 
-    >>> print browser.bycss("#search-results")
+    >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
-    <section id="search-results"><h1>Search Results</h1>
+    <section id="collective-search-event-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -560,9 +560,9 @@ Search::
 
     >>> browser.getControl(name="form.buttons.search").click()
 
-    >>> print browser.bycss("#search-results")
+    >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
-    <section id="search-results"><h1>Search Results</h1>
+    <section id="collective-search-event-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -582,9 +582,9 @@ Search::
 Go to Next 2 items::
 
     >>> browser.getLink('Next 2 items').click()
-    >>> print browser.bycss("#search-results")
+    >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
-    <section id="search-results"><h1>Search Results</h1>
+    <section id="collective-search-event-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/folder01/event03" title="Event03">Event03</a>
     </dt>
@@ -604,9 +604,9 @@ Go to Next 2 items::
 Go to Previous 2 items::
 
     >>> browser.getLink('Previous 2 items').click()
-    >>> print browser.bycss("#search-results")
+    >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
-    <section id="search-results"><h1>Search Results</h1>
+    <section id="collective-search-event-results"><h1>Search Results</h1>
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>

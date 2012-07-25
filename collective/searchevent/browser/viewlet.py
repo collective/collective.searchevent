@@ -44,7 +44,7 @@ class SearchEventResultsViewlet(grok.Viewlet):
             date = DateTime(date)
         return date
 
-    def results(self, limit=0, b_start=0, b_size=10, b_orphan=1):
+    def results(self, paths=None, limit=0, b_start=0, b_size=10, b_orphan=1):
         """Returns limited number of brains.
 
         :param limit: Integer number.
@@ -92,7 +92,7 @@ class SearchEventResultsViewlet(grok.Viewlet):
         Subject = form.get('form.widgets.tags', None)
         if Subject:
             query.update({'Subject': Subject})
-        paths = form.get('form.widgets.paths', None)
+        paths = form.get('form.widgets.paths', paths)
         if paths:
             query.update({'path': paths})
         if limit:
