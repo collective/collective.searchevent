@@ -1,6 +1,5 @@
-Log in as the portal owner::
+Log in as Manager::
 
-    >>> from plone.app.testing import TEST_USER_NAME, TEST_USER_PASSWORD
     >>> browser.login(TEST_USER_NAME, TEST_USER_PASSWORD)
 
 Go to @@manage-portlets::
@@ -20,9 +19,9 @@ Input Values::
     >>> 'Events</a>' in browser.contents
     True
 
-Got to portal_url::
+Got to '/'::
 
-    >>> browser.open(portal_url)
+    >>> browser.open('/')
     >>> 'Events</a>' in browser.contents
     True
     >>> '@@search-results' in browser.contents
@@ -61,6 +60,7 @@ Search Event with empty field::
     >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
     <section id="collective-search-event-results"><h1>Search Results</h1>
+    ...
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -92,6 +92,7 @@ Search - FutureYear/05/01::
     >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
     <section id="collective-search-event-results"><h1>Search Results</h1>
+    ...
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -108,6 +109,7 @@ Search without year::
     >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
     <section id="collective-search-event-results"><h1>Search Results</h1>
+    ...
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -139,6 +141,7 @@ Search FutureYear/05/01 -::
     >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
     <section id="collective-search-event-results"><h1>Search Results</h1>
+    ...
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -157,6 +160,7 @@ Search FutureYear/04/30 -::
     >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
     <section id="collective-search-event-results"><h1>Search Results</h1>
+    ...
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -187,6 +191,7 @@ Search FutureYear/04/30 - FutureYear/05/01::
     >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
     <section id="collective-search-event-results"><h1>Search Results</h1>
+    ...
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -203,6 +208,7 @@ Search FutureYear/04/30 - FutureYear/05/02::
     >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
     <section id="collective-search-event-results"><h1>Search Results</h1>
+    ...
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -230,6 +236,7 @@ Search FutureYear/04/30 - FutureYear/05/02 with words Event01::
     >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
     <section id="collective-search-event-results"><h1>Search Results</h1>
+    ...
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -248,6 +255,7 @@ Search only with words Event01::
     >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
     <section id="collective-search-event-results"><h1>Search Results</h1>
+    ...
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -283,6 +291,7 @@ Search only with words Event01::
     >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
     <section id="collective-search-event-results"><h1>Search Results</h1>
+    ...
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -299,6 +308,7 @@ Search with empy fields::
     >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
     <section id="collective-search-event-results"><h1>Search Results</h1>
+    ...
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -360,7 +370,7 @@ Go to portlet to set tags::
     >>> browser.getControl(name="form.collections").value = ['Col01']
     >>> browser.getControl(name="form.actions.save").click()
 
-    >>> browser.open(portal_url)
+    >>> browser.open('/')
 
     >>> 'Tags' in browser.contents
     True
@@ -379,9 +389,9 @@ Set Folder01 as path::
     >>> import transaction
     >>> transaction.commit()
 
-Go to portal_url::
+Go to '/'::
 
-    >>> browser.open(portal_url)
+    >>> browser.open('/')
 
     >>> 'Tags' in browser.contents
     True
@@ -395,6 +405,7 @@ Search with empy fields::
     >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
     <section id="collective-search-event-results"><h1>Search Results</h1>
+    ...
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -423,6 +434,7 @@ Search with tag::
     >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
     <section id="collective-search-event-results"><h1>Search Results</h1>
+    ...
     <dl><dt>
     <a href="http://nohost/plone/folder01/event03" title="Event03">Event03</a>
     </dt>
@@ -477,9 +489,9 @@ Set Folder01 as path::
     >>> registry['collective.searchevent.collections'] = collections
     >>> transaction.commit()
 
-Go to portal_url::
+Go to '/'::
 
-    >>> browser.open(portal_url)
+    >>> browser.open('/')
 
 Search from Folder02::
 
@@ -489,6 +501,7 @@ Search from Folder02::
     >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
     <section id="collective-search-event-results"><h1>Search Results</h1>
+    ...
     <dl><dt>
     <a href="http://nohost/plone/folder02/event04" title="Event04">Event04</a>
     </dt>
@@ -519,6 +532,7 @@ Search Event with empty field::
     >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
     <section id="collective-search-event-results"><h1>Search Results</h1>
+    ...
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -563,6 +577,7 @@ Search::
     >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
     <section id="collective-search-event-results"><h1>Search Results</h1>
+    ...
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
@@ -585,6 +600,7 @@ Go to Next 2 items::
     >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
     <section id="collective-search-event-results"><h1>Search Results</h1>
+    ...
     <dl><dt>
     <a href="http://nohost/plone/folder01/event03" title="Event03">Event03</a>
     </dt>
@@ -607,6 +623,7 @@ Go to Previous 2 items::
     >>> print browser.bycss("#collective-search-event-results")
     --- 1 ---
     <section id="collective-search-event-results"><h1>Search Results</h1>
+    ...
     <dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>

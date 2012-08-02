@@ -8,6 +8,9 @@ from plone.app.contentlisting.interfaces import IContentListing
 from plone.app.viewletmanager.manager import OrderedViewletManager
 from plone.memoize.instance import memoize
 from zope.interface import Interface
+import csv
+import tempfile
+from StringIO import StringIO
 
 
 grok.templatedir('viewlets')
@@ -19,13 +22,11 @@ class SearchEventResultsViewletManager(OrderedViewletManager, grok.ViewletManage
     grok.name('collective.searchevent.results.manager')
 
 
-class SearchEventResultsViewlet(grok.Viewlet):
-    """Search event results Viewlet Class."""
+class BaseSearchEventViewlet(grok.Viewlet):
+    """Base class for viewlet."""
+    grok.baseclass()
     grok.context(Interface)
-    grok.require('zope2.View')
-    grok.template('results')
     grok.viewletmanager(SearchEventResultsViewletManager)
-    grok.name('collective.searchevent.results')
 
     def date(self, year, month, day):
         date = None
@@ -98,12 +99,20 @@ class SearchEventResultsViewlet(grok.Viewlet):
         if limit:
             query.update({'sort_limit': limit})
         # Add b_start and b_size to the query.
-        query['b_start'] = b_start
-        query['b_size'] = b_size + b_orphan
+        if b_size:
+            query['b_start'] = b_start
+            query['b_size'] = b_size + b_orphan
         brains = catalog(query)
         if limit:
             brains = brains[:limit]
         return IContentListing(brains)
+
+
+class SearchEventResultsViewlet(BaseSearchEventViewlet):
+    """Search event results Viewlet Class."""
+    grok.require('zope2.View')
+    grok.template('results')
+    grok.name('collective.searchevent.results')
 
     def batch(self):
         form = self.request.form
@@ -141,3 +150,26 @@ class SearchEventResultsViewlet(grok.Viewlet):
             dt = u'{} - {}'.format(start_dt, end_dt)
 
         return dt
+
+
+class ExportSearchEventResultsViewlet(BaseSearchEventViewlet):
+    """Viewlet Class for exporting search event results in csv mode."""
+    grok.require('cmf.ModifyPortalContent')
+    grok.template('export')
+    grok.name('collective.searchevent.export')
+
+    def events(self):
+        return self.results(b_size=None)
+
+    def update(self):
+        if self.request.form.get('form.export', None) is not None:
+            out = StringIO()
+            writer = csv.writer(out)
+            writer.writerow(('Email address', 'Subject'))
+            filename = 'test.csv'
+            cd = 'attachment; filename="{}"'.format(filename)
+            self.request.response.setHeader('Content-Type', 'text/csv')
+            self.request.response.setHeader("Content-Disposition", cd)
+            return out.getvalue()
+            # for item in self.results(b_size=None):
+

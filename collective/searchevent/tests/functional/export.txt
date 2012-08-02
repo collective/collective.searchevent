@@ -1,0 +1,55 @@
+Log in as Manager::
+
+    >>> browser.login(TEST_USER_NAME, TEST_USER_PASSWORD)
+
+Got to '/'::
+
+    >>> browser.open('/')
+
+Create Event01 FutureYear/05/01-10:00 AM - FutureYear/05/01 11:00 AM::
+
+    >>> from DateTime import DateTime
+    >>> FutureYear = str(DateTime().year() + 1)
+
+    >>> browser.getLink('Event').click()
+
+    >>> browser.getControl(name="title").value = 'Event01'
+    >>> browser.getControl(name="startDate_year").value = [FutureYear]
+    >>> browser.getControl(name="startDate_month").value = ['05']
+    >>> browser.getControl(name="startDate_day").value = ['01']
+    >>> browser.getControl(name="startDate_hour").value = ['10']
+    >>> browser.getControl(name="startDate_minute").value = ['00']
+    >>> browser.getControl(name="startDate_ampm").value = ['AM']
+    >>> browser.getControl(name="endDate_year").value = [FutureYear]
+    >>> browser.getControl(name="endDate_month").value = ['05']
+    >>> browser.getControl(name="endDate_day").value = ['01']
+    >>> browser.getControl(name="endDate_hour").value = ['11']
+    >>> browser.getControl(name="endDate_minute").value = ['00']
+    >>> browser.getControl(name="endDate_ampm").value = ['AM']
+    >>> browser.getControl(name="form.button.save").click()
+
+Create Event02 FutureYear/05/02-10:00 AM - FutureYear/05/03 10:00 AM::
+
+    >>> browser.open('/createObject?type_name=Event')
+
+    >>> browser.getControl(name="title").value = 'Event02'
+    >>> browser.getControl(name="startDate_year").value = [FutureYear]
+    >>> browser.getControl(name="startDate_month").value = ['05']
+    >>> browser.getControl(name="startDate_day").value = ['02']
+    >>> browser.getControl(name="startDate_hour").value = ['10']
+    >>> browser.getControl(name="startDate_minute").value = ['00']
+    >>> browser.getControl(name="startDate_ampm").value = ['AM']
+    >>> browser.getControl(name="endDate_year").value = [FutureYear]
+    >>> browser.getControl(name="endDate_month").value = ['05']
+    >>> browser.getControl(name="endDate_day").value = ['03']
+    >>> browser.getControl(name="endDate_hour").value = ['10']
+    >>> browser.getControl(name="endDate_minute").value = ['00']
+    >>> browser.getControl(name="endDate_ampm").value = ['AM']
+    >>> browser.getControl(name="form.button.save").click()
+
+Go to search results::
+
+    >>> browser.open('/@@search-results')
+    >>> browser.getControl(name="form.export").click()
+
+    >>> browser.openBrowser()

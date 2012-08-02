@@ -3,6 +3,8 @@ from collective.searchevent.tests.base import FUNCTIONAL_TESTING
 from hexagonit.testing.browser import Browser
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
+from plone.app.testing import TEST_USER_NAME
+from plone.app.testing import TEST_USER_PASSWORD
 from plone.testing import layered
 from zope.testing import renormalizing
 
@@ -24,24 +26,24 @@ CHECKER = renormalizing.RENormalizing([
 
 def setUp(self):
     layer = self.globs['layer']
+    portal = layer['portal']
+    browser = Browser(layer['app'])
     # Update global variables within the tests.
     self.globs.update({
-        'portal': layer['portal'],
-        'portal_url': layer['portal'].absolute_url(),
-        'browser': Browser(layer['app']),
+        'portal': portal,
+        'browser': browser,
+        'TEST_USER_NAME': TEST_USER_NAME,
+        'TEST_USER_PASSWORD': TEST_USER_PASSWORD,
     })
 
-    portal = self.globs['portal']
-    browser = self.globs['browser']
-    portal_url = self.globs['portal_url']
-    browser.setBaseUrl(portal_url)
+    browser.setBaseUrl(portal.absolute_url())
 
     browser.handleErrors = True
     portal.error_log._ignored_exceptions = ()
 
     setRoles(portal, TEST_USER_ID, ['Manager'])
 
-    self.globs['controlpanel_url'] = '{}/@@overview-controlpanel'.format(portal_url)
+    self.globs['controlpanel_url'] = '{}/@@overview-controlpanel'.format(portal.absolute_url())
 
     folder = portal[
         portal.invokeFactory(
@@ -83,4 +85,5 @@ def DocFileSuite(testfile, flags=FLAGS, setUp=setUp, layer=FUNCTIONAL_TESTING):
 def test_suite():
     return unittest.TestSuite([
         DocFileSuite('functional/browser.txt'),
+        DocFileSuite('functional/export.txt'),
         ])
