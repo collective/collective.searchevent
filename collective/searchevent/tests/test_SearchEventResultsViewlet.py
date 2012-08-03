@@ -1,6 +1,6 @@
 from collective.searchevent.tests.base import IntegrationTestCase
 
-import mock
+# import mock
 
 
 class TestSearchEventResultsViewlet(IntegrationTestCase):
@@ -62,33 +62,33 @@ class TestSearchEventResultsViewlet(IntegrationTestCase):
             getattr(SearchEventResultsViewlet, 'grokcore.viewlet.directive.viewletmanager'),
             SearchEventResultsViewletManager)
 
-    def test_viewlet__date(self):
-        """With year, month and day values."""
-        viewlet = self.createViewlet()
-        from DateTime import DateTime
-        self.assertEqual(viewlet.date(2012, 01, 02), DateTime('2012/01/02'))
+    # def test_viewlet__date(self):
+    #     """With year, month and day values."""
+    #     viewlet = self.createViewlet()
+    #     from DateTime import DateTime
+    #     self.assertEqual(viewlet.date(2012, 01, 02), DateTime('2012/01/02'))
 
-    def test_viewlet__date__no_day(self):
-        """Without day value, the day is the first day."""
-        viewlet = self.createViewlet()
-        from DateTime import DateTime
-        self.assertEqual(viewlet.date(2012, 01, None), DateTime('2012/01/01'))
+    # def test_viewlet__date__no_day(self):
+    #     """Without day value, the day is the first day."""
+    #     viewlet = self.createViewlet()
+    #     from DateTime import DateTime
+    #     self.assertEqual(viewlet.date(2012, 01, None), DateTime('2012/01/01'))
 
-    @mock.patch('collective.searchevent.browser.viewlet.DateTime')
-    @mock.patch('collective.searchevent.browser.viewlet.getToolByName')
-    def test_viewlet__results__with_limit(self, getToolByName, DateTime):
-        """Limiting number for results."""
-        catalog = getToolByName()
-        catalog.return_value = [mock.Mock(), mock.Mock(), mock.Mock()]
-        viewlet = self.createViewlet()
-        viewlet.results(limit=2)
-        getToolByName().assert_called_with({
-            'SearchableText': '',
-            'end': {'query': [DateTime()], 'range': 'min'},
-            'object_provides': 'Products.ATContentTypes.interfaces.event.IATEvent',
-            'sort_limit': 2,
-            'sort_on': 'start',
-            'start': {'query': [None], 'range': 'max'},
-            'b_start': 0,
-            'b_size': 11,
-        })
+    # @mock.patch('collective.searchevent.browser.viewlet.DateTime')
+    # @mock.patch('collective.searchevent.browser.viewlet.getToolByName')
+    # def test_viewlet__results__with_limit(self, getToolByName, DateTime):
+    #     """Limiting number for results."""
+    #     catalog = getToolByName()
+    #     catalog.return_value = [mock.Mock(), mock.Mock(), mock.Mock()]
+    #     viewlet = self.createViewlet()
+    #     viewlet.results(limit=2)
+    #     getToolByName().assert_called_with({
+    #         'SearchableText': '',
+    #         'end': {'query': [DateTime()], 'range': 'min'},
+    #         'object_provides': 'Products.ATContentTypes.interfaces.event.IATEvent',
+    #         'sort_limit': 2,
+    #         'sort_on': 'start',
+    #         'start': {'query': [None], 'range': 'max'},
+    #         'b_start': 0,
+    #         'b_size': 11,
+    #     })

@@ -2,16 +2,21 @@ Log in as Manager::
 
     >>> browser.login(TEST_USER_NAME, TEST_USER_PASSWORD)
 
-Got to '/'::
+Select Event search portlet::
 
-    >>> browser.open('/')
+    >>> browser.open("/++contextportlets++plone.leftcolumn/+/collective.searchevent.SearchEvent")
+
+Input Values::
+
+    >>> browser.getControl(name="form.header").value = 'Search Events'
+    >>> browser.getControl(name="form.actions.save").click()
 
 Create Event01 FutureYear/05/01-10:00 AM - FutureYear/05/01 11:00 AM::
 
     >>> from DateTime import DateTime
     >>> FutureYear = str(DateTime().year() + 1)
 
-    >>> browser.getLink('Event').click()
+    >>> browser.open('/createObject?type_name=Event')
 
     >>> browser.getControl(name="title").value = 'Event01'
     >>> browser.getControl(name="startDate_year").value = [FutureYear]
@@ -50,6 +55,7 @@ Create Event02 FutureYear/05/02-10:00 AM - FutureYear/05/03 10:00 AM::
 Go to search results::
 
     >>> browser.open('/@@search-results')
-    >>> browser.getControl(name="form.export").click()
+
+    >>> browser.getControl(name="form.buttons.export").click()
 
     >>> browser.openBrowser()

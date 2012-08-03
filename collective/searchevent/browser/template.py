@@ -1,13 +1,18 @@
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
+from StringIO import StringIO
 from collective.searchevent import _
 from collective.searchevent.collection import Collection
 from collective.searchevent.collection import ICollection
+from collective.searchevent.interfaces import IItemDateTime
+from collective.searchevent.interfaces import ISearchEventResults
 from plone.app.z3cform.layout import wrap_form
 from plone.registry.interfaces import IRegistry
 from plone.z3cform.crud import crud
+from zope.component import getMultiAdapter
 from zope.component import getUtility
+import csv
 
 
 class SearchEventControlPanelForm(crud.CrudForm):
@@ -95,5 +100,27 @@ class SearchResultsView(BrowserView):
     index = ViewPageTemplateFile('templates/search_results.pt')
 
     def __call__(self):
-        self.request.set('disable_border', True)
-        return self.index()
+        if self.request.form.get('form.buttons.export', None) is not None:
+            out = StringIO()
+            writer = csv.writer(out, delimiter='|', quoting=csv.QUOTE_MINIMAL)
+            writer.writerow((
+                'Title',
+                'Description',
+                'Date',
+                'URL'))
+            for item in getMultiAdapter(
+                (self.context, self.request), ISearchEventResults)():
+                writer.writerow((
+                    item.Title(),
+                    item.Description(),
+                    IItemDateTime(item)(),
+                    item.getURL()
+                    ))
+            filename = 'test.csv'
+            cd = 'attachment; filename="{}"'.format(filename)
+            self.request.response.setHeader('Content-Type', 'text/csv')
+            self.request.response.setHeader("Content-Disposition", cd)
+            return out.getvalue()
+        else:
+            self.request.set('disable_border', True)
+            return self.index()

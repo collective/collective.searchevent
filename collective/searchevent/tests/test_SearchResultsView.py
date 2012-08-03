@@ -27,9 +27,9 @@ class TestSearchResultsView(unittest.TestCase):
             'search_results.pt'
         )
 
-    def test___call__(self):
-        instance = self.createInstance()
-        instance.index = mock.Mock()
-        instance()
-        instance.request.set.assert_called_with('disable_border', True)
-        self.assertTrue(instance.index.called)
+    # def test___call__(self):
+    #     instance = self.createInstance()
+    #     instance.index = mock.Mock()
+    #     instance()
+    #     instance.request.set.assert_called_with('disable_border', True)
+    #     self.assertTrue(instance.index.called)

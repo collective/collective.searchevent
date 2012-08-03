@@ -3,13 +3,13 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from collective.searchevent import _
 from collective.searchevent.interfaces import ISearchEventCollection
 from five import grok
+from plone import directives
 from plone.app.portlets.portlets import base
 from plone.portlets.interfaces import IPortletDataProvider
 from plone.z3cform.layout import FormWrapper
 from z3c.form import button
 from z3c.form.browser.checkbox import CheckBoxFieldWidget
 from z3c.form.field import Fields
-from z3c.form.form import Form
 from zope import schema
 from zope.component import getMultiAdapter
 from zope.component import getUtility
@@ -154,7 +154,7 @@ class Paths(object):
         return SimpleVocabulary(terms)
 
 
-class ISearchEventForm(Interface):
+class ISearchEventForm(directives.form.Schema):
 
     after_date = schema.Date(
         title=_(u'From'),
@@ -172,26 +172,17 @@ class ISearchEventForm(Interface):
     )
 
 
-class SearchEventForm(Form):
+class SearchEventForm(directives.form.SchemaForm):
+    grok.context(Interface)
+    grok.require('zope2.View')
+    directives.form.wrap(True)
 
-    fields = Fields(ISearchEventForm)
+    schema = ISearchEventForm
     ignoreContext = True
-    label = _(u"Search Event")
 
-    def __init__(self, context, request, returnURLHint=None, full=True, data=None):
-        """
-
-        @param returnURLHint: Should we enforce return URL for this form
-
-        @param full: Show all available fields or just required ones.
-        """
-        Form.__init__(self, context, request)
-        self.all_fields = full
-
-        self.returnURLHint = returnURLHint
-
+    def __init__(self, context, request, data=None):
+        super(SearchEventForm, self).__init__(context, request)
         self.data = data
-
         cid = self.data.collections
         if cid:
             collection = getUtility(ISearchEventCollection)(cid)
@@ -245,42 +236,134 @@ class SearchEventForm(Form):
     @button.buttonAndHandler(_('Search Events'), name='search')
     def search(self, action):
         """ Form button hander. """
-
         data, errors = self.extractData()
+        if not errors:
+            pass
 
+    @button.buttonAndHandler(_('Export'), name='export')
+    def handleApply(self, action):
+        data, errors = self.extractData()
         if not errors:
             pass
 
 
+# class SearchEventForm(Form):
+
+#     fields = Fields(ISearchEventForm)
+#     ignoreContext = True
+#     label = _(u"Search Event")
+
+#     def __init__(self, context, request, returnURLHint=None, full=True, data=None):
+#         """
+
+#         @param returnURLHint: Should we enforce return URL for this form
+
+#         @param full: Show all available fields or just required ones.
+#         """
+#         Form.__init__(self, context, request)
+#         self.all_fields = full
+
+#         self.returnURLHint = returnURLHint
+
+#         self.data = data
+
+#         cid = self.data.collections
+#         if cid:
+#             collection = getUtility(ISearchEventCollection)(cid)
+#             if collection:
+#                 tags = collection.get('tags')
+#                 if tags:
+#                     field = schema.Set(
+#                         title=self.data.tags,
+#                         required=False,
+#                         value_type=schema.Choice(
+#                             source=Tags(tags),
+#                         ),
+#                     )
+#                     field.__name__ = 'tags'
+#                     self.fields += Fields(field)
+#                     self.fields['tags'].widgetFactory = CheckBoxFieldWidget
+#                 paths = collection.get('paths')
+#                 if paths:
+#                     field = schema.Set(
+#                         title=self.data.folders,
+#                         required=False,
+#                         value_type=schema.Choice(
+#                             source=Paths(paths),
+#                         ),
+#                     )
+#                     field.__name__ = 'paths'
+#                     self.fields += Fields(field)
+#                     self.fields['paths'].widgetFactory = CheckBoxFieldWidget
+
+    # def updateWidgets(self):
+    #     super(self.__class__, self).updateWidgets()
+    #     self.widgets['words'].size = 20
+
+    # @property
+    # def action(self):
+    #     """ Rewrite HTTP POST action.
+
+    #     If the form is rendered embedded on the others pages we
+    #     make sure the form is posted through the same view always,
+    #     instead of making HTTP POST to the page where the form was rendered.
+    #     """
+    #     url = '{}/@@search-results'.format(self.context.absolute_url())
+    #     cid = self.data.collections
+    #     if cid:
+    #         collection = getUtility(ISearchEventCollection)(cid)
+    #         if collection:
+    #             limit = collection['limit'] or 10
+    #             url = '{}?b_size={}'.format(url, limit)
+    #     return url
+
+    # @button.buttonAndHandler(_('Search Events'), name='search')
+    # def search(self, action):
+    #     """ Form button hander. """
+
+    #     data, errors = self.extractData()
+
+    #     if not errors:
+    #         pass
+
+
 class Renderer(base.Renderer):
 
-    _template = ViewPageTemplateFile('search.pt')
-    render = _template
+    # _template = ViewPageTemplateFile('search.pt')
+    # render = _template
+    render = ViewPageTemplateFile('search.pt')
 
     def __init__(self, *args):
         self.assignment = args[-1]
         base.Renderer.__init__(self, *args)
-        self.form_wrapper = self.createForm()
+        # self.form_wrapper = self.createForm()
 
-    def createForm(self):
-        """ Create a form instance.
+    # def createForm(self):
+    #     """ Create a form instance.
 
-        @return: z3c.form wrapped for Plone 3 view
-        """
+    #     @return: z3c.form wrapped for Plone 3 view
+    #     """
 
-        context = self.context.aq_inner
+    #     context = self.context.aq_inner
 
-        returnURL = self.context.absolute_url()
+    #     returnURL = self.context.absolute_url()
 
-        # Create a compact version of the contact form
-        # (not all fields visible)
-        form = SearchEventForm(context, self.request, returnURLHint=returnURL, full=False, data=self.data)
+    #     # Create a compact version of the contact form
+    #     # (not all fields visible)
+    #     form = SearchEventForm(context, self.request, returnURLHint=returnURL, full=False, data=self.data)
 
-        # Wrap a form in Plone view
-        view = PortletFormView(context, self.request)
-        view = view.__of__(context)  # Make sure acquisition chain is respected
+    #     # Wrap a form in Plone view
+    #     view = PortletFormView(context, self.request)
+    #     view = view.__of__(context)  # Make sure acquisition chain is respected
+    #     view.form_instance = form
+    #     return view
+
+    def form(self):
+        form = SearchEventForm(self.context, self.request, data=self.data)
+        view = PortletFormView(self.context, self.request)
+        view = view.__of__(self.context)
         view.form_instance = form
-        return view
+        return view()
 
     @property
     def title(self):
