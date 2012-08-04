@@ -57,5 +57,13 @@ Go to search results::
     >>> browser.open('/@@search-results')
 
     >>> browser.getControl(name="form.buttons.export").click()
+    >>> browser.contents
+    'Title|Description|Date|URL\r\nEvent01||May 01, 2013 10:00 AM - 11:00 AM|http://nohost/plone/event01\r\nEvent02||May 02, 2013 10:00 AM - May 03, 2013 10:00 AM|http://nohost/plone/event02\r\n'
 
-    >>> browser.openBrowser()
+Anonymous should not see export button::
+
+    >>> browser.open('/')
+    >>> browser.getLink('Log out').click()
+    >>> browser.open('/@@search-results')
+    >>> "form.buttons.export" not in browser.contents
+    True

@@ -124,29 +124,29 @@ class SearchEventResultsViewlet(BaseSearchEventViewlet):
             start=b_start,
             orphan=b_orphan)
 
-    @memoize
-    def _ulocalized_time(self):
-        """Return ulocalized_time method.
+    # @memoize
+    # def _ulocalized_time(self):
+    #     """Return ulocalized_time method.
 
-        :rtype: method
-        """
-        translation_service = getToolByName(self.context, 'translation_service')
-        return translation_service.ulocalized_time
+    #     :rtype: method
+    #     """
+    #     translation_service = getToolByName(self.context, 'translation_service')
+    #     return translation_service.ulocalized_time
 
     def datetime(self, item):
         return IItemDateTime(item)()
-        start = item.start
-        end = item.end
-        ulocalized_time = self._ulocalized_time()
-        start_dt = ulocalized_time(start, long_format=True, context=self.context)
-        if start.Date() == end.Date():
-            if start == end:
-                dt = start_dt
-            else:
-                end_time = ulocalized_time(end, time_only=True)
-                dt = u'{} - {}'.format(start_dt, end_time)
-        else:
-            end_dt = ulocalized_time(end, long_format=True, context=self.context)
-            dt = u'{} - {}'.format(start_dt, end_dt)
+        # start = item.start
+        # end = item.end
+        # ulocalized_time = self._ulocalized_time()
+        # start_dt = ulocalized_time(start, long_format=True, context=self.context)
+        # if start.Date() == end.Date():
+        #     if start == end:
+        #         dt = start_dt
+        #     else:
+        #         end_time = ulocalized_time(end, time_only=True)
+        #         dt = u'{} - {}'.format(start_dt, end_time)
+        # else:
+        #     end_dt = ulocalized_time(end, long_format=True, context=self.context)
+        #     dt = u'{} - {}'.format(start_dt, end_dt)
 
-        return dt
+        # return dt

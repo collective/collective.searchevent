@@ -18,6 +18,8 @@ from zope.interface import Interface
 from zope.interface import implements
 from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.vocabulary import SimpleVocabulary
+from AccessControl import getSecurityManager
+from Products.CMFCore import permissions
 
 
 class ISearchEventPortlet(IPortletDataProvider):
@@ -240,11 +242,16 @@ class SearchEventForm(directives.form.SchemaForm):
         if not errors:
             pass
 
-    @button.buttonAndHandler(_('Export'), name='export')
+    @property
+    def has_permission(self):
+        return getSecurityManager().checkPermission(permissions.ModifyPortalContent, self.context)
+
+    @button.buttonAndHandler(_('Export'), name='export', condition=lambda form: form.has_permission)
     def handleApply(self, action):
-        data, errors = self.extractData()
-        if not errors:
-            pass
+        """Export search event results to csv file."""
+        # data, errors = self.extractData()
+        # if not errors:
+        #     pass
 
 
 # class SearchEventForm(Form):

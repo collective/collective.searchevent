@@ -7,6 +7,7 @@ from collective.searchevent.collection import Collection
 from collective.searchevent.collection import ICollection
 from collective.searchevent.interfaces import IItemDateTime
 from collective.searchevent.interfaces import ISearchEventResults
+from datetime import datetime
 from plone.app.z3cform.layout import wrap_form
 from plone.registry.interfaces import IRegistry
 from plone.z3cform.crud import crud
@@ -116,7 +117,7 @@ class SearchResultsView(BrowserView):
                     IItemDateTime(item)(),
                     item.getURL()
                     ))
-            filename = 'test.csv'
+            filename = 'search-event-results-{}.csv'.format(datetime.now().isoformat())
             cd = 'attachment; filename="{}"'.format(filename)
             self.request.response.setHeader('Content-Type', 'text/csv')
             self.request.response.setHeader("Content-Disposition", cd)
