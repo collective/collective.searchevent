@@ -18,9 +18,9 @@ import csv
 
 class SearchEventControlPanelForm(crud.CrudForm):
 
-    update_schema = ICollection
-
+    ignoreContext = True
     label = _(u'Event Search Collections')
+    update_schema = ICollection
 
     def update(self):
         super(self.__class__, self).update()
