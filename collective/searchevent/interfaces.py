@@ -18,3 +18,9 @@ class IItemDateTime(Interface):
 
     def __call__():  # pragma: no cover
         """Returns localized datetime."""
+
+
+class IItemText(Interface):
+
+    def __call__():  # pragma: no cover
+        """Returns item text converted from html."""

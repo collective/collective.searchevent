@@ -6,6 +6,7 @@ from collective.searchevent import _
 from collective.searchevent.collection import Collection
 from collective.searchevent.collection import ICollection
 from collective.searchevent.interfaces import IItemDateTime
+from collective.searchevent.interfaces import IItemText
 from collective.searchevent.interfaces import ISearchEventResults
 from datetime import datetime
 from plone.app.z3cform.layout import wrap_form
@@ -106,15 +107,17 @@ class SearchResultsView(BrowserView):
             writer = csv.writer(out, delimiter='|', quoting=csv.QUOTE_MINIMAL)
             writer.writerow((
                 'Title',
-                'Description',
                 'Date',
+                'Description',
+                'Text',
                 'URL'))
             for item in getMultiAdapter(
                 (self.context, self.request), ISearchEventResults)():
                 writer.writerow((
                     item.Title(),
-                    item.Description(),
                     IItemDateTime(item)(),
+                    item.Description(),
+                    IItemText(item)(),
                     item.getURL()
                     ))
             filename = 'search-event-results-{}.csv'.format(datetime.now().isoformat())

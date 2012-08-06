@@ -31,6 +31,8 @@ Create Event01 FutureYear/05/01-10:00 AM - FutureYear/05/01 11:00 AM::
     >>> browser.getControl(name="endDate_hour").value = ['11']
     >>> browser.getControl(name="endDate_minute").value = ['00']
     >>> browser.getControl(name="endDate_ampm").value = ['AM']
+    >>> browser.getControl(name="description").value = 'Descriptiön of Event01'
+    >>> browser.getControl(name="text").value = '<p>Söme Text of Event01.</p>'
     >>> browser.getControl(name="form.button.save").click()
 
 Create Event02 FutureYear/05/02-10:00 AM - FutureYear/05/03 10:00 AM::
@@ -50,6 +52,8 @@ Create Event02 FutureYear/05/02-10:00 AM - FutureYear/05/03 10:00 AM::
     >>> browser.getControl(name="endDate_hour").value = ['10']
     >>> browser.getControl(name="endDate_minute").value = ['00']
     >>> browser.getControl(name="endDate_ampm").value = ['AM']
+    >>> browser.getControl(name="description").value = 'Descriptiön of Event02'
+    >>> browser.getControl(name="text").value = '<p>Söme Text of Event02.</p>'
     >>> browser.getControl(name="form.button.save").click()
 
 Go to search results::
@@ -58,7 +62,7 @@ Go to search results::
 
     >>> browser.getControl(name="form.buttons.export").click()
     >>> browser.contents
-    'Title|Description|Date|URL\r\nEvent01||May 01, 2013 10:00 AM - 11:00 AM|http://nohost/plone/event01\r\nEvent02||May 02, 2013 10:00 AM - May 03, 2013 10:00 AM|http://nohost/plone/event02\r\n'
+    'Title|Date|Description|Text|URL\r\nEvent01|May 01, 2013 10:00 AM - 11:00 AM|Descripti\xc3\xb6n of Event01| S\xc3\xb6me Text of Event01. |http://nohost/plone/event01\r\nEvent02|May 02, 2013 10:00 AM - May 03, 2013 10:00 AM|Descripti\xc3\xb6n of Event02| S\xc3\xb6me Text of Event02. |http://nohost/plone/event02\r\n'
 
 Anonymous should not see export button::
 

@@ -1,5 +1,6 @@
 from Products.CMFCore.utils import getToolByName
 from collective.searchevent.interfaces import IItemDateTime
+from collective.searchevent.interfaces import IItemText
 from five import grok
 from plone.app.contentlisting.interfaces import IContentListingObject
 from plone.memoize.instance import memoize
@@ -36,3 +37,18 @@ class ItemDateTime(grok.Adapter):
         """
         translation_service = getToolByName(getSite(), 'translation_service')
         return translation_service.ulocalized_time
+
+
+class ItemText(grok.Adapter):
+    grok.context(IContentListingObject)
+    grok.provides(IItemText)
+
+    def __call__(self):
+        obj = self.context.getObject()
+        html = obj.getField('text').get(obj)
+        return self._html_to_text(html)
+
+    @memoize
+    def _html_to_text(self, html):
+        transforms = getToolByName(getSite(), 'portal_transforms')
+        return transforms.convert('html_to_text', html).getData()
