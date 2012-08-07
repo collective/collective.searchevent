@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-0.2 (2012-08-XX)
+0.2 (2012-08-07)
 ================
 
 - Added more control on batch start, size and orphan. [taito]

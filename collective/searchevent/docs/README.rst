@@ -14,7 +14,7 @@ To make filtering work, you need to go to **Search Event Collections** from **Si
 Exporting
 ---------
 
-Exporting search event results to csv file is possible by **Export** button on the portlet.
+Exporting search event results to csv file is available for roles who have Modify Portal Content permission who can see **Export** button on the portlet.
 The separation of each values are done by '``|``'.
 
 Tested with
