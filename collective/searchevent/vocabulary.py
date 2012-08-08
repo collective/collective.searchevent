@@ -20,8 +20,7 @@ class RegistryCollectionsVocabulary(object):
                 SimpleTerm(
                     value=item['id'],
                     title=item['id'],
-                ) for item in items
-            ]
+                ) for item in items]
         return SimpleVocabulary(terms)
 
 
