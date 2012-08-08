@@ -11,7 +11,6 @@
       <span class="portletTopRight"></span>
     </dt>
     <dd class="portletItem">
-      <!-- <form tal:replace="structure view/form_wrapper" /> -->
       <form tal:replace="structure view/form" />
     </dd>
   </dl>

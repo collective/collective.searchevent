@@ -17,33 +17,27 @@ class ICollection(Schema):
 
     id = ASCIILine(
         title=_(u'ID'),
-        description=_(u'Shown when managing search event portlet.'),
-    )
+        description=_(u'Shown when managing search event portlet.'))
+
     tags = Set(
         title=_(u'Tags'),
         description=_(u'Select tags to be filtered when searching events.'),
         required=False,
-        value_type=Choice(
-            vocabulary=u"plone.app.vocabularies.Keywords",
-        )
-    )
+        value_type=Choice(vocabulary=u"plone.app.vocabularies.Keywords"))
+
     paths = RelationList(
         title=_(u"Paths"),
         description=_(u"Select paths to be filtered when searching events. Only top level folders can be used."),
         required=False,
         value_type=RelationChoice(
-            source=ObjPathSourceBinder(
-                object_provides=IATFolder.__identifier__
-            ),
-        ),
-    )
+            source=ObjPathSourceBinder(object_provides=IATFolder.__identifier__)))
+
     limit = Int(
         title=_(u"Limit"),
         description=_(u"Number of results with which search results will be batched."),
         required=True,
         default=10,
-        min=1,
-    )
+        min=1)
 
 
 class Collection(object):

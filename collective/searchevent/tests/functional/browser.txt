@@ -507,7 +507,6 @@ Seach from Folder02 but also with Tag01::
     <p>There are no search results found.</p>
     </section>
 
-
 Search Event with empty field::
 
     >>> browser.getControl(name="form.widgets.tags:list").value = []
