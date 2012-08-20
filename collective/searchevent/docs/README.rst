@@ -21,6 +21,7 @@ Tested with
 -----------
 
 * Plone-4.2 [taito]
+* Plone-4.1.6 [taito]
 
 Further Documentation URL
 -------------------------

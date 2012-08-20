@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-0.2.1 (2012-08-XX)
+0.2.1 (2012-08-20)
 ==================
 
 - Order of form field in portlet fixed. [taito]
