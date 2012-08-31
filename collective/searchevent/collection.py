@@ -13,7 +13,7 @@ from zope.schema import Set
 from zope.site.hooks import getSite
 
 
-class ICollection(Schema):
+class IAddCollection(Schema):
 
     id = ASCIILine(
         title=_(u'ID'),
@@ -40,6 +40,14 @@ class ICollection(Schema):
         min=1)
 
 
+class ICollection(IAddCollection):
+
+        id = ASCIILine(
+        title=_(u'ID'),
+        description=_(u'Shown when managing search event portlet.'),
+        readonly=True)
+
+
 class Collection(object):
 
     implements(ICollection)
@@ -50,13 +58,6 @@ class Collection(object):
         self.paths = paths
         self.limit = limit
         self.portal_catalog = self._portal_catalog()
-
-    def __repr__(self):
-        return '<Collection with id={id!r}, tags={tags!r}, paths={paths!r}, limit={limit!r}>'.format(
-            id=self.id,
-            tags=self.tags,
-            paths=self.paths,
-            limit=self.limit)
 
     def _portal_catalog(self):
         """Work around for Keywords vocabulary."""

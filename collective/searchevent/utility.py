@@ -10,9 +10,12 @@ class SearchEventCollection(grok.GlobalUtility):
 
     def __call__(self, cid):
         registry = getUtility(IRegistry)
-        collections = [
-            col for col in registry[
-                'collective.searchevent.collections'
-            ] if col['id'] == cid]
-        if collections:
-            return collections[0]
+        tags = registry['collective.searchevent.collections.tags']
+        paths = registry['collective.searchevent.collections.paths']
+        limit = registry['collective.searchevent.collections.limit']
+        if cid in tags:
+            return {
+                'tags': tags[cid],
+                'paths': paths[cid],
+                'limit': limit[cid],
+            }

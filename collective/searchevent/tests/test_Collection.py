@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-import unittest
 import mock
+import unittest
 
 
 class TestCollection(unittest.TestCase):
@@ -20,10 +20,3 @@ class TestCollection(unittest.TestCase):
         from collective.searchevent.collection import ICollection
         from zope.interface.verify import verifyObject
         self.assertTrue(verifyObject(ICollection, instance))
-
-    def test__repr__(self):
-        item = self.createInstance()
-        self.assertEqual(
-            item.__repr__(),
-            "<Collection with id='ID', tags=['TAG01', 'TAG02'], paths=['PATH01', 'PATH02'], limit=10>"
-        )

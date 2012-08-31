@@ -33,45 +33,55 @@ class TestCase(IntegrationTestCase):
         self.assertTrue(action.visible)
         self.assertEqual(action.permissions, ('Manage portal',))
 
-    def test_registry__collections(self):
+    def get_record(self, name):
         from zope.component import getUtility
         from plone.registry.interfaces import IRegistry
-        registry = getUtility(IRegistry)
-        self.assertEqual(len(registry['collective.searchevent.collections']), 0)
+        return getUtility(IRegistry).records.get(name)
 
-    def test_registry__collections__instance(self):
-        from zope.component import getUtility
-        from plone.registry.interfaces import IRegistry
-        field = getUtility(IRegistry).records[
-            'collective.searchevent.collections'
-        ].field
-        from plone.registry.field import List
-        self.assertTrue(isinstance(field, List))
-
-    def test_registry__collections__title(self):
-        from zope.component import getUtility
-        from plone.registry.interfaces import IRegistry
-        field = getUtility(IRegistry).records[
-            'collective.searchevent.collections'
-        ].field
-        self.assertEqual(field.title, u'Collections')
-
-    def test_registry__collections__description(self):
-        from zope.component import getUtility
-        from plone.registry.interfaces import IRegistry
-        field = getUtility(IRegistry).records[
-            'collective.searchevent.collections'
-        ].field
-        self.assertEqual(field.description, u'List of Collection Data.')
-
-    def test_registry__collections__value_type(self):
-        from zope.component import getUtility
-        from plone.registry.interfaces import IRegistry
-        field = getUtility(IRegistry).records[
-            'collective.searchevent.collections'
-        ].field
+    def test_registry__tags(self):
         from plone.registry.field import Dict
-        self.assertTrue(isinstance(field.value_type, Dict))
+        record = self.get_record('collective.searchevent.collections.tags')
+        self.assertIsInstance(record.field, Dict)
+
+    def test_registry__tags__key_type(self):
+        from plone.registry.field import ASCIILine
+        record = self.get_record('collective.searchevent.collections.tags')
+        self.assertIsInstance(record.field.key_type, ASCIILine)
+
+    def test_registry__tags__value_type(self):
+        from plone.registry.field import Set
+        record = self.get_record('collective.searchevent.collections.tags')
+        self.assertIsInstance(record.field.value_type, Set)
+
+    def test_registry__paths(self):
+        from plone.registry.field import Dict
+        record = self.get_record('collective.searchevent.collections.paths')
+        self.assertIsInstance(record.field, Dict)
+
+    def test_registry__paths__key_type(self):
+        from plone.registry.field import ASCIILine
+        record = self.get_record('collective.searchevent.collections.paths')
+        self.assertIsInstance(record.field.key_type, ASCIILine)
+
+    def test_registry__paths__value_type(self):
+        from plone.registry.field import List
+        record = self.get_record('collective.searchevent.collections.paths')
+        self.assertIsInstance(record.field.value_type, List)
+
+    def test_registry__limit(self):
+        from plone.registry.field import Dict
+        record = self.get_record('collective.searchevent.collections.limit')
+        self.assertIsInstance(record.field, Dict)
+
+    def test_registry__limit__key_type(self):
+        from plone.registry.field import ASCIILine
+        record = self.get_record('collective.searchevent.collections.limit')
+        self.assertIsInstance(record.field.key_type, ASCIILine)
+
+    def test_registry__limit__value_type(self):
+        from plone.registry.field import Int
+        record = self.get_record('collective.searchevent.collections.limit')
+        self.assertIsInstance(record.field.value_type, Int)
 
     def test_uninstall__package(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
@@ -94,13 +104,17 @@ class TestCase(IntegrationTestCase):
         ]
         self.assertFalse('searchevent_collection_registry' in actions)
 
-    def test_unintall__registry__collections(self):
+    def test_unintall__registry__tags(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         installer.uninstallProducts(['collective.searchevent'])
-        from zope.component import getUtility
-        from plone.registry.interfaces import IRegistry
-        registry = getUtility(IRegistry)
-        self.assertRaises(
-            KeyError,
-            lambda: registry['collective.searchevent.collections']
-        )
+        self.assertIsNone(self.get_record('collective.searchevent.collections.tags'))
+
+    def test_unintall__registry__paths(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        installer.uninstallProducts(['collective.searchevent'])
+        self.assertIsNone(self.get_record('collective.searchevent.collections.paths'))
+
+    def test_unintall__registry__limit(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        installer.uninstallProducts(['collective.searchevent'])
+        self.assertIsNone(self.get_record('collective.searchevent.collections.limit'))

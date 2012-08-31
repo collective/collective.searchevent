@@ -13,14 +13,9 @@ class RegistryCollectionsVocabulary(object):
 
     def __call__(self, context):
         registry = getUtility(IRegistry)
-        items = registry['collective.searchevent.collections']
-        terms = items
-        if items:
-            terms = [
-                SimpleTerm(
-                    value=item['id'],
-                    title=item['id'],
-                ) for item in items]
+        terms = [
+            SimpleTerm(
+                value=item, title=item) for item in registry['collective.searchevent.collections.tags']]
         return SimpleVocabulary(terms)
 
 

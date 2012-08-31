@@ -1,4 +1,6 @@
 <?xml version="1.0"?>
 <registry>
-  <record name="collective.searchevent.collections" delete="true" />
+  <record name="collective.searchevent.collections.tags" delete="true" />
+  <record name="collective.searchevent.collections.paths" delete="true" />
+  <record name="collective.searchevent.collections.limit" delete="true" />
 </registry>

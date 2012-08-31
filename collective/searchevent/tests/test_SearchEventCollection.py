@@ -15,6 +15,10 @@ class TestSearchEventCollection(unittest.TestCase):
 
     @mock.patch('collective.searchevent.utility.getUtility')
     def test_instance(self, getUtility):
-        getUtility.return_value = {'collective.searchevent.collections': []}
+        getUtility.return_value = {
+            'collective.searchevent.collections.tags': [],
+            'collective.searchevent.collections.paths': [],
+            'collective.searchevent.collections.limit': [],
+            }
         instance = self.createInstance()
         self.failIf(instance('cid'))

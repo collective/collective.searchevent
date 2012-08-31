@@ -1,12 +1,13 @@
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from Products.statusmessages.interfaces import IStatusMessage
 from StringIO import StringIO
 from collective.searchevent import _
 from collective.searchevent.collection import Collection
+from collective.searchevent.collection import IAddCollection
 from collective.searchevent.collection import ICollection
 from collective.searchevent.interfaces import IItemDateTime
 from collective.searchevent.interfaces import IItemText
+from collective.searchevent.interfaces import ISearchEventCollection
 from collective.searchevent.interfaces import ISearchEventResults
 from datetime import datetime
 from plone.app.z3cform.layout import wrap_form
@@ -21,6 +22,7 @@ class SearchEventControlPanelForm(crud.CrudForm):
 
     ignoreContext = True
     label = _(u'Event Search Collections')
+    add_schema = IAddCollection
     update_schema = ICollection
 
     def update(self):
@@ -34,23 +36,23 @@ class SearchEventControlPanelForm(crud.CrudForm):
         add_form.widgets['id'].size = 10
         add_form.widgets['limit'].size = 5
 
-    def get_items(self):
+    def update_data(self, data):
+        """Add new collection data to egistry.
+
+        :param data: Collection data.
+        :type data: dict
+        """
         registry = getUtility(IRegistry)
-        collections = registry['collective.searchevent.collections']
-        data = []
-        for collection in collections:
-            data.append(
-                (
-                    str(collection['id']),
-                    Collection(
-                        collection['id'],
-                        collection['tags'],
-                        collection['paths'],
-                        collection['limit'],
-                    )
-                )
-            )
-        return data
+        tags = registry['collective.searchevent.collections.tags']
+        paths = registry['collective.searchevent.collections.paths']
+        limit = registry['collective.searchevent.collections.limit']
+        did = data['id']
+        tags[did] = data['tags']
+        paths[did] = data['paths']
+        limit[did] = data['limit']
+        registry['collective.searchevent.collections.tags'] = tags
+        registry['collective.searchevent.collections.paths'] = paths
+        registry['collective.searchevent.collections.limit'] = limit
 
     def add(self, data):
         """Add new collection data to collective.searchevent.collections registry.
@@ -58,16 +60,13 @@ class SearchEventControlPanelForm(crud.CrudForm):
         :param data: Collection data.
         :type data: dict
         """
+        self.update_data(data)
+
+    def get_items(self):
+        """Get items to show on the form."""
         registry = getUtility(IRegistry)
-        collections = registry['collective.searchevent.collections']
-        ids = [item['id'] for item in collections]
-        if data['id'] not in ids:
-            data.update({'paths': self.request.form.get('crud-add.form.widgets.paths')})
-            collections.append(data)
-            registry['collective.searchevent.collections'] = collections
-        else:
-            message = _(u"You cannot add another collection with the same ID.")
-            IStatusMessage(self.request).addStatusMessage(message, type='warn')
+        tags = registry['collective.searchevent.collections.tags']
+        return [(key, Collection(key, **getUtility(ISearchEventCollection)(key))) for key in tags]
 
     def remove(self, (id, item)):
         """Delete collection data from collective.searchevent.collections registry.
@@ -79,22 +78,18 @@ class SearchEventControlPanelForm(crud.CrudForm):
         :type id: object
         """
         registry = getUtility(IRegistry)
-        collections = registry['collective.searchevent.collections']
-        collections = [collection for collection in collections if collection['id'] != id]
-        registry['collective.searchevent.collections'] = collections
+        del registry['collective.searchevent.collections.tags'][id]
+        del registry['collective.searchevent.collections.paths'][id]
+        del registry['collective.searchevent.collections.limit'][id]
 
     def before_update(self, item, data):
-        registry = getUtility(IRegistry)
-        collections = registry['collective.searchevent.collections']
-        collections = [collection for collection in collections if collection['id'] != data['id']]
-        collections.append(data)
-        registry['collective.searchevent.collections'] = collections
+        data['id'] = item.id
+        self.update_data(data)
 
 
 SearchEventControlPanelView = wrap_form(
     SearchEventControlPanelForm,
-    index=ViewPageTemplateFile('templates/controlpanel.pt')
-)
+    index=ViewPageTemplateFile('templates/controlpanel.pt'))
 
 
 class SearchResultsView(BrowserView):

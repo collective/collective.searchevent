@@ -1,6 +1,5 @@
-Log in as the portal owner::
+Log in as Manager::
 
-    >>> from plone.app.testing import TEST_USER_NAME, TEST_USER_PASSWORD
     >>> browser.login(TEST_USER_NAME, TEST_USER_PASSWORD)
 
 Go to regitsty::
@@ -29,8 +28,6 @@ Add another collection with ID01 wnich should be ignored::
     >>> browser.getControl(name="crud-add.form.buttons.add").click()
 
     >>> 'value="20"' in browser.contents
-    False
-    >>> 'You cannot add another collection with the same ID.' in browser.contents
     True
 
 Add the other collection with different ID::

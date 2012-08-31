@@ -370,10 +370,10 @@ Set Folder01 as path::
     >>> from zope.component import getUtility
     >>> from plone.registry.interfaces import IRegistry
     >>> registry = getUtility(IRegistry)
-    >>> collections = registry['collective.searchevent.collections']
+    >>> paths = registry['collective.searchevent.collections.paths']
     >>> path = '/'.join(portal['folder01'].getPhysicalPath())
-    >>> collections[0].update({'paths': [path]})
-    >>> registry['collective.searchevent.collections'] = collections
+    >>> paths['Col01'] = [path]
+    >>> registry['collective.searchevent.collections.paths'] = paths
     >>> import transaction
     >>> transaction.commit()
 
@@ -459,20 +459,27 @@ Create Event04 FutureYear/05/05-10:00 AM - FutureYear/05/06 10:00 AM under Folde
 Go to registry to set tags::
 
     >>> browser.open('/@@searchevent-controlpanel')
+    >>> print browser.bycss('#crud-edit-Col01-widgets-tags')
+    --- 1 ---
+    <select id="crud-edit-Col01-widgets-tags" name="crud-edit.Col01.widgets.tags:list" class="select-widget set-field" multiple size="5"><option id="crud-edit-Col01-widgets-tags-0" value="T=C3=A4g01" selected>T&#228;g01</option><option id="crud-edit-Col01-widgets-tags-1" value="T=C3=B6g02">T&#246;g02</option></select>
 
 Add Tag01 Col01::
 
     >>> browser.getControl(name="crud-edit.Col01.widgets.tags:list").value = [tag01, tag02]
     >>> browser.getControl(name="crud-edit.form.buttons.edit").click()
 
-Set Folder01 as path::
+    >>> browser.open('/@@searchevent-controlpanel')
+    >>> print browser.bycss('#crud-edit-Col01-widgets-tags')
+    --- 1 ---
+    <select id="crud-edit-Col01-widgets-tags" name="crud-edit.Col01.widgets.tags:list" class="select-widget set-field" multiple size="5"><option id="crud-edit-Col01-widgets-tags-0" value="T=C3=A4g01" selected>T&#228;g01</option><option id="crud-edit-Col01-widgets-tags-1" value="T=C3=B6g02" selected>T&#246;g02</option></select>
 
-    >>> collections = registry['collective.searchevent.collections']
+Set Folder02 as path::
+
+    >>> paths = registry['collective.searchevent.collections.paths']
     >>> path = '/'.join(portal['folder02'].getPhysicalPath())
-    >>> paths = collections[0]['paths']
-    >>> paths.append(path)
-    >>> collections[0].update({'paths': paths})
-    >>> registry['collective.searchevent.collections'] = collections
+    >>> paths['Col01'] = [path]
+    >>> registry['collective.searchevent.collections.paths'] = paths
+    >>> import transaction
     >>> transaction.commit()
 
 Go to '/'::
@@ -544,9 +551,9 @@ Search Event with empty field::
 
 Set batch size into 2::
 
-    >>> collections = registry['collective.searchevent.collections']
-    >>> collections[0].update({'limit': 2})
-    >>> registry['collective.searchevent.collections'] = collections
+    >>> limit = registry['collective.searchevent.collections.limit']
+    >>> limit['Col01'] = 2
+    >>> registry['collective.searchevent.collections.limit'] = limit
     >>> transaction.commit()
 
 Reload the browser::

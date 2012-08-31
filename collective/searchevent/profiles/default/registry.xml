@@ -1,10 +1,26 @@
 <?xml version="1.0"?>
 <registry>
-  <record name="collective.searchevent.collections">
-    <field type="plone.registry.field.List">
-      <title>Collections</title>
-      <description>List of Collection Data.</description>
-      <value_type type="plone.registry.field.Dict" />
+  <record name="collective.searchevent.collections.tags">
+    <field type="plone.registry.field.Dict">
+      <title>Tags for Collections</title>
+      <key_type type="plone.registry.field.ASCIILine" />
+      <value_type type="plone.registry.field.Set" />
+    </field>
+    <value />
+  </record>
+  <record name="collective.searchevent.collections.paths">
+    <field type="plone.registry.field.Dict">
+      <title>Paths for Collections</title>
+      <key_type type="plone.registry.field.ASCIILine" />
+      <value_type type="plone.registry.field.List" />
+    </field>
+    <value />
+  </record>
+  <record name="collective.searchevent.collections.limit">
+    <field type="plone.registry.field.Dict">
+      <title>Limit for Collections</title>
+      <key_type type="plone.registry.field.ASCIILine" />
+      <value_type type="plone.registry.field.Int" />
     </field>
     <value />
   </record>

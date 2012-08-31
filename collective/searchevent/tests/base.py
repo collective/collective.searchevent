@@ -7,7 +7,7 @@ from plone.testing import z2
 import unittest
 
 
-class CollectiveEvent_Search_PortletLayer(PloneSandboxLayer):
+class CollectiveSearcheventLayer(PloneSandboxLayer):
 
     defaultBases = (PLONE_FIXTURE,)
 
@@ -28,11 +28,11 @@ class CollectiveEvent_Search_PortletLayer(PloneSandboxLayer):
         z2.uninstallProduct(app, 'collective.searchevent')
 
 
-FIXTURE = CollectiveEvent_Search_PortletLayer()
+FIXTURE = CollectiveSearcheventLayer()
 INTEGRATION_TESTING = IntegrationTesting(
-    bases=(FIXTURE,), name="CollectiveEvent_Search_PortletLayer:Integration")
+    bases=(FIXTURE,), name="CollectiveSearcheventLayer:Integration")
 FUNCTIONAL_TESTING = FunctionalTesting(
-    bases=(FIXTURE,), name="CollectiveEvent_Search_PortletLayer:Functional")
+    bases=(FIXTURE,), name="CollectiveSearcheventLayer:Functional")
 
 
 class IntegrationTestCase(unittest.TestCase):
