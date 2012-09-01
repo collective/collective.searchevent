@@ -1,0 +1,16 @@
+<configure
+  i18n_domain="collective.searchevent"
+  xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+  xmlns="http://namespaces.zope.org/zope">
+
+  <genericsetup:upgradeStep
+    description=""
+    destination="2"
+    handler="collective.searchevent.upgrades.upgrade_1_to_2"
+    profile="collective.searchevent:default"
+    sortkey="1"
+    source="1"
+    title="Update registry record"
+    />
+
+</configure>
