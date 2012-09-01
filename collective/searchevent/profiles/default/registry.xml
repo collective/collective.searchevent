@@ -24,4 +24,5 @@
     </field>
     <value />
   </record>
+  <record name="collective.searchevent.collections" delete="true" />
 </registry>
