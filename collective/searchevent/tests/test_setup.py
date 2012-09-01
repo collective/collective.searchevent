@@ -33,6 +33,12 @@ class TestCase(IntegrationTestCase):
         self.assertTrue(action.visible)
         self.assertEqual(action.permissions, ('Manage portal',))
 
+    def test_metadata__version(self):
+        setup = getToolByName(self.portal, 'portal_setup')
+        self.assertEqual(
+            setup.getVersionForProfile('profile-collective.searchevent:default'),
+            u'2')
+
     def get_record(self, name):
         from zope.component import getUtility
         from plone.registry.interfaces import IRegistry
