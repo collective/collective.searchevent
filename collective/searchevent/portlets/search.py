@@ -120,7 +120,6 @@ class Paths(object):
                 }
             }
             brains = catalog(query)
-            import pdb; pdb.set_trace()
             if brains:
                 brain = brains[0]
                 title_or_id = brain.Title or brain.id

@@ -7,7 +7,7 @@ import mock
 OLD_DATA = [{
     'id': 'ID',
     'limit': 3,
-    'paths': set(['path1', 'path2']),
+    'paths': set(['portal/path1', 'portal/path2']),
     'tags': ['tag1', 'tag2'],
 }]
 
