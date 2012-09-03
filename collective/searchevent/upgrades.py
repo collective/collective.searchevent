@@ -15,7 +15,7 @@ def convert_old_data_to_new_data(old_data):
     for item in old_data:
         did = item['id']
         tags[did] = set(item['tags'])
-        paths[did] = sorted(list(item['paths']))
+        paths[did] = sorted([unicode(path) for path in list(item['paths'])])
         limit[did] = item['limit']
     return {
         'tags': tags,

@@ -13,7 +13,7 @@ OLD_DATA = [{
 
 DATA = {
     'tags': {'ID': set(['tag1', 'tag2'])},
-    'paths': {'ID': ['path1', 'path2']},
+    'paths': {'ID': [u'path1', u'path2']},
     'limit': {'ID': 3},
 }
 
