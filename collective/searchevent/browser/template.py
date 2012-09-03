@@ -44,7 +44,7 @@ class SearchEventControlPanelForm(crud.CrudForm):
             paths = registry['collective.searchevent.collections.paths'][str(form.widgets['id'].value)]
             form.widgets['paths'].value = u'\n'.join(paths)
         add_form = self.subforms[1]
-        add_form.widgets['id'].size = 5
+        add_form.widgets['id'].size = 10
         add_form.widgets['limit'].size = 3
 
     def update_data(self, data):

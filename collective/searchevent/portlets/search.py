@@ -119,11 +119,14 @@ class Paths(object):
                     'depth': 0,
                 }
             }
-            brain = catalog(query)[0]
-            title_or_id = brain.Title or brain.id
-            terms.append(
-                SimpleVocabulary.createTerm(
-                    path, str(path), title_or_id))
+            brains = catalog(query)
+            import pdb; pdb.set_trace()
+            if brains:
+                brain = brains[0]
+                title_or_id = brain.Title or brain.id
+                terms.append(
+                    SimpleVocabulary.createTerm(
+                        path, str(path), title_or_id))
         return SimpleVocabulary(terms)
 
 
