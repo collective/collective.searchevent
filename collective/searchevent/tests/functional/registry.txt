@@ -67,4 +67,4 @@ Add the other collection with Tags::
 
     >>> print browser.bycss('#crud-edit-ID03-widgets-tags')
     --- 1 ---
-    <select id="crud-edit-ID03-widgets-tags" name="crud-edit.ID03.widgets.tags:list" class="select-widget set-field" multiple size="10"><option id="crud-edit-ID03-widgets-tags-0" value="T=C3=A4g01">T&#228;g01</option><option id="crud-edit-ID03-widgets-tags-1" value="T=C3=A5g03" selected>T&#229;g03</option><option id="crud-edit-ID03-widgets-tags-2" value="T=C3=B6g02" selected>T&#246;g02</option></select>
+    <select id="crud-edit-ID03-widgets-tags" name="crud-edit.ID03.widgets.tags:list" class="select-widget set-field" multiple size="5"><option id="crud-edit-ID03-widgets-tags-0" value="T=C3=A4g01">T&#228;g01</option><option id="crud-edit-ID03-widgets-tags-1" value="T=C3=A5g03" selected>T&#229;g03</option><option id="crud-edit-ID03-widgets-tags-2" value="T=C3=B6g02" selected>T&#246;g02</option></select>
