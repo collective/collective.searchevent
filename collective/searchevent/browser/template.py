@@ -38,7 +38,7 @@ class SearchEventControlPanelForm(crud.CrudForm):
         forms = edit_forms.subforms
         for form in forms:
             form.widgets['tags'].size = 5
-            form.widgets['paths'].cols = 10
+            form.widgets['paths'].rows = 10
             form.widgets['limit'].size = 3
             registry = getUtility(IRegistry)
             paths = registry['collective.searchevent.collections.paths'][str(form.widgets['id'].value)]

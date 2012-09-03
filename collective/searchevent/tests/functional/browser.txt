@@ -373,7 +373,7 @@ Set Folder01 as path::
 
     >>> print browser.bycss('#crud-edit-Col01-widgets-paths')
     --- 1 ---
-    <textarea id="crud-edit-Col01-widgets-paths" name="crud-edit.Col01.widgets.paths" class="textarea-widget text-field" cols="10">/folder01</textarea>
+    <textarea id="crud-edit-Col01-widgets-paths" name="crud-edit.Col01.widgets.paths" class="textarea-widget text-field" rows="10">/folder01</textarea>
 
 Go to '/'::
 
@@ -479,7 +479,7 @@ Set Folder02 as path::
 
     >>> print browser.bycss('#crud-edit-Col01-widgets-paths')
     --- 1 ---
-    <textarea id="crud-edit-Col01-widgets-paths" name="crud-edit.Col01.widgets.paths" class="textarea-widget text-field" cols="10">/folder01
+    <textarea id="crud-edit-Col01-widgets-paths" name="crud-edit.Col01.widgets.paths" class="textarea-widget text-field" rows="10">/folder01
     /folder02</textarea>
 
 Go to '/'::
@@ -556,7 +556,7 @@ Set batch size into 2::
     >>> browser.getControl(name="crud-edit.form.buttons.edit").click()
     >>> print browser.bycss('#crud-edit-Col01-widgets-paths')
     --- 1 ---
-    <textarea id="crud-edit-Col01-widgets-paths" name="crud-edit.Col01.widgets.paths" class="textarea-widget text-field" cols="10">/folder01
+    <textarea id="crud-edit-Col01-widgets-paths" name="crud-edit.Col01.widgets.paths" class="textarea-widget text-field" rows="10">/folder01
     /folder02</textarea>
 
     >>> print browser.bycss('#crud-edit-Col01-widgets-limit')
