@@ -108,13 +108,11 @@ class Paths(object):
         portal_path = getToolByName(context, 'portal_url').getPortalPath()
         res = []
         for path in self.paths:
-            if not isinstance(path, str):
-                path = '{}/{}'.format(portal_path, path.id)
+            path = '{}{}'.format(portal_path, path)
             res.append(path)
-        self.paths = res
         catalog = getToolByName(context, 'portal_catalog')
         terms = []
-        for path in self.paths:
+        for path in res:
             query = {
                 'path': {
                     'query': path,

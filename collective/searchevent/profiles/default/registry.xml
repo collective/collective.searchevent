@@ -23,7 +23,7 @@
       </key_type>
       <value_type type="plone.registry.field.List">
         <title>Value: list</title>
-        <value_type type="plone.registry.field.ASCIILine">
+        <value_type type="plone.registry.field.TextLine">
           <title>Path</title>
         </value_type>
       </value_type>

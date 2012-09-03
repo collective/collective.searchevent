@@ -3,8 +3,8 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from StringIO import StringIO
 from collective.searchevent import _
 from collective.searchevent.collection import Collection
-from collective.searchevent.collection import IAddCollection
-from collective.searchevent.collection import ICollection
+from collective.searchevent.schema import IAddCollection
+from collective.searchevent.schema import ICollection
 from collective.searchevent.interfaces import IItemDateTime
 from collective.searchevent.interfaces import IItemText
 from collective.searchevent.interfaces import ISearchEventCollection
@@ -25,6 +25,13 @@ class SearchEventControlPanelForm(crud.CrudForm):
     add_schema = IAddCollection
     update_schema = ICollection
 
+    def _normalize(self, value):
+        """Normalize and make it list."""
+        if value:
+            return [l.strip() for l in value.strip().splitlines() if l.strip()]
+        else:
+            return []
+
     def update(self):
         super(self.__class__, self).update()
         edit_forms = self.subforms[0]
@@ -32,6 +39,9 @@ class SearchEventControlPanelForm(crud.CrudForm):
         for form in forms:
             form.widgets['id'].size = 10
             form.widgets['limit'].size = 5
+            registry = getUtility(IRegistry)
+            paths = registry['collective.searchevent.collections.paths'][str(form.widgets['id'].value)]
+            form.widgets['paths'].value = u'\n'.join(paths)
         add_form = self.subforms[1]
         add_form.widgets['id'].size = 10
         add_form.widgets['limit'].size = 5
@@ -48,7 +58,7 @@ class SearchEventControlPanelForm(crud.CrudForm):
         limit = registry['collective.searchevent.collections.limit']
         did = data['id']
         tags[did] = data['tags']
-        paths[did] = data['paths']
+        paths[did] = self._normalize(data['paths'])
         limit[did] = data['limit']
         registry['collective.searchevent.collections.tags'] = tags
         registry['collective.searchevent.collections.paths'] = paths

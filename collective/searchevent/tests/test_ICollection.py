@@ -4,12 +4,12 @@ import unittest
 class TestICollection(unittest.TestCase):
 
     def test_subclass(self):
-        from collective.searchevent.collection import ICollection
+        from collective.searchevent.schema import ICollection
         from zope.interface import Interface
         self.assertTrue(issubclass(ICollection, Interface))
 
     def createField(self, name):
-        from collective.searchevent.collection import ICollection
+        from collective.searchevent.schema import ICollection
         return ICollection.get(name)
 
     def test_id__instance(self):
@@ -54,9 +54,9 @@ class TestICollection(unittest.TestCase):
             u'plone.app.vocabularies.Keywords')
 
     def test_paths__instance(self):
-        from z3c.relationfield.schema import RelationList
+        from zope.schema import Text
         field = self.createField('paths')
-        self.assertTrue(isinstance(field, RelationList))
+        self.assertTrue(isinstance(field, Text))
 
     def test_paths__title(self):
         field = self.createField('paths')
@@ -64,18 +64,8 @@ class TestICollection(unittest.TestCase):
 
     def test_paths__description(self):
         field = self.createField('paths')
-        self.assertEqual(field.description, u'Select paths to be filtered when searching events. Only top level folders can be used.')
+        self.assertEqual(field.description, u"Input path starting form '/', excluding plone root path, line by line.")
 
     def test_paths__required(self):
         field = self.createField('paths')
         self.assertFalse(field.required)
-
-    def test_paths__value_type(self):
-        field = self.createField('paths')
-        from z3c.relationfield.schema import RelationChoice
-        self.assertTrue(isinstance(field.value_type, RelationChoice))
-
-    def test_paths__value_type__source__instance(self):
-        field = self.createField('paths')
-        from plone.formwidget.contenttree import ObjPathSourceBinder
-        self.assertTrue(isinstance(field.value_type.source, ObjPathSourceBinder))

@@ -367,15 +367,13 @@ Go to portlet to set tags::
 
 Set Folder01 as path::
 
-    >>> from zope.component import getUtility
-    >>> from plone.registry.interfaces import IRegistry
-    >>> registry = getUtility(IRegistry)
-    >>> paths = registry['collective.searchevent.collections.paths']
-    >>> path = '/'.join(portal['folder01'].getPhysicalPath())
-    >>> paths['Col01'] = [path]
-    >>> registry['collective.searchevent.collections.paths'] = paths
-    >>> import transaction
-    >>> transaction.commit()
+    >>> browser.open('/@@searchevent-controlpanel')
+    >>> browser.getControl(name="crud-edit.Col01.widgets.paths").value = '/folder01'
+    >>> browser.getControl(name="crud-edit.form.buttons.edit").click()
+
+    >>> print browser.bycss('#crud-edit-Col01-widgets-paths')
+    --- 1 ---
+    <textarea id="crud-edit-Col01-widgets-paths" name="crud-edit.Col01.widgets.paths" class="textarea-widget text-field">/folder01</textarea>
 
 Go to '/'::
 
@@ -475,12 +473,14 @@ Add Tag01 Col01::
 
 Set Folder02 as path::
 
-    >>> paths = registry['collective.searchevent.collections.paths']
-    >>> path = '/'.join(portal['folder02'].getPhysicalPath())
-    >>> paths['Col01'] = [path]
-    >>> registry['collective.searchevent.collections.paths'] = paths
-    >>> import transaction
-    >>> transaction.commit()
+    >>> browser.open('/@@searchevent-controlpanel')
+    >>> browser.getControl(name="crud-edit.Col01.widgets.paths").value = '/folder01\n/folder02'
+    >>> browser.getControl(name="crud-edit.form.buttons.edit").click()
+
+    >>> print browser.bycss('#crud-edit-Col01-widgets-paths')
+    --- 1 ---
+    <textarea id="crud-edit-Col01-widgets-paths" name="crud-edit.Col01.widgets.paths" class="textarea-widget text-field">/folder01
+    /folder02</textarea>
 
 Go to '/'::
 
@@ -488,7 +488,7 @@ Go to '/'::
 
 Search from Folder02::
 
-    >>> browser.getControl(name="form.widgets.paths:list").value = path
+    >>> browser.getControl(name="form.widgets.paths:list").value = ['/plone/folder02']
     >>> browser.getControl(name="form.buttons.search").click()
 
     >>> print browser.bycss("#collective-search-event-results")
@@ -505,7 +505,7 @@ Search from Folder02::
 Seach from Folder02 but also with Tag01::
 
     >>> browser.getControl(name="form.widgets.tags:list").value = ['Täg01']
-    >>> browser.getControl(name="form.widgets.paths:list").value = path
+    >>> browser.getControl(name="form.widgets.paths:list").value = ['/plone/folder02']
     >>> browser.getControl(name="form.buttons.search").click()
 
     >>> print browser.bycss("#collective-search-event-results")
@@ -551,16 +551,21 @@ Search Event with empty field::
 
 Set batch size into 2::
 
-    >>> limit = registry['collective.searchevent.collections.limit']
-    >>> limit['Col01'] = 2
-    >>> registry['collective.searchevent.collections.limit'] = limit
-    >>> transaction.commit()
+    >>> browser.open('/@@searchevent-controlpanel')
+    >>> browser.getControl(name="crud-edit.Col01.widgets.limit").value = '2'
+    >>> browser.getControl(name="crud-edit.form.buttons.edit").click()
+    >>> print browser.bycss('#crud-edit-Col01-widgets-paths')
+    --- 1 ---
+    <textarea id="crud-edit-Col01-widgets-paths" name="crud-edit.Col01.widgets.paths" class="textarea-widget text-field">/folder01
+    /folder02</textarea>
 
-Reload the browser::
-
-    >>> browser.reload()
+    >>> print browser.bycss('#crud-edit-Col01-widgets-limit')
+    --- 1 ---
+    <input id="crud-edit-Col01-widgets-limit" name="crud-edit.Col01.widgets.limit" class="text-widget required int-field" size="5" value="2" type="text">
 
 Search::
+
+    >>> browser.open('/')
 
     >>> browser.getControl(name="form.buttons.search").click()
 
