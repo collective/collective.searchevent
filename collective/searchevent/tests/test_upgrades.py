@@ -13,7 +13,7 @@ OLD_DATA = [{
 
 DATA = {
     'tags': {'ID': set(['tag1', 'tag2'])},
-    'paths': {'ID': [u'path1', u'path2']},
+    'paths': {'ID': [u'/path1', u'/path2']},
     'limit': {'ID': 3},
 }
 
@@ -40,6 +40,6 @@ class TestUpgrades(IntegrationTestCase):
         self.assertEqual(
             getUtility()['collective.searchevent.collections.tags'], {'ID': set(['tag1', 'tag2'])})
         self.assertEqual(
-            getUtility()['collective.searchevent.collections.paths'], {'ID': ['path1', 'path2']})
+            getUtility()['collective.searchevent.collections.paths'], {'ID': [u'/path1', u'/path2']})
         self.assertEqual(
             getUtility()['collective.searchevent.collections.limit'], {'ID': 3})
