@@ -29,6 +29,7 @@ class IAddCollection(Schema):
         title=_(u"Paths"),
         description=_(u"Select paths to be filtered when searching events. Only top level folders can be used."),
         required=False,
+        missing_value=[],
         value_type=RelationChoice(
             source=ObjPathSourceBinder(object_provides=IATFolder.__identifier__)))
 

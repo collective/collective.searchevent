@@ -3,26 +3,45 @@
   <record name="collective.searchevent.collections.tags">
     <field type="plone.registry.field.Dict">
       <title>Tags for Collections</title>
-      <key_type type="plone.registry.field.ASCIILine" />
-      <value_type type="plone.registry.field.Set" />
+      <key_type type="plone.registry.field.ASCIILine">
+        <title>ID</title>
+      </key_type>
+      <value_type type="plone.registry.field.Set">
+        <title>Value: set</title>
+        <value_type type="plone.registry.field.BytesLine">
+          <title>Tag</title>
+        </value_type>
+      </value_type>
     </field>
-    <value />
+    <value purge="false" />
   </record>
   <record name="collective.searchevent.collections.paths">
     <field type="plone.registry.field.Dict">
       <title>Paths for Collections</title>
-      <key_type type="plone.registry.field.ASCIILine" />
-      <value_type type="plone.registry.field.List" />
+      <key_type type="plone.registry.field.ASCIILine">
+        <title>ID</title>
+      </key_type>
+      <value_type type="plone.registry.field.List">
+        <title>Value: list</title>
+        <value_type type="plone.registry.field.ASCIILine">
+          <title>Path</title>
+        </value_type>
+      </value_type>
     </field>
-    <value />
+    <value purget="false" />
   </record>
   <record name="collective.searchevent.collections.limit">
     <field type="plone.registry.field.Dict">
       <title>Limit for Collections</title>
-      <key_type type="plone.registry.field.ASCIILine" />
-      <value_type type="plone.registry.field.Int" />
+      <key_type type="plone.registry.field.ASCIILine">
+        <title>ID</title>
+      </key_type>
+      <value_type type="plone.registry.field.Int">
+        <title>Value: int</title>
+      </value_type>
     </field>
-    <value />
+    <value>10</value>
   </record>
   <record name="collective.searchevent.collections" delete="true" />
+  <record name="inicie.event_search_portlet.collections" delete="true" />
 </registry>
