@@ -36,15 +36,17 @@ class SearchEventControlPanelForm(crud.CrudForm):
         super(self.__class__, self).update()
         edit_forms = self.subforms[0]
         forms = edit_forms.subforms
+        size = 10
         for form in forms:
-            form.widgets['id'].size = 10
-            form.widgets['limit'].size = 5
+            form.widgets['tags'].size = size
+            form.widgets['paths'].size = size
+            form.widgets['limit'].size = 3
             registry = getUtility(IRegistry)
             paths = registry['collective.searchevent.collections.paths'][str(form.widgets['id'].value)]
             form.widgets['paths'].value = u'\n'.join(paths)
         add_form = self.subforms[1]
-        add_form.widgets['id'].size = 10
-        add_form.widgets['limit'].size = 5
+        add_form.widgets['id'].size = size
+        add_form.widgets['limit'].size = 3
 
     def update_data(self, data):
         """Add new collection data to egistry.

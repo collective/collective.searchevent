@@ -459,7 +459,7 @@ Go to registry to set tags::
     >>> browser.open('/@@searchevent-controlpanel')
     >>> print browser.bycss('#crud-edit-Col01-widgets-tags')
     --- 1 ---
-    <select id="crud-edit-Col01-widgets-tags" name="crud-edit.Col01.widgets.tags:list" class="select-widget set-field" multiple size="5"><option id="crud-edit-Col01-widgets-tags-0" value="T=C3=A4g01" selected>T&#228;g01</option><option id="crud-edit-Col01-widgets-tags-1" value="T=C3=B6g02">T&#246;g02</option></select>
+    <select id="crud-edit-Col01-widgets-tags" name="crud-edit.Col01.widgets.tags:list" class="select-widget set-field" multiple size="10"><option id="crud-edit-Col01-widgets-tags-0" value="T=C3=A4g01" selected>T&#228;g01</option><option id="crud-edit-Col01-widgets-tags-1" value="T=C3=B6g02">T&#246;g02</option></select>
 
 Add Tag01 Col01::
 
@@ -469,7 +469,7 @@ Add Tag01 Col01::
     >>> browser.open('/@@searchevent-controlpanel')
     >>> print browser.bycss('#crud-edit-Col01-widgets-tags')
     --- 1 ---
-    <select id="crud-edit-Col01-widgets-tags" name="crud-edit.Col01.widgets.tags:list" class="select-widget set-field" multiple size="5"><option id="crud-edit-Col01-widgets-tags-0" value="T=C3=A4g01" selected>T&#228;g01</option><option id="crud-edit-Col01-widgets-tags-1" value="T=C3=B6g02" selected>T&#246;g02</option></select>
+    <select id="crud-edit-Col01-widgets-tags" name="crud-edit.Col01.widgets.tags:list" class="select-widget set-field" multiple size="10"><option id="crud-edit-Col01-widgets-tags-0" value="T=C3=A4g01" selected>T&#228;g01</option><option id="crud-edit-Col01-widgets-tags-1" value="T=C3=B6g02" selected>T&#246;g02</option></select>
 
 Set Folder02 as path::
 
@@ -561,7 +561,7 @@ Set batch size into 2::
 
     >>> print browser.bycss('#crud-edit-Col01-widgets-limit')
     --- 1 ---
-    <input id="crud-edit-Col01-widgets-limit" name="crud-edit.Col01.widgets.limit" class="text-widget required int-field" size="5" value="2" type="text">
+    <input id="crud-edit-Col01-widgets-limit" name="crud-edit.Col01.widgets.limit" class="text-widget required int-field" size="3" value="2" type="text">
 
 Search::
 
