@@ -20,8 +20,8 @@ The separation of each values are done by '``|``'.
 Tested with
 -----------
 
+* Plone-4.2.1 [taito]
 * Plone-4.2 [taito]
-* Plone-4.1.6 [taito]
 
 Further Documentation URL
 -------------------------
