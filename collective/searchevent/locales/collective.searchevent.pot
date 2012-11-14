@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2012-05-23 17:59+0000\n"
+"POT-Creation-Date: 2012-11-14 23:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "A portlet which displays event search form."
 msgstr ""
 
-#: ./portlets/search.py:299
+#: ./portlets/search.py:251
 msgid "Add Event Search Portlet"
 msgstr ""
 
@@ -29,28 +29,37 @@ msgstr ""
 msgid "Collections"
 msgstr ""
 
-#: ./portlets/search.py:310
+#: ./portlets/search.py:262
 msgid "Edit Event Search Portlet"
 msgstr ""
 
-#: ./browser/template.py:22
+#: ./browser/template.py:25
 msgid "Event Search Collections"
+msgstr ""
+
+#: ./browser/viewlets/export.pt:8
+#: ./portlets/search.py:217
+msgid "Export"
 msgstr ""
 
 #: ./portlets/search.py:53
 msgid "Folders"
 msgstr ""
 
-#: ./portlets/search.py:160
+#: ./portlets/search.py:135
 msgid "From"
 msgstr ""
 
-#: ./collection.py:17
+#: ./schema.py:9
 msgid "ID"
 msgstr ""
 
-#: ./portlets/search.py:35
+#: ./portlets/search.py:36
 msgid "If enabled, header title will be shown."
+msgstr ""
+
+#: ./schema.py:20
+msgid "Input path starting form '/', excluding plone root path, line by line."
 msgstr ""
 
 #: ./portlets/search.py:54
@@ -61,20 +70,20 @@ msgstr ""
 msgid "Label of tags field."
 msgstr ""
 
-#: ./collection.py:36
+#: ./schema.py:26
 msgid "Limit"
 msgstr ""
 
-#: ./collection.py:37
+#: ./schema.py:27
 msgid "Number of results with which search results will be batched."
 msgstr ""
 
-#: ./portlets/search.py:28
-msgid "Portlet header"
+#: ./schema.py:19
+msgid "Paths"
 msgstr ""
 
-#: ./portlets/search.py:179
-msgid "Search Event"
+#: ./portlets/search.py:30
+msgid "Portlet header"
 msgstr ""
 
 #: ./profiles/default/controlpanel.xml
@@ -85,48 +94,52 @@ msgstr ""
 msgid "Search Event portlet"
 msgstr ""
 
-#: ./portlets/search.py:244
+#: ./portlets/search.py:206
 msgid "Search Events"
 msgstr ""
 
-#: ./browser/templates/event_results.pt:11
+#: ./browser/templates/search_results.pt:12
 msgid "Search Results"
 msgstr ""
 
-#: ./portlets/search.py:170
+#: ./portlets/search.py:143
 msgid "Search Words"
+msgstr ""
+
+#: ./schema.py:14
+msgid "Select tags to be filtered when searching events."
 msgstr ""
 
 #: ./portlets/search.py:42
 msgid "Select the collections for filtering search."
 msgstr ""
 
-#: ./portlets/search.py:34
+#: ./portlets/search.py:35
 msgid "Show header"
 msgstr ""
 
-#: ./collection.py:20
+#: ./schema.py:10
+msgid "Shown when managing search event portlet."
+msgstr ""
+
 #: ./portlets/search.py:47
+#: ./schema.py:13
 msgid "Tags"
 msgstr ""
 
-#: ./browser/templates/event_results.pt:12
+#: ./browser/viewlets/results.pt:4
 msgid "There are no search results found."
 msgstr ""
 
-#: ./portlets/search.py:300
+#: ./portlets/search.py:252
 msgid "This portlet displays a form to search events."
 msgstr ""
 
-#: ./portlets/search.py:29
+#: ./portlets/search.py:31
 msgid "Title of the rendered portlet."
 msgstr ""
 
-#: ./portlets/search.py:165
+#: ./portlets/search.py:139
 msgid "To"
-msgstr ""
-
-#: ./browser/template.py:67
-msgid "You cannot add another collection with the same ID."
 msgstr ""
 
