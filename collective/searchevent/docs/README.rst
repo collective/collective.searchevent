@@ -17,11 +17,10 @@ Exporting
 Exporting search event results to csv file is available for roles who have Modify Portal Content permission who can see **Export** button on the portlet.
 The separation of each values are done by '``|``'.
 
-Tested with
------------
+Currently tested with
+---------------------
 
-* Plone-4.2.1 [taito]
-* Plone-4.2 [taito]
+* Plone-4.2.2
 
 Further Documentation URL
 -------------------------

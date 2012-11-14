@@ -19,6 +19,6 @@ class TestSearchEventCollection(unittest.TestCase):
             'collective.searchevent.collections.tags': [],
             'collective.searchevent.collections.paths': [],
             'collective.searchevent.collections.limit': [],
-            }
+        }
         instance = self.createInstance()
         self.failIf(instance('cid'))

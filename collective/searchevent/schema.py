@@ -32,7 +32,7 @@ class IAddCollection(form.Schema):
 
 class ICollection(IAddCollection):
 
-        id = schema.ASCIILine(
+    id = schema.ASCIILine(
         title=_(u'ID'),
         description=_(u'Shown when managing search event portlet.'),
         readonly=True)

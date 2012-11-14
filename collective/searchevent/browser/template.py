@@ -15,6 +15,7 @@ from plone.registry.interfaces import IRegistry
 from plone.z3cform.crud import crud
 from zope.component import getMultiAdapter
 from zope.component import getUtility
+
 import csv
 
 
@@ -124,8 +125,7 @@ class SearchResultsView(BrowserView):
                     IItemDateTime(item)(),
                     item.Description(),
                     IItemText(item)(),
-                    item.getURL()
-                    ))
+                    item.getURL()))
             filename = 'search-event-results-{}.csv'.format(datetime.now().isoformat())
             cd = 'attachment; filename="{}"'.format(filename)
             self.request.response.setHeader('Content-Type', 'text/csv')
