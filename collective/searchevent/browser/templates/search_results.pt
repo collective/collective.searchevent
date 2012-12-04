@@ -4,12 +4,11 @@
   metal:use-macro="here/main_template/macros/master"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   xmlns:metal="http://xml.zope.org/namespaces/metal"
-  xmlns:tal="http://xml.zope.org/namespaces/tal"
-  >
+  xmlns:tal="http://xml.zope.org/namespaces/tal">
   <body>
     <div metal:fill-slot="main">
       <section id="collective-search-event-results">
-        <h1 i18n:translate="">Search Results</h1>
+        <h1 class="documentFirstHeading" i18n:translate="">Search Results</h1>
         <div tal:replace="structure provider:collective.searchevent.results.manager" />
       </section>
     </div>
