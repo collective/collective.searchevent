@@ -9,10 +9,10 @@ def read(*rnames):
 
 
 long_description = (
-    read('collective', 'searchevent', 'docs', 'README.rst') + "\n" +
-    read('collective', 'searchevent', 'docs', 'HISTORY.rst') + "\n" +
-    read('collective', 'searchevent', 'docs', 'CONTRIBUTORS.rst') + "\n" +
-    read('collective', 'searchevent', 'docs', 'CREDITS.rst'))
+    read('src', 'collective', 'searchevent', 'docs', 'README.rst') + "\n" +
+    read('src', 'collective', 'searchevent', 'docs', 'HISTORY.rst') + "\n" +
+    read('src', 'collective', 'searchevent', 'docs', 'CONTRIBUTORS.rst') + "\n" +
+    read('src', 'collective', 'searchevent', 'docs', 'CREDITS.rst'))
 
 
 setup(
@@ -31,7 +31,8 @@ setup(
     author_email='taito.horiuchi@gmail.com',
     url='https://github.com/collective/collective.searchevent',
     license='BSD',
-    packages=find_packages(exclude=['ez_setup']),
+    packages=find_packages('src', exclude=['ez_setup']),
+    package_dir={'': 'src'},
     namespace_packages=['collective'],
     include_package_data=True,
     zip_safe=False,

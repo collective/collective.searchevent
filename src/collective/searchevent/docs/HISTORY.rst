@@ -1,11 +1,11 @@
 Changelog
 ---------
 
-0.5 (2012-12-07)
+0.5 (2012-12-10)
 ================
 
 - Addes CSS style. [taito]
-
+- Added testing integration to Travis CI. [taito]
 
 0.4 (2012-11-14)
 ================
