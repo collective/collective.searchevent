@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
 <portlets
   i18n:domain="collective.searchevent"
-  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  >
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n">
 
   <!-- Portlet type registrations -->
   <portlet

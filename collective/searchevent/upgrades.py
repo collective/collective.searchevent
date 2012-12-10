@@ -5,6 +5,9 @@ from zope.component import getUtility
 import logging
 
 
+logger = logging.getLogger(__name__)
+
+
 PROFILE_ID = 'profile-collective.searchevent:default'
 
 
@@ -45,3 +48,9 @@ def upgrade_1_to_2(context, logger=None):
     registry['collective.searchevent.collections.limit'] = data['limit']
 
     logger.info('Updated collective.searchevent.collections.*.')
+
+
+def reimport_cssregistry(context):
+    setup = getToolByName(context, 'portal_setup')
+    logger.info('Reimporting cssregistry.')
+    setup.runImportStepFromProfile(PROFILE_ID, 'cssregistry', run_dependencies=False, purge_old=False)

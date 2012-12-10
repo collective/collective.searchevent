@@ -13,4 +13,14 @@
     title="Update registry record"
     />
 
+  <genericsetup:upgradeStep
+    description=""
+    destination="3"
+    handler="collective.searchevent.upgrades.reimport_cssregistry"
+    profile="collective.searchevent:default"
+    sortkey="1"
+    source="2"
+    title="Reimport cssregistry"
+    />
+
 </configure>

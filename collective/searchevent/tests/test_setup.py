@@ -1,5 +1,9 @@
-from collective.searchevent.tests.base import IntegrationTestCase
 from Products.CMFCore.utils import getToolByName
+from collective.searchevent.tests.base import IntegrationTestCase
+
+
+def get_css_resource(obj, name):
+    return getToolByName(obj, 'portal_css').getResource(name)
 
 
 class TestCase(IntegrationTestCase):
@@ -8,18 +12,58 @@ class TestCase(IntegrationTestCase):
     def setUp(self):
         self.portal = self.layer['portal']
 
-    def test_is_collective_searchevent_installed(self):
+    def test_package_installed(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         self.failUnless(installer.isProductInstalled('collective.searchevent'))
-
-    def test_is_plone_formwidget_datetime_installed(self):
-        installer = getToolByName(self.portal, 'portal_quickinstaller')
-        self.failUnless(installer.isProductInstalled('plone.formwidget.datetime'))
 
     def test_browserlayer(self):
         from collective.searchevent.browser.interfaces import ISearchEventLayer
         from plone.browserlayer import utils
         self.failUnless(ISearchEventLayer in utils.registered_layers())
+
+    def test_cssregistry__main__applyPrefix(self):
+        resource = get_css_resource(self.portal, '++resource++collective.searchevent/css/main.css')
+        self.assertTrue(resource.getApplyPrefix())
+
+    def test_cssregistry__main__authenticated(self):
+        resource = get_css_resource(self.portal, '++resource++collective.searchevent/css/main.css')
+        self.assertFalse(resource.getAuthenticated())
+
+    def test_cssregistry__main__compression(self):
+        resource = get_css_resource(self.portal, '++resource++collective.searchevent/css/main.css')
+        self.assertEqual(resource.getCompression(), 'safe')
+
+    def test_cssregistry__main__conditionalcomment(self):
+        resource = get_css_resource(self.portal, '++resource++collective.searchevent/css/main.css')
+        self.assertEqual(resource.getConditionalcomment(), '')
+
+    def test_cssregistry__main__cookable(self):
+        resource = get_css_resource(self.portal, '++resource++collective.searchevent/css/main.css')
+        self.assertTrue(resource.getCookable())
+
+    def test_cssregistry__main__enabled(self):
+        resource = get_css_resource(self.portal, '++resource++collective.searchevent/css/main.css')
+        self.assertTrue(resource.getEnabled())
+
+    def test_cssregistry__main__expression(self):
+        resource = get_css_resource(self.portal, '++resource++collective.searchevent/css/main.css')
+        self.assertEqual(resource.getExpression(), '')
+
+    def test_cssregistry__main__media(self):
+        resource = get_css_resource(self.portal, '++resource++collective.searchevent/css/main.css')
+        self.assertEqual(resource.getMedia(), 'screen')
+
+    def test_cssregistry__main__rel(self):
+        resource = get_css_resource(self.portal, '++resource++collective.searchevent/css/main.css')
+        self.assertEqual(resource.getRel(), 'stylesheet')
+
+    def test_cssregistry__main__rendering(self):
+        resource = get_css_resource(self.portal, '++resource++collective.searchevent/css/main.css')
+        self.assertEqual(resource.getRendering(), 'link')
+
+    def test_cssregistry__main__title(self):
+        resource = get_css_resource(self.portal, '++resource++collective.searchevent/css/main.css')
+        self.assertIsNone(resource.getTitle())
 
     def test_controlpanel(self):
         controlpanel = getToolByName(self.portal, 'portal_controlpanel')
@@ -33,11 +77,19 @@ class TestCase(IntegrationTestCase):
         self.assertTrue(action.visible)
         self.assertEqual(action.permissions, ('Manage portal',))
 
+    def test_metadata__dependency__plone_formwidget_datetime(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.failUnless(installer.isProductInstalled('plone.formwidget.datetime'))
+
+    def test_metadata__dependency__plone_app_relatedfield(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.failUnless(installer.isProductInstalled('plone.app.relationfield'))
+
     def test_metadata__version(self):
         setup = getToolByName(self.portal, 'portal_setup')
         self.assertEqual(
             setup.getVersionForProfile('profile-collective.searchevent:default'),
-            u'2')
+            u'3')
 
     def get_record(self, name):
         from zope.component import getUtility

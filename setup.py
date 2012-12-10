@@ -20,8 +20,6 @@ setup(
     version='0.4',
     description="Adds portlet to search event content types for Plone.",
     long_description=long_description,
-    # Get more strings from
-    # http://pypi.python.org/pypi?:action=list_classifiers
     classifiers=[
         "Framework :: Plone",
         "Framework :: Plone :: 4.2",
@@ -38,18 +36,13 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'Plone>=4.2',
         'five.grok',
         'hexagonit.testing',
-        'plone.app.contentlisting',
-        'plone.app.portlets',
         'plone.app.relationfield',
         'plone.behavior',
-        'plone.browserlayer',
         'plone.directives.form',
         'plone.formwidget.datetime',
-        'setuptools',
-        'zope.i18nmessageid'],
+        'setuptools'],
     entry_points="""
     # -*- Entry points: -*-
 

@@ -7,8 +7,13 @@
   xmlns:plone="http://namespaces.plone.org/plone"
   xmlns="http://namespaces.zope.org/zope">
 
+  <include package="five.grok" />
   <include package="plone.behavior" file="meta.zcml" />
-  <includeDependencies package="." />
+  <include package="plone.formwidget.datetime" />
+  <include package="plone.app.relationfield" />
+  <include package=".browser" />
+  <include package=".portlets" />
+  <include file="upgrades.zcml"/>
   <grok:grok package="." />
   <five:registerPackage package="." initialize=".initialize" />
   <i18n:registerTranslations directory="locales" />
@@ -28,9 +33,5 @@
     provides="Products.GenericSetup.interfaces.EXTENSION"
     title="Uninstall collective.searchevent"
     />
-
-  <include package=".browser" />
-  <include package=".portlets" />
-  <include file="upgrades.zcml"/>
 
 </configure>

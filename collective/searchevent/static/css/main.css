@@ -1,0 +1,19 @@
+.collectiveSearchEventPortlet .option {
+    display: block;
+}
+.collectiveSearchEventPortlet .label {
+    font-weight: normal;
+}
+#collective-search-event-results article h1 {
+    font-size: 1.2em;
+}
+#collective-search-event-results article h1 a:link {
+    border-bottom: 0.1em solid #0084A7;
+}
+#collective-search-event-results article h2 {
+    font-size: 1em;
+    font-weight: normal;
+}
+#collective-search-event-results article h2 span.datetime {
+    color: #A7A7A7;
+}

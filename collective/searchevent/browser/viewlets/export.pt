@@ -1,7 +1,6 @@
 <tal:block
   i18n:domain="collective.searchevent"
-  tal:condition="viewlet/events"
-  >
+  tal:condition="viewlet/events">
   <form
     method="post"
     tal:attributes="action context/@@plone_context_state/current_base_url">
