@@ -5,5 +5,5 @@
 *~
 .DS_Store
 .long-description.html
-collective/searchevent/docs/_build/*
+src/collective/searchevent/docs/_build/*
 dist
