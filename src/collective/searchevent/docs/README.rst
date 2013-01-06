@@ -20,16 +20,4 @@ The separation of each values are done by '``|``'.
 Currently tested with
 ---------------------
 
-* Plone-4.2.2
-
-Further Documentation URL
--------------------------
-
-`http://packages.python.org/collective.searchevent/
-<http://packages.python.org/collective.searchevent/>`_
-
-Repository URL
---------------
-
-`https://github.com/collective/collective.searchevent/
-<https://github.com/collective/collective.searchevent/>`_
+* Plone-4.2.3
