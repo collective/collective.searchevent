@@ -16,8 +16,6 @@ class TestPaths(unittest.TestCase):
         instance = self.createInstance()
         context = mock.Mock()
         getToolByName().getPortalPath.return_value = 'PORTAL_PATH'
-        # context.portal_url.getPortalPath.return_value = 'PORTAL_PATH'
         brain = mock.Mock()
         getToolByName().return_value = [brain]
-        # context.portal_catalog.return_value = [brain]
         instance(context)
