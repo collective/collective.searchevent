@@ -13,19 +13,16 @@ Input Values::
 
 Create Event01 FutureYear/05/01-10:00 AM - FutureYear/05/01 11:00 AM::
 
-    >>> from DateTime import DateTime
-    >>> FutureYear = str(DateTime().year() + 1)
-
     >>> browser.open('/createObject?type_name=Event')
 
     >>> browser.getControl(name="title").value = 'Event01'
-    >>> browser.getControl(name="startDate_year").value = [FutureYear]
+    >>> browser.getControl(name="startDate_year").value = [FUTURE_YEAR]
     >>> browser.getControl(name="startDate_month").value = ['05']
     >>> browser.getControl(name="startDate_day").value = ['01']
     >>> browser.getControl(name="startDate_hour").value = ['10']
     >>> browser.getControl(name="startDate_minute").value = ['00']
     >>> browser.getControl(name="startDate_ampm").value = ['AM']
-    >>> browser.getControl(name="endDate_year").value = [FutureYear]
+    >>> browser.getControl(name="endDate_year").value = [FUTURE_YEAR]
     >>> browser.getControl(name="endDate_month").value = ['05']
     >>> browser.getControl(name="endDate_day").value = ['01']
     >>> browser.getControl(name="endDate_hour").value = ['11']
@@ -40,13 +37,13 @@ Create Event02 FutureYear/05/02-10:00 AM - FutureYear/05/03 10:00 AM::
     >>> browser.open('/createObject?type_name=Event')
 
     >>> browser.getControl(name="title").value = 'Event02'
-    >>> browser.getControl(name="startDate_year").value = [FutureYear]
+    >>> browser.getControl(name="startDate_year").value = [FUTURE_YEAR]
     >>> browser.getControl(name="startDate_month").value = ['05']
     >>> browser.getControl(name="startDate_day").value = ['02']
     >>> browser.getControl(name="startDate_hour").value = ['10']
     >>> browser.getControl(name="startDate_minute").value = ['00']
     >>> browser.getControl(name="startDate_ampm").value = ['AM']
-    >>> browser.getControl(name="endDate_year").value = [FutureYear]
+    >>> browser.getControl(name="endDate_year").value = [FUTURE_YEAR]
     >>> browser.getControl(name="endDate_month").value = ['05']
     >>> browser.getControl(name="endDate_day").value = ['03']
     >>> browser.getControl(name="endDate_hour").value = ['10']
@@ -62,7 +59,7 @@ Go to search results::
 
     >>> browser.getControl(name="form.buttons.export").click()
     >>> browser.contents
-    'Title|Date|Description|Text|URL\r\nEvent01|May 01, 2013 10:00 AM - 11:00 AM|Descripti\xc3\xb6n of Event01| S\xc3\xb6me Text of Event01. |http://nohost/plone/event01\r\nEvent02|May 02, 2013 10:00 AM - May 03, 2013 10:00 AM|Descripti\xc3\xb6n of Event02| S\xc3\xb6me Text of Event02. |http://nohost/plone/event02\r\n'
+    'Title|Date|Description|Text|URL\r\nEvent01|May 01, ... 10:00 AM - 11:00 AM|Descripti\xc3\xb6n of Event01| S\xc3\xb6me Text of Event01. |http://nohost/plone/event01\r\nEvent02|May 02, ... 10:00 AM - May 03, ... 10:00 AM|Descripti\xc3\xb6n of Event02| S\xc3\xb6me Text of Event02. |http://nohost/plone/event02\r\n'
 
 Anonymous should not see export button::
 

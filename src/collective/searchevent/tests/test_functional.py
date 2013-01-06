@@ -7,6 +7,7 @@ from plone.app.testing import TEST_USER_NAME
 from plone.app.testing import TEST_USER_PASSWORD
 from plone.testing import layered
 from zope.testing import renormalizing
+from DateTime import DateTime
 
 import doctest
 import manuel.codeblock
@@ -53,6 +54,8 @@ def setUp(self):
         )
     ]
     folder.reindexObject()
+
+    self.globs.update({'FUTURE_YEAR': str(DateTime().year() + 1)})
 
     transaction.commit()
 

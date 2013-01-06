@@ -5,8 +5,8 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from collective.searchevent import _
 from collective.searchevent.interfaces import ISearchEventCollection
 from five import grok
-from plone import directives
 from plone.app.portlets.portlets import base
+from plone.directives import form as dform
 from plone.portlets.interfaces import IPortletDataProvider
 from plone.z3cform.layout import FormWrapper
 from z3c.form import button
@@ -129,7 +129,7 @@ class Paths(object):
         return SimpleVocabulary(terms)
 
 
-class ISearchEventForm(directives.form.Schema):
+class ISearchEventForm(dform.Schema):
 
     after_date = schema.Date(
         title=_(u'From'),
@@ -143,15 +143,15 @@ class ISearchEventForm(directives.form.Schema):
         title=_(u"Search Words"),
         required=False)
 
-    directives.form.order_before(words='*')
-    directives.form.order_before(before_date='words')
-    directives.form.order_before(after_date='before_date')
+    dform.order_before(words='*')
+    dform.order_before(before_date='words')
+    dform.order_before(after_date='before_date')
 
 
-class SearchEventForm(directives.form.SchemaForm):
+class SearchEventForm(dform.SchemaForm):
     grok.context(Interface)
     grok.require('zope2.View')
-    directives.form.wrap(True)
+    dform.wrap(True)
 
     schema = ISearchEventForm
     ignoreContext = True

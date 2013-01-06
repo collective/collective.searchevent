@@ -11,10 +11,13 @@ class TestPaths(unittest.TestCase):
         paths = [path]
         return Paths(paths)
 
-    def test__call__(self):
+    @mock.patch('collective.searchevent.portlets.search.getToolByName')
+    def test__call__(self, getToolByName):
         instance = self.createInstance()
         context = mock.Mock()
-        context.portal_url.getPortalPath.return_value = 'PORTAL_PATH'
+        getToolByName().getPortalPath.return_value = 'PORTAL_PATH'
+        # context.portal_url.getPortalPath.return_value = 'PORTAL_PATH'
         brain = mock.Mock()
-        context.portal_catalog.return_value = [brain]
+        getToolByName().return_value = [brain]
+        # context.portal_catalog.return_value = [brain]
         instance(context)
