@@ -119,7 +119,7 @@ class SearchResultsView(BrowserView):
                 'Text',
                 'URL'))
             for item in getMultiAdapter(
-                (self.context, self.request), ISearchEventResults)():
+                (self.context, self.request), ISearchEventResults)(b_size=None):
                 writer.writerow((
                     item.Title(),
                     IItemDateTime(item)(),
