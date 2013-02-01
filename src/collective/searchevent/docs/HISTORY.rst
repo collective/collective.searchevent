@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+0.5.3 (2013-02-01)
+==================
+
+- Fixed encoding error while exporting events. [taito]
+
 0.5.2 (2013-02-01)
 ==================
 

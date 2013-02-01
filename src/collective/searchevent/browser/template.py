@@ -118,11 +118,13 @@ class SearchResultsView(BrowserView):
                 'Description',
                 'Text',
                 'URL'))
+            plone = getMultiAdapter((self.context, self.request), name="plone")
+            encoding = plone.site_encoding()
             for item in getMultiAdapter(
                 (self.context, self.request), ISearchEventResults)(b_size=None):
                 writer.writerow((
                     item.Title(),
-                    IItemDateTime(item)(),
+                    IItemDateTime(item)().encode(encoding),
                     item.Description(),
                     IItemText(item)(),
                     item.getURL()))
