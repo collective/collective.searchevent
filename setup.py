@@ -17,7 +17,7 @@ long_description = (
 
 setup(
     name='collective.searchevent',
-    version='0.5.2',
+    version='0.5.3',
     description="Adds portlet to search event content types for Plone.",
     long_description=long_description,
     classifiers=[
