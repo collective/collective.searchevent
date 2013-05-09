@@ -1,20 +1,25 @@
-from Products.Five.browser import BrowserView
+from Products.ATContentTypes import ATCTMessageFactory
+from Products.ATContentTypes.content.event import ATEvent
+from Products.CMFPlone import PloneMessageFactory
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from StringIO import StringIO
+from collective.base.interfaces import IAdapter
+from collective.base.view import BaseFormView
 from collective.searchevent import _
+from collective.searchevent.browser.interfaces import ISearchEventResultsView
 from collective.searchevent.collection import Collection
-from collective.searchevent.schema import IAddCollection
-from collective.searchevent.schema import ICollection
-from collective.searchevent.interfaces import IItemDateTime
 from collective.searchevent.interfaces import IItemText
 from collective.searchevent.interfaces import ISearchEventCollection
 from collective.searchevent.interfaces import ISearchEventResults
+from collective.searchevent.schema import IAddCollection
+from collective.searchevent.schema import ICollection
 from datetime import datetime
 from plone.app.z3cform.layout import wrap_form
 from plone.registry.interfaces import IRegistry
 from plone.z3cform.crud import crud
 from zope.component import getMultiAdapter
 from zope.component import getUtility
+from zope.interface import implements
 
 import csv
 
@@ -104,35 +109,49 @@ SearchEventControlPanelView = wrap_form(
     index=ViewPageTemplateFile('templates/controlpanel.pt'))
 
 
-class SearchResultsView(BrowserView):
+class SearchEventResultsView(BaseFormView):
+    implements(ISearchEventResultsView)
 
-    index = ViewPageTemplateFile('templates/search_results.pt')
+    title = _(u'Search Results')
 
     def __call__(self):
-        if self.request.form.get('form.buttons.export', None) is not None:
+        super(SearchEventResultsView, self).__call__()
+        if self.request.form.get('form.buttons.Export', None) is not None:
+            defaults_name = [
+                PloneMessageFactory(u'Title'),
+                PloneMessageFactory(u'Date'),
+                PloneMessageFactory(u'Description'),
+                PloneMessageFactory(u'Text'),
+                PloneMessageFactory(u'URL')]
+            extras = ['location', 'attendees', 'eventUrl', 'contactName', 'contactEmail', 'contactPhone', 'subject']
+            extras_name = [self.context.translate(ATCTMessageFactory(ATEvent.schema.get(extra).widget.label)) for extra in extras]
+            headers = tuple(defaults_name + extras_name)
             out = StringIO()
             writer = csv.writer(out, delimiter='|', quoting=csv.QUOTE_MINIMAL)
-            writer.writerow((
-                'Title',
-                'Date',
-                'Description',
-                'Text',
-                'URL'))
+            writer.writerow(headers)
+
             plone = getMultiAdapter((self.context, self.request), name="plone")
             encoding = plone.site_encoding()
-            for item in getMultiAdapter(
-                (self.context, self.request), ISearchEventResults)(b_size=None):
-                writer.writerow((
+            adapter = IAdapter(self.context)
+            for item in getMultiAdapter((self.context, self.request), ISearchEventResults)(b_size=None):
+                values = [
                     item.Title(),
-                    IItemDateTime(item)().encode(encoding),
+                    adapter.event_datetime(item).encode(encoding),
                     item.Description(),
                     IItemText(item)(),
-                    item.getURL()))
+                    item.getURL()]
+                obj = item.getObject()
+                for extra in extras:
+                    if extra == 'attendees' or extra == 'subject':
+                        values.append(u', '.join(getattr(obj, extra)))
+                    else:
+                        values.append(getattr(obj, extra))
+                writer.writerow(tuple(values))
+
             filename = 'search-event-results-{}.csv'.format(datetime.now().isoformat())
             cd = 'attachment; filename="{}"'.format(filename)
             self.request.response.setHeader('Content-Type', 'text/csv')
             self.request.response.setHeader("Content-Disposition", cd)
             return out.getvalue()
         else:
-            self.request.set('disable_border', True)
-            return self.index()
+            return self.template()

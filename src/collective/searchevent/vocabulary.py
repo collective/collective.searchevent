@@ -1,4 +1,3 @@
-from five import grok
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 from zope.interface import implements
@@ -13,10 +12,8 @@ class RegistryCollectionsVocabulary(object):
 
     def __call__(self, context):
         registry = getUtility(IRegistry)
-        terms = [
-            SimpleTerm(
-                value=item, title=item) for item in registry['collective.searchevent.collections.tags']]
+        terms = [SimpleTerm(value=item, title=item) for item in registry['collective.searchevent.collections.tags']]
         return SimpleVocabulary(terms)
 
 
-grok.global_utility(RegistryCollectionsVocabulary, name=u"collective.searchevent.RegistryCollections")
+RegistryCollectionsVocabularyFactory = RegistryCollectionsVocabulary()

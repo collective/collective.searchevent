@@ -77,14 +77,6 @@ class TestCase(IntegrationTestCase):
         self.assertTrue(action.visible)
         self.assertEqual(action.permissions, ('Manage portal',))
 
-    def test_metadata__dependency__plone_formwidget_datetime(self):
-        installer = getToolByName(self.portal, 'portal_quickinstaller')
-        self.failUnless(installer.isProductInstalled('plone.formwidget.datetime'))
-
-    def test_metadata__dependency__plone_app_relatedfield(self):
-        installer = getToolByName(self.portal, 'portal_quickinstaller')
-        self.failUnless(installer.isProductInstalled('plone.app.relationfield'))
-
     def test_metadata__version(self):
         setup = getToolByName(self.portal, 'portal_setup')
         self.assertEqual(

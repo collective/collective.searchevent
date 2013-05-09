@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+0.6 (2013-05-xx)
+================
+
+- Removed dependency from five.grok. [taito]
+
 0.5.3 (2013-02-01)
 ==================
 

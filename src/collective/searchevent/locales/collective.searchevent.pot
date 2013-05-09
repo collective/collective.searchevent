@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2012-11-14 23:11+0000\n"
+"POT-Creation-Date: 2013-05-09 19:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,40 +21,40 @@ msgstr ""
 msgid "A portlet which displays event search form."
 msgstr ""
 
-#: ./portlets/search.py:251
+#: ./portlets/search.py:163
 msgid "Add Event Search Portlet"
 msgstr ""
 
-#: ./portlets/search.py:41
+#: ./portlets/search.py:43
 msgid "Collections"
 msgstr ""
 
-#: ./portlets/search.py:262
+#: ./portlets/search.py:174
 msgid "Edit Event Search Portlet"
 msgstr ""
 
-#: ./browser/template.py:25
+#: ./portlets/search.pt:26
+msgid "End Date"
+msgstr ""
+
+#: ./browser/template.py:31
 msgid "Event Search Collections"
 msgstr ""
 
-#: ./browser/viewlets/export.pt:8
-#: ./portlets/search.py:217
+#: ./browser/viewlets/export.pt:7
+#: ./portlets/search.pt:75
 msgid "Export"
 msgstr ""
 
-#: ./portlets/search.py:53
+#: ./portlets/search.py:55
 msgid "Folders"
-msgstr ""
-
-#: ./portlets/search.py:135
-msgid "From"
 msgstr ""
 
 #: ./schema.py:9
 msgid "ID"
 msgstr ""
 
-#: ./portlets/search.py:36
+#: ./portlets/search.py:38
 msgid "If enabled, header title will be shown."
 msgstr ""
 
@@ -62,11 +62,11 @@ msgstr ""
 msgid "Input path starting form '/', excluding plone root path, line by line."
 msgstr ""
 
-#: ./portlets/search.py:54
+#: ./portlets/search.py:56
 msgid "Label of folders field."
 msgstr ""
 
-#: ./portlets/search.py:48
+#: ./portlets/search.py:50
 msgid "Label of tags field."
 msgstr ""
 
@@ -82,8 +82,12 @@ msgstr ""
 msgid "Paths"
 msgstr ""
 
-#: ./portlets/search.py:30
+#: ./portlets/search.py:32
 msgid "Portlet header"
+msgstr ""
+
+#: ./portlets/search.pt:37
+msgid "Seach Words"
 msgstr ""
 
 #: ./profiles/default/controlpanel.xml
@@ -94,27 +98,20 @@ msgstr ""
 msgid "Search Event portlet"
 msgstr ""
 
-#: ./portlets/search.py:206
-msgid "Search Events"
-msgstr ""
-
-#: ./browser/templates/search_results.pt:12
+#: ./browser/template.py:116
+#: ./browser/templates/search-event-results.pt:11
 msgid "Search Results"
-msgstr ""
-
-#: ./portlets/search.py:143
-msgid "Search Words"
 msgstr ""
 
 #: ./schema.py:14
 msgid "Select tags to be filtered when searching events."
 msgstr ""
 
-#: ./portlets/search.py:42
+#: ./portlets/search.py:44
 msgid "Select the collections for filtering search."
 msgstr ""
 
-#: ./portlets/search.py:35
+#: ./portlets/search.py:37
 msgid "Show header"
 msgstr ""
 
@@ -122,24 +119,29 @@ msgstr ""
 msgid "Shown when managing search event portlet."
 msgstr ""
 
-#: ./portlets/search.py:47
+#: ./portlets/search.pt:15
+msgid "Start Date"
+msgstr ""
+
+#: ./portlets/search.py:49
 #: ./schema.py:13
 msgid "Tags"
 msgstr ""
 
-#: ./browser/viewlets/results.pt:4
+#: ./browser/viewlets/search-event-results.pt:5
 msgid "There are no search results found."
 msgstr ""
 
-#: ./portlets/search.py:252
+#: ./portlets/search.py:164
 msgid "This portlet displays a form to search events."
 msgstr ""
 
-#: ./portlets/search.py:31
+#: ./portlets/search.py:33
 msgid "Title of the rendered portlet."
 msgstr ""
 
-#: ./portlets/search.py:139
-msgid "To"
+#. Default: "Input date format: YEAR-MONTH-DAY like 2013-01-01."
+#: ./browser/viewlet.py:52
+msgid "input_date_format"
 msgstr ""
 

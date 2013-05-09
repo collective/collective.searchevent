@@ -43,3 +43,10 @@ class TestUpgrades(IntegrationTestCase):
             getUtility()['collective.searchevent.collections.paths'], {'ID': [u'/path1', u'/path2']})
         self.assertEqual(
             getUtility()['collective.searchevent.collections.limit'], {'ID': 3})
+
+    @mock.patch('collective.searchevent.upgrades.getToolByName')
+    def test_reimport_cssregistry(self, getToolByName):
+        from collective.searchevent.upgrades import reimport_cssregistry
+        reimport_cssregistry(self.portal)
+        getToolByName().runImportStepFromProfile.assert_called_with('profile-collective.searchevent:default',
+            'cssregistry', run_dependencies=False, purge_old=False)

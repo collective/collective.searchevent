@@ -3,11 +3,19 @@
   xmlns:browser="http://namespaces.zope.org/browser"
   xmlns="http://namespaces.zope.org/zope">
 
+  <browser:resourceDirectory
+    name="collective.searchevent"
+    directory="static"
+    layer=".interfaces.ISearchEventLayer"
+    />
+
+  <!-- View -->
+
   <browser:page
-    class=".template.SearchResultsView"
+    class=".template.SearchEventResultsView"
     for="*"
     layer=".interfaces.ISearchEventLayer"
-    name="search-results"
+    name="search-event-results"
     permission="zope2.View"
     />
 
@@ -17,6 +25,18 @@
     layer=".interfaces.ISearchEventLayer"
     name="searchevent-controlpanel"
     permission="cmf.ManagePortal"
+    />
+
+  <!-- Viewlet -->
+
+  <browser:viewlet
+    class=".viewlet.SearchEventResultsViewlet"
+    for="*"
+    layer=".interfaces.ISearchEventLayer"
+    manager="collective.base.interfaces.IBaseFormViewletManager"
+    name="collective.searchevent.viewlets.search-event-results"
+    permission="zope2.View"
+    view=".interfaces.ISearchEventResultsView"
     />
 
 </configure>

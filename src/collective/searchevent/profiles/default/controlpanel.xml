@@ -2,8 +2,7 @@
 <object
   i18n:domain="collective.searchevent"
   name="portal_controlpanel"
-  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  >
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n">
 
   <configlet
     action_id="searchevent_collection_registry"
@@ -14,8 +13,7 @@
     icon_expr="string:${portal_url}/maintenance_icon.png"
     title="Search Event Collections"
     url_expr="string:${portal_url}/@@searchevent-controlpanel"
-    visible="True"
-    >
+    visible="True">
     <permission>Manage portal</permission>
   </configlet>
 

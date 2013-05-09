@@ -1,9 +1,9 @@
 from collective.searchevent import _
-from plone.directives import form
+from plone.supermodel.model import Schema
 from zope import schema
 
 
-class IAddCollection(form.Schema):
+class IAddCollection(Schema):
 
     id = schema.ASCIILine(
         title=_(u'ID'),

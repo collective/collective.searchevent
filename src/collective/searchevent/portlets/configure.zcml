@@ -2,8 +2,7 @@
   i18n_domain="collective.searchevent"
   xmlns:i18n="http://namespaces.zope.org/i18n"
   xmlns:plone="http://namespaces.plone.org/plone"
-  xmlns="http://namespaces.zope.org/zope"
-  >
+  xmlns="http://namespaces.zope.org/zope">
 
   <permission
     id="collective.searchevent.AddSearchEventPortlet"

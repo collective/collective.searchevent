@@ -1,25 +1,16 @@
 from AccessControl import getSecurityManager
+from DateTime import DateTime
 from Products.CMFCore import permissions
-from Products.CMFPlone.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from collective.base.interfaces import IAdapter
 from collective.searchevent import _
 from collective.searchevent.interfaces import ISearchEventCollection
-from five import grok
 from plone.app.portlets.portlets import base
-from plone.directives import form as dform
 from plone.portlets.interfaces import IPortletDataProvider
-from plone.z3cform.layout import FormWrapper
-from z3c.form import button
-from z3c.form.browser.checkbox import CheckBoxFieldWidget
-from z3c.form.field import Fields
 from zope import schema
-from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.formlib import form
-from zope.interface import Interface
 from zope.interface import implements
-from zope.schema.interfaces import IContextSourceBinder
-from zope.schema.vocabulary import SimpleVocabulary
 
 
 class ISearchEventPortlet(IPortletDataProvider):
@@ -41,7 +32,7 @@ class ISearchEventPortlet(IPortletDataProvider):
         title=_(u"Collections"),
         description=_(u"Select the collections for filtering search."),
         required=False,
-        source="collective.searchevent.RegistryCollections")
+        source="collective.searchevent.vocabulary.registry-collections")
 
     tags = schema.TextLine(
         title=_(u"Tags"),
@@ -79,146 +70,6 @@ class Assignment(base.Assignment):
         return self.header
 
 
-class PortletFormView(FormWrapper):
-    """ Form view which renders z3c.forms embedded in a portlet."""
-
-    index = ViewPageTemplateFile("formwrapper.pt")
-
-
-class Tags(object):
-    grok.implements(IContextSourceBinder)
-
-    def __init__(self, tags):
-        self.tags = tags
-
-    def __call__(self, context):
-        terms = [
-            SimpleVocabulary.createTerm(tag, str(tag), tag) for tag in list(self.tags)]
-        return SimpleVocabulary(terms)
-
-
-class Paths(object):
-
-    grok.implements(IContextSourceBinder)
-
-    def __init__(self, paths):
-        self.paths = paths
-
-    def __call__(self, context):
-        portal_path = getToolByName(context, 'portal_url').getPortalPath()
-        res = []
-        for path in self.paths:
-            path = '{}{}'.format(portal_path, path)
-            res.append(path)
-        catalog = getToolByName(context, 'portal_catalog')
-        terms = []
-        for path in res:
-            query = {
-                'path': {
-                    'query': path,
-                    'depth': 0,
-                }
-            }
-            brains = catalog(query)
-            if brains:
-                brain = brains[0]
-                title_or_id = brain.Title or brain.id
-                terms.append(
-                    SimpleVocabulary.createTerm(
-                        path, str(path), title_or_id))
-        return SimpleVocabulary(terms)
-
-
-class ISearchEventForm(dform.Schema):
-
-    after_date = schema.Date(
-        title=_(u'From'),
-        required=False)
-
-    before_date = schema.Date(
-        title=_(u'To'),
-        required=False)
-
-    words = schema.TextLine(
-        title=_(u"Search Words"),
-        required=False)
-
-    dform.order_before(words='*')
-    dform.order_before(before_date='words')
-    dform.order_before(after_date='before_date')
-
-
-class SearchEventForm(dform.SchemaForm):
-    grok.context(Interface)
-    grok.require('zope2.View')
-    dform.wrap(True)
-
-    schema = ISearchEventForm
-    ignoreContext = True
-
-    def __init__(self, context, request, data=None):
-        super(SearchEventForm, self).__init__(context, request)
-        self.data = data
-        cid = self.data.collections
-        if cid:
-            collection = getUtility(ISearchEventCollection)(cid)
-            if collection:
-                tags = collection.get('tags')
-                if tags:
-                    field = schema.Set(
-                        title=self.data.tags,
-                        required=False,
-                        value_type=schema.Choice(source=Tags(tags)))
-                    field.__name__ = 'tags'
-                    self.fields += Fields(field)
-                    self.fields['tags'].widgetFactory = CheckBoxFieldWidget
-                paths = collection.get('paths')
-                if paths:
-                    field = schema.Set(
-                        title=self.data.folders,
-                        required=False,
-                        value_type=schema.Choice(source=Paths(paths)))
-                    field.__name__ = 'paths'
-                    self.fields += Fields(field)
-                    self.fields['paths'].widgetFactory = CheckBoxFieldWidget
-
-    def updateWidgets(self):
-        super(self.__class__, self).updateWidgets()
-        self.widgets['words'].size = 20
-
-    @property
-    def action(self):
-        """ Rewrite HTTP POST action.
-
-        If the form is rendered embedded on the others pages we
-        make sure the form is posted through the same view always,
-        instead of making HTTP POST to the page where the form was rendered.
-        """
-        url = '{}/@@search-results'.format(self.context.absolute_url())
-        cid = self.data.collections
-        if cid:
-            collection = getUtility(ISearchEventCollection)(cid)
-            if collection:
-                limit = collection['limit'] or 10
-                url = '{}?b_size={}'.format(url, limit)
-        return url
-
-    @button.buttonAndHandler(_('Search Events'), name='search')
-    def search(self, action):
-        """ Form button hander. """
-        data, errors = self.extractData()
-        if not errors:
-            pass
-
-    @property
-    def has_permission(self):
-        return getSecurityManager().checkPermission(permissions.ModifyPortalContent, self.context)
-
-    @button.buttonAndHandler(_('Export'), name='export', condition=lambda form: form.has_permission)
-    def handleApply(self, action):
-        """Export search event results to csv file."""
-
-
 class Renderer(base.Renderer):
 
     render = ViewPageTemplateFile('search.pt')
@@ -227,21 +78,69 @@ class Renderer(base.Renderer):
         self.assignment = args[-1]
         base.Renderer.__init__(self, *args)
 
-    def form(self):
-        form = SearchEventForm(self.context, self.request, data=self.data)
-        view = PortletFormView(self.context, self.request)
-        view = view.__of__(self.context)
-        view.form_instance = form
-        return view()
-
-    @property
     def title(self):
         return self.assignment.show_header and self.assignment.header
 
-    @property
     def search_results_url(self):
-        context_state = getMultiAdapter((self.context, self.request), name=u'plone_context_state')
-        return '{}/@@search-results'.format(context_state.object_url())
+        url = '{}/@@search-event-results'.format(self.context.absolute_url())
+        cid = self.data.collections
+        if cid:
+            collection = getUtility(ISearchEventCollection)(cid)
+            if collection:
+                limit = collection['limit'] or 10
+                url = '{}?b_size={}'.format(url, limit)
+        return url
+
+    def start(self):
+        form = self.request.form
+        year = DateTime().year()
+        return {'placeholder': '{}-01-01'.format(year), 'value': form.get('start', '')}
+
+    def end(self):
+        form = self.request.form
+        year = DateTime().year()
+        return {'placeholder': '{}-12-31'.format(year), 'value': form.get('end', '')}
+
+    def words(self):
+        return self.request.form.get('words', '')
+
+    def _get_collection(self, name):
+        cid = self.data.collections
+        if cid:
+            collection = getUtility(ISearchEventCollection)(cid)
+            if collection.get(name):
+
+                checked = self.request.form.get(name, [])
+                names = []
+
+                attr = name
+                if name == 'paths':
+                    attr = 'folders'
+                    adapter = IAdapter(self.context)
+                    portal_path = adapter.portal_path()
+                    for nam in collection.get(name):
+                        path = '{}{}'.format(portal_path, nam)
+                        title = adapter.get_brain(path=path, depth=0).Title
+                        names.append({
+                            'checked': nam in checked,
+                            'key': path,
+                            'title': title,
+                        })
+                else:
+
+                    for nam in collection.get(name):
+                        names.append({'checked': nam in checked, 'key': nam})
+
+                return {'names': names, 'title': getattr(self.data, attr)}
+
+    def tags(self):
+        return self._get_collection('tags')
+
+    def paths(self):
+        return self._get_collection('paths')
+
+    def export_available(self):
+        return getSecurityManager().checkPermission(permissions.ModifyPortalContent, self.context)
 
 
 class AddForm(base.AddForm):

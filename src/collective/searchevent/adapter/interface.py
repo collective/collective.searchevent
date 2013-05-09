@@ -1,17 +1,16 @@
-from Acquisition import aq_inner
 from DateTime import DateTime
 from Products.ATContentTypes.interfaces.event import IATEvent
-from Products.CMFCore.utils import getToolByName
+from collective.base.interfaces import IAdapter
 from collective.searchevent.interfaces import ISearchEventResults
-from five import grok
-from plone.app.contentlisting.interfaces import IContentListing
+from zope.component import adapts
 from zope.interface import Interface
+from zope.interface import implements
 from zope.publisher.interfaces.browser import IBrowserRequest
 
 
-class SearchEventResults(grok.MultiAdapter):
-    grok.provides(ISearchEventResults)
-    grok.adapts(Interface, IBrowserRequest)
+class SearchEventResults(object):
+    adapts(Interface, IBrowserRequest)
+    implements(ISearchEventResults)
 
     def __init__(self, context, request):
         self.context = context
@@ -34,38 +33,38 @@ class SearchEventResults(grok.MultiAdapter):
 
         :rtype: plone.app.contentlisting.contentlisting.ContentListing
         """
-        context = aq_inner(self.context)
-        catalog = getToolByName(context, 'portal_catalog')
         form = self.request.form
-        after_year = form.get('form.widgets.after_date-year', None)
-        after_month = form.get('form.widgets.after_date-month', None)
-        after_day = form.get('form.widgets.after_date-day', None)
-        after_date = self._date(after_year, after_month, after_day)
-        before_year = form.get('form.widgets.before_date-year', None)
-        before_month = form.get('form.widgets.before_date-month', None)
-        before_day = form.get('form.widgets.before_date-day', None)
-        before_date = self._date(before_year, before_month, before_day)
-        if before_date:
-            before_date += 1
-        if not (before_date or after_date):
-            after_date = DateTime()
+
+        start = form.get('start')
+        if start:
+            start = DateTime(start)
+
+        end = form.get('end')
+        if end:
+            end = DateTime(end) + 1
+
+        if not (start or end):
+            start = DateTime()
+
+        adapter = IAdapter(self.context)
+
         query = dict(
-            object_provides=IATEvent.__identifier__,
-            SearchableText=form.get('form.widgets.words', ''),
+            SearchableText=form.get('words', ''),
             sort_on='start',
             start={
-                'query': [before_date, ],
+                'query': [end, ],
                 'range': 'max',
             },
             end={
-                'query': [after_date, ],
+                'query': [start, ],
                 'range': 'min',
-            }
+            },
+            path=adapter.portal_path(),
         )
-        Subject = form.get('form.widgets.tags', None)
+        Subject = form.get('tags', None)
         if Subject:
             query.update({'Subject': Subject})
-        paths = form.get('form.widgets.paths', paths)
+        paths = form.get('paths', paths)
         if paths:
             query.update({'path': paths})
         if limit:
@@ -73,25 +72,6 @@ class SearchEventResults(grok.MultiAdapter):
         # Add b_start and b_size to the query.
         if b_size:
             query['b_start'] = b_start
-            query['b_size'] = b_size + b_orphan
-        brains = catalog(query)
-        if limit:
-            brains = brains[:limit]
-        return IContentListing(brains)
+            query['b_size'] = b_size
 
-    def _date(self, year, month, day):
-        date = None
-        if year:
-            if day:
-                date = '{}/{}/{}'.format(
-                    year,
-                    month,
-                    day,
-                )
-            else:
-                date = '{}/{}/01'.format(
-                    year,
-                    month,
-                )
-            date = DateTime(date)
-        return date
+        return adapter.get_content_listing(IATEvent, **query)

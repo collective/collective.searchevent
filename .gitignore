@@ -5,5 +5,4 @@
 *~
 .DS_Store
 .long-description.html
-src/collective/searchevent/docs/_build/*
 dist

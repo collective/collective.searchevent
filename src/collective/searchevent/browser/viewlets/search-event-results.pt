@@ -1,6 +1,7 @@
-<tal:block
+<section
   i18n:domain="collective.searchevent"
-  tal:define="batch viewlet/batch;">
+  id="search-event-results"
+  tal:define="batch view/batch;">
   <p tal:condition="not: batch"
      i18n:translate="">
     There are no search results found.
@@ -18,7 +19,7 @@
              />
         </dt>
         <dd>
-          <span class="datetime" tal:content="python: viewlet.datetime(item)" />
+          <span class="datetime" tal:content="python: view.datetime(item)" />
           <p
             tal:condition="item/Description"
             tal:content="item/Description"
@@ -26,6 +27,8 @@
         </dd>
       </tal:results>
     </dl>
-    <div metal:use-macro="context/batch_macros/macros/navigation" />
+    <tal:batchnavigation
+      define="batchnavigation nocall:context/@@batchnavigation"
+      replace="structure python:batchnavigation(batch)" />
   </tal:block>
-</tal:block>
+</section>

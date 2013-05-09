@@ -24,28 +24,43 @@ Got to '/'::
     >>> browser.open('/')
     >>> 'Events</a>' in browser.contents
     True
-    >>> '@@search-results' in browser.contents
+    >>> '@@search-event-results' in browser.contents
     True
-    >>> 'Folders' in browser.contents
-    False
-    >>> 'Tags' in browser.contents
-    False
 
-Create Event01 FutureYear/05/01-10:00 AM - FutureYear/05/01 11:00 AM::
+    >>> print browser.bycss('#start')
+    --- 1 ---
+    <div id="start">
+    <label class="horizontal">Start Date</label>
+    <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
 
-    >>> from DateTime import DateTime
-    >>> FutureYear = str(DateTime().year() + 1)
+    >>> print browser.bycss('#end')
+    --- 1 ---
+    <div id="end">
+    <label class="horizontal">End Date</label>
+    <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
+
+    >>> print browser.bycss('#words')
+    --- 1 ---
+    <div id="words">
+    <label class="horizontal">Seach Words</label>
+    <input name="words" type="text" value=""></div>
+
+    >>> print browser.bycss('#tags')
+
+    >>> print browser.bycss('#paths')
+
+Create Event01 next_year/05/01-10:00 AM - next_year/05/01 11:00 AM::
+
 
     >>> browser.getLink('Event').click()
-
     >>> browser.getControl(name="title").value = 'Event01'
-    >>> browser.getControl(name="startDate_year").value = [FutureYear]
+    >>> browser.getControl(name="startDate_year").value = [next_year]
     >>> browser.getControl(name="startDate_month").value = ['05']
     >>> browser.getControl(name="startDate_day").value = ['01']
     >>> browser.getControl(name="startDate_hour").value = ['10']
     >>> browser.getControl(name="startDate_minute").value = ['00']
     >>> browser.getControl(name="startDate_ampm").value = ['AM']
-    >>> browser.getControl(name="endDate_year").value = [FutureYear]
+    >>> browser.getControl(name="endDate_year").value = [next_year]
     >>> browser.getControl(name="endDate_month").value = ['05']
     >>> browser.getControl(name="endDate_day").value = ['01']
     >>> browser.getControl(name="endDate_hour").value = ['11']
@@ -55,204 +70,497 @@ Create Event01 FutureYear/05/01-10:00 AM - FutureYear/05/01 11:00 AM::
 
 Search Event with empty field::
 
-    >>> browser.getControl(name="form.buttons.search").click()
-    >>> print browser.bycss("#collective-search-event-results")
+    >>> browser.getControl(name="form.buttons.Search").click()
+
+    >>> print browser.bycss('.documentFirstHeading')
     --- 1 ---
-    <section id="collective-search-event-results"><h1 class="documentFirstHeading">Search Results</h1>    <dl><dt>
+    <h1 class="documentFirstHeading">Search Results</h1>
+
+    >>> print browser.bycss("#search-event-results")
+    --- 1 ---
+    <section id="search-event-results"><dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
     <span class="datetime">May 01, ... 10:00 AM - 11:00 AM</span>
     </dd>
-    </dl></section>
+    </dl><!-- Navigation --></section>
 
-Search - FutureYear/04/30::
-
-    >>> browser.getControl(name="form.widgets.before_date-day").value = '30'
-    >>> browser.getControl(name="form.widgets.before_date-month").value = ['4']
-    >>> browser.getControl(name="form.widgets.before_date-year").value = FutureYear
-    >>> browser.getControl(name="form.buttons.search").click()
-
-    >>> print browser.bycss("#collective-search-event-results")
+    >>> print browser.bycss('#start')
     --- 1 ---
-    <section id="collective-search-event-results"><h1 class="documentFirstHeading">Search Results</h1>    <p>There are no search results found.</p>
+    <div id="start">
+    <label class="horizontal">Start Date</label>
+    <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
+
+    >>> print browser.bycss('#end')
+    --- 1 ---
+    <div id="end">
+    <label class="horizontal">End Date</label>
+    <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
+
+    >>> print browser.bycss('#words')
+    --- 1 ---
+    <div id="words">
+    <label class="horizontal">Seach Words</label>
+    <input name="words" type="text" value=""></div>
+
+    >>> print browser.bycss('#tags')
+
+    >>> print browser.bycss('#paths')
+
+Input no date format value to start and end date::
+
+    >>> browser.getControl(name="start").value = 'START'
+    >>> browser.getControl(name="form.buttons.Search").click()
+
+    >>> print browser.bycss('.portalMessage')
+    --- 1 ---
+    ...
+    --- 2 ---
+    <dl class="portalMessage info"><dt>Info</dt>
+    <dd>Input date format: YEAR-MONTH-DAY like 2013-01-01.</dd>
+    </dl>
+
+    >>> print browser.bycss('#start')
+    --- 1 ---
+    <div id="start">
+    <label class="horizontal">Start Date</label>
+    <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
+
+    >>> print browser.bycss('#end')
+    --- 1 ---
+    <div id="end">
+    <label class="horizontal">End Date</label>
+    <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
+
+    >>> print browser.bycss('#words')
+    --- 1 ---
+    <div id="words">
+    <label class="horizontal">Seach Words</label>
+    <input name="words" type="text" value=""></div>
+
+    >>> print browser.bycss('#tags')
+
+    >>> print browser.bycss('#paths')
+
+Search - next_next_year/04/30::
+
+    >>> date = '{}-04-30'.format(next_next_year)
+
+    >>> browser.getControl(name="start").value = date
+    >>> browser.getControl(name="form.buttons.Search").click()
+
+    >>> print browser.bycss("#search-event-results")
+    --- 1 ---
+    <section id="search-event-results"><p>
+    There are no search results found.
+    </p>
     </section>
 
-Search - FutureYear/05/01::
-
-    >>> browser.getControl(name="form.widgets.before_date-day").value = '1'
-    >>> browser.getControl(name="form.widgets.before_date-month").value = ['5']
-    >>> browser.getControl(name="form.widgets.before_date-year").value = FutureYear
-    >>> browser.getControl(name="form.buttons.search").click()
-
-    >>> print browser.bycss("#collective-search-event-results")
+    >>> print browser.bycss('#start')
     --- 1 ---
-    <section id="collective-search-event-results"><h1 class="documentFirstHeading">Search Results</h1>    <dl><dt>
+    <div id="start">
+    <label class="horizontal">Start Date</label>
+    <input name="start" size="10" type="date" placeholder="...-01-01" value="...-04-30"></div>
+
+    >>> print browser.bycss('#end')
+    --- 1 ---
+    <div id="end">
+    <label class="horizontal">End Date</label>
+    <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
+
+    >>> print browser.bycss('#words')
+    --- 1 ---
+    <div id="words">
+    <label class="horizontal">Seach Words</label>
+    <input name="words" type="text" value=""></div>
+
+    >>> print browser.bycss('#tags')
+
+    >>> print browser.bycss('#paths')
+
+Search - next_year/05/01::
+
+    >>> date = '{}-05-01'.format(next_year)
+    >>> browser.getControl(name="start").value = date
+    >>> browser.getControl(name="form.buttons.Search").click()
+
+    >>> print browser.bycss("#search-event-results")
+    --- 1 ---
+    <section id="search-event-results"><dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
     <span class="datetime">May 01, ... 10:00 AM - 11:00 AM</span>
     </dd>
-    </dl></section>
+    </dl><!-- Navigation --></section>
 
-Search without year::
-
-    >>> browser.getControl(name="form.widgets.before_date-year").value = ''
-    >>> browser.getControl(name="form.buttons.search").click()
-
-    >>> print browser.bycss("#collective-search-event-results")
+    >>> print browser.bycss('#start')
     --- 1 ---
-    <section id="collective-search-event-results"><h1 class="documentFirstHeading">Search Results</h1>    <dl><dt>
-    <a href="http://nohost/plone/event01" title="Event01">Event01</a>
-    </dt>
-    <dd>
-    <span class="datetime">May 01, ... 10:00 AM - 11:00 AM</span>
-    </dd>
-    </dl></section>
+    <div id="start">
+    <label class="horizontal">Start Date</label>
+    <input name="start" size="10" type="date" placeholder="...-01-01" value="...-05-01"></div>
 
-Search FutureYear/05/02 -::
-
-    >>> browser.getControl(name="form.widgets.after_date-day").value = '2'
-    >>> browser.getControl(name="form.widgets.after_date-month").value = ['5']
-    >>> browser.getControl(name="form.widgets.after_date-year").value = FutureYear
-    >>> browser.getControl(name="form.buttons.search").click()
-
-    >>> print browser.bycss("#collective-search-event-results")
+    >>> print browser.bycss('#end')
     --- 1 ---
-    <section id="collective-search-event-results"><h1 class="documentFirstHeading">Search Results</h1>    <p>There are no search results found.</p>
+    <div id="end">
+    <label class="horizontal">End Date</label>
+    <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
+
+    >>> print browser.bycss('#words')
+    --- 1 ---
+    <div id="words">
+    <label class="horizontal">Seach Words</label>
+    <input name="words" type="text" value=""></div>
+
+    >>> print browser.bycss('#tags')
+
+    >>> print browser.bycss('#paths')
+
+Search next_year/05/02 -::
+
+    >>> date = '{}-05-02'.format(next_year)
+    >>> browser.getControl(name="start").value = date
+    >>> browser.getControl(name="form.buttons.Search").click()
+
+    >>> print browser.bycss("#search-event-results")
+    --- 1 ---
+    <section id="search-event-results"><p>
+    There are no search results found.
+    </p>
     </section>
 
-Search FutureYear/05/01 -::
-
-    >>> browser.getControl(name="form.widgets.after_date-day").value = '1'
-    >>> browser.getControl(name="form.widgets.after_date-month").value = ['5']
-    >>> browser.getControl(name="form.widgets.after_date-year").value = FutureYear
-    >>> browser.getControl(name="form.buttons.search").click()
-
-    >>> print browser.bycss("#collective-search-event-results")
+    >>> print browser.bycss('#start')
     --- 1 ---
-    <section id="collective-search-event-results"><h1 class="documentFirstHeading">Search Results</h1>    <dl><dt>
+    <div id="start">
+    <label class="horizontal">Start Date</label>
+    <input name="start" size="10" type="date" placeholder="...-01-01" value="...-05-02"></div>
+
+    >>> print browser.bycss('#end')
+    --- 1 ---
+    <div id="end">
+    <label class="horizontal">End Date</label>
+    <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
+
+    >>> print browser.bycss('#words')
+    --- 1 ---
+    <div id="words">
+    <label class="horizontal">Seach Words</label>
+    <input name="words" type="text" value=""></div>
+
+    >>> print browser.bycss('#tags')
+
+    >>> print browser.bycss('#paths')
+
+Search next_year/05/01 -::
+
+    >>> date = '{}-05-01'.format(next_year)
+    >>> browser.getControl(name="start").value = date
+    >>> browser.getControl(name="form.buttons.Search").click()
+
+    >>> print browser.bycss("#search-event-results")
+    --- 1 ---
+    <section id="search-event-results"><dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
     <span class="datetime">May 01, ... 10:00 AM - 11:00 AM</span>
     </dd>
-    </dl></section>
+    </dl><!-- Navigation --></section>
 
-Search FutureYear/04/30 -::
-
-    >>> browser.getControl(name="form.widgets.after_date-day").value = '30'
-    >>> browser.getControl(name="form.widgets.after_date-month").value = ['4']
-    >>> browser.getControl(name="form.widgets.after_date-year").value = FutureYear
-    >>> browser.getControl(name="form.buttons.search").click()
-
-    >>> print browser.bycss("#collective-search-event-results")
+    >>> print browser.bycss('#start')
     --- 1 ---
-    <section id="collective-search-event-results"><h1 class="documentFirstHeading">Search Results</h1>    <dl><dt>
+    <div id="start">
+    <label class="horizontal">Start Date</label>
+    <input name="start" size="10" type="date" placeholder="...-01-01" value="...-05-01"></div>
+
+    >>> print browser.bycss('#end')
+    --- 1 ---
+    <div id="end">
+    <label class="horizontal">End Date</label>
+    <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
+
+    >>> print browser.bycss('#words')
+    --- 1 ---
+    <div id="words">
+    <label class="horizontal">Seach Words</label>
+    <input name="words" type="text" value=""></div>
+
+    >>> print browser.bycss('#tags')
+
+    >>> print browser.bycss('#paths')
+
+Search next_year/04/30 -::
+
+    >>> date = '{}-04-30'.format(next_year)
+    >>> browser.getControl(name="start").value = date
+    >>> browser.getControl(name="form.buttons.Search").click()
+
+    >>> print browser.bycss("#search-event-results")
+    --- 1 ---
+    <section id="search-event-results"><dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
     <span class="datetime">May 01, ... 10:00 AM - 11:00 AM</span>
     </dd>
-    </dl></section>
+    </dl><!-- Navigation --></section>
 
-Search FutureYear/04/30 - FutureYear/04/30::
-
-    >>> browser.getControl(name="form.widgets.before_date-day").value = '30'
-    >>> browser.getControl(name="form.widgets.before_date-month").value = ['4']
-    >>> browser.getControl(name="form.widgets.before_date-year").value = FutureYear
-    >>> browser.getControl(name="form.buttons.search").click()
-
-    >>> print browser.bycss("#collective-search-event-results")
+    >>> print browser.bycss('#start')
     --- 1 ---
-    <section id="collective-search-event-results"><h1 class="documentFirstHeading">Search Results</h1>    <p>There are no search results found.</p>
+    <div id="start">
+    <label class="horizontal">Start Date</label>
+    <input name="start" size="10" type="date" placeholder="...-01-01" value="...-04-30"></div>
+
+    >>> print browser.bycss('#end')
+    --- 1 ---
+    <div id="end">
+    <label class="horizontal">End Date</label>
+    <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
+
+    >>> print browser.bycss('#words')
+    --- 1 ---
+    <div id="words">
+    <label class="horizontal">Seach Words</label>
+    <input name="words" type="text" value=""></div>
+
+    >>> print browser.bycss('#tags')
+
+    >>> print browser.bycss('#paths')
+
+Search next_year/04/30 - next_year/04/30::
+
+    >>> browser.getControl(name="end").value = date
+    >>> browser.getControl(name="form.buttons.Search").click()
+
+    >>> print browser.bycss("#search-event-results")
+    --- 1 ---
+    <section id="search-event-results"><p>
+    There are no search results found.
+    </p>
     </section>
 
-Search FutureYear/04/30 - FutureYear/05/01::
-
-    >>> browser.getControl(name="form.widgets.before_date-day").value = '1'
-    >>> browser.getControl(name="form.widgets.before_date-month").value = ['5']
-    >>> browser.getControl(name="form.buttons.search").click()
-
-    >>> print browser.bycss("#collective-search-event-results")
+    >>> print browser.bycss('#start')
     --- 1 ---
-    <section id="collective-search-event-results"><h1 class="documentFirstHeading">Search Results</h1>    <dl><dt>
+    <div id="start">
+    <label class="horizontal">Start Date</label>
+    <input name="start" size="10" type="date" placeholder="...-01-01" value="...-04-30"></div>
+
+    >>> print browser.bycss('#end')
+    --- 1 ---
+    <div id="end">
+    <label class="horizontal">End Date</label>
+    <input name="end" size="10" type="date" placeholder="...-12-31" value="...-04-30"></div>
+
+    >>> print browser.bycss('#words')
+    --- 1 ---
+    <div id="words">
+    <label class="horizontal">Seach Words</label>
+    <input name="words" type="text" value=""></div>
+
+    >>> print browser.bycss('#tags')
+
+    >>> print browser.bycss('#paths')
+
+Search next_year/04/30 - next_year/05/01::
+
+    >>> date = '{}-05-01'.format(next_year)
+    >>> browser.getControl(name="end").value = date
+    >>> browser.getControl(name="form.buttons.Search").click()
+
+    >>> print browser.bycss("#search-event-results")
+    --- 1 ---
+    <section id="search-event-results"><dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
     <span class="datetime">May 01, ... 10:00 AM - 11:00 AM</span>
     </dd>
-    </dl></section>
+    </dl><!-- Navigation --></section>
 
-Search FutureYear/04/30 - FutureYear/05/02::
-
-    >>> browser.getControl(name="form.widgets.before_date-day").value = '2'
-    >>> browser.getControl(name="form.buttons.search").click()
-
-    >>> print browser.bycss("#collective-search-event-results")
+    >>> print browser.bycss('#start')
     --- 1 ---
-    <section id="collective-search-event-results"><h1 class="documentFirstHeading">Search Results</h1>    <dl><dt>
+    <div id="start">
+    <label class="horizontal">Start Date</label>
+    <input name="start" size="10" type="date" placeholder="...-01-01" value="...-04-30"></div>
+
+    >>> print browser.bycss('#end')
+    --- 1 ---
+    <div id="end">
+    <label class="horizontal">End Date</label>
+    <input name="end" size="10" type="date" placeholder="...-12-31" value="...-05-01"></div>
+
+    >>> print browser.bycss('#words')
+    --- 1 ---
+    <div id="words">
+    <label class="horizontal">Seach Words</label>
+    <input name="words" type="text" value=""></div>
+
+    >>> print browser.bycss('#tags')
+
+    >>> print browser.bycss('#paths')
+
+Search next_year/04/30 - next_year/05/02::
+
+    >>> date = '{}-05-02'.format(next_year)
+    >>> browser.getControl(name="end").value = date
+    >>> browser.getControl(name="form.buttons.Search").click()
+
+    >>> print browser.bycss("#search-event-results")
+    --- 1 ---
+    <section id="search-event-results"><dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
     <span class="datetime">May 01, ... 10:00 AM - 11:00 AM</span>
     </dd>
-    </dl></section>
+    </dl><!-- Navigation --></section>
 
-Search FutureYear/04/30 - FutureYear/05/02 with words AAA::
-
-    >>> browser.getControl(name="form.widgets.words").value = 'AAA'
-    >>> browser.getControl(name="form.buttons.search").click()
-
-    >>> print browser.bycss("#collective-search-event-results")
+    >>> print browser.bycss('#start')
     --- 1 ---
-    <section id="collective-search-event-results"><h1 class="documentFirstHeading">Search Results</h1>    <p>There are no search results found.</p>
+    <div id="start">
+    <label class="horizontal">Start Date</label>
+    <input name="start" size="10" type="date" placeholder="...-01-01" value="...-04-30"></div>
+
+    >>> print browser.bycss('#end')
+    --- 1 ---
+    <div id="end">
+    <label class="horizontal">End Date</label>
+    <input name="end" size="10" type="date" placeholder="...-12-31" value="...-05-02"></div>
+
+    >>> print browser.bycss('#words')
+    --- 1 ---
+    <div id="words">
+    <label class="horizontal">Seach Words</label>
+    <input name="words" type="text" value=""></div>
+
+    >>> print browser.bycss('#tags')
+
+    >>> print browser.bycss('#paths')
+
+Search next_year/04/30 - next_year/05/02 with words AAA::
+
+    >>> browser.getControl(name="words").value = 'AAA'
+    >>> browser.getControl(name="form.buttons.Search").click()
+
+    >>> print browser.bycss("#search-event-results")
+    --- 1 ---
+    <section id="search-event-results"><p>
+    There are no search results found.
+    </p>
     </section>
 
-Search FutureYear/04/30 - FutureYear/05/02 with words Event01::
-
-    >>> browser.getControl(name="form.widgets.words").value = 'Event01'
-    >>> browser.getControl(name="form.buttons.search").click()
-
-    >>> print browser.bycss("#collective-search-event-results")
+    >>> print browser.bycss('#start')
     --- 1 ---
-    <section id="collective-search-event-results"><h1 class="documentFirstHeading">Search Results</h1>    <dl><dt>
+    <div id="start">
+    <label class="horizontal">Start Date</label>
+    <input name="start" size="10" type="date" placeholder="...-01-01" value="...-04-30"></div>
+
+    >>> print browser.bycss('#end')
+    --- 1 ---
+    <div id="end">
+    <label class="horizontal">End Date</label>
+    <input name="end" size="10" type="date" placeholder="...-12-31" value="...-05-02"></div>
+
+    >>> print browser.bycss('#words')
+    --- 1 ---
+    <div id="words">
+    <label class="horizontal">Seach Words</label>
+    <input name="words" type="text" value="AAA"></div>
+
+    >>> print browser.bycss('#tags')
+
+    >>> print browser.bycss('#paths')
+
+Search next_year/04/30 - next_year/05/02 with words Event01::
+
+    >>> browser.getControl(name="words").value = 'Event01'
+    >>> browser.getControl(name="form.buttons.Search").click()
+
+    >>> print browser.bycss("#search-event-results")
+    --- 1 ---
+    <section id="search-event-results"><dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
     <span class="datetime">May 01, ... 10:00 AM - 11:00 AM</span>
     </dd>
-    </dl></section>
+    </dl><!-- Navigation --></section>
+
+    >>> print browser.bycss('#start')
+    --- 1 ---
+    <div id="start">
+    <label class="horizontal">Start Date</label>
+    <input name="start" size="10" type="date" placeholder="...-01-01" value="...-04-30"></div>
+
+    >>> print browser.bycss('#end')
+    --- 1 ---
+    <div id="end">
+    <label class="horizontal">End Date</label>
+    <input name="end" size="10" type="date" placeholder="...-12-31" value="...-05-02"></div>
+
+    >>> print browser.bycss('#words')
+    --- 1 ---
+    <div id="words">
+    <label class="horizontal">Seach Words</label>
+    <input name="words" type="text" value="Event01"></div>
+
+    >>> print browser.bycss('#tags')
+
+    >>> print browser.bycss('#paths')
 
 Search only with words Event01::
 
-    >>> browser.getControl(name="form.widgets.words").value = 'Event01'
-    >>> browser.getControl(name="form.widgets.after_date-year").value = ''
-    >>> browser.getControl(name="form.widgets.before_date-year").value = ''
-    >>> browser.getControl(name="form.buttons.search").click()
+    >>> browser.getControl(name="start").value = ''
+    >>> browser.getControl(name="end").value = ''
+    >>> browser.getControl(name="words").value = 'Event01'
+    >>> browser.getControl(name="form.buttons.Search").click()
 
-    >>> print browser.bycss("#collective-search-event-results")
+    >>> print browser.bycss("#search-event-results")
     --- 1 ---
-    <section id="collective-search-event-results"><h1 class="documentFirstHeading">Search Results</h1>    <dl><dt>
+    <section id="search-event-results"><dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
     <span class="datetime">May 01, ... 10:00 AM - 11:00 AM</span>
     </dd>
-    </dl></section>
+    </dl><!-- Navigation --></section>
 
-Create Event02 FutureYear/05/02-10:00 AM - FutureYear/05/03 10:00 AM::
+    >>> print browser.bycss('#start')
+    --- 1 ---
+    <div id="start">
+    <label class="horizontal">Start Date</label>
+    <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
+
+    >>> print browser.bycss('#end')
+    --- 1 ---
+    <div id="end">
+    <label class="horizontal">End Date</label>
+    <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
+
+    >>> print browser.bycss('#words')
+    --- 1 ---
+    <div id="words">
+    <label class="horizontal">Seach Words</label>
+    <input name="words" type="text" value="Event01"></div>
+
+    >>> print browser.bycss('#tags')
+
+    >>> print browser.bycss('#paths')
+
+
+Create Event02 next_year/05/02-10:00 AM - next_year/05/03 10:00 AM::
 
     >>> browser.open('/createObject?type_name=Event')
 
     >>> browser.getControl(name="title").value = 'Event02'
-    >>> browser.getControl(name="startDate_year").value = [FutureYear]
+    >>> browser.getControl(name="startDate_year").value = [next_year]
     >>> browser.getControl(name="startDate_month").value = ['05']
     >>> browser.getControl(name="startDate_day").value = ['02']
     >>> browser.getControl(name="startDate_hour").value = ['10']
     >>> browser.getControl(name="startDate_minute").value = ['00']
     >>> browser.getControl(name="startDate_ampm").value = ['AM']
-    >>> browser.getControl(name="endDate_year").value = [FutureYear]
+    >>> browser.getControl(name="endDate_year").value = [next_year]
     >>> browser.getControl(name="endDate_month").value = ['05']
     >>> browser.getControl(name="endDate_day").value = ['03']
     >>> browser.getControl(name="endDate_hour").value = ['10']
@@ -262,27 +570,49 @@ Create Event02 FutureYear/05/02-10:00 AM - FutureYear/05/03 10:00 AM::
 
 Search only with words Event01::
 
-    >>> browser.getControl(name="form.widgets.words").value = 'Event01'
-    >>> browser.getControl(name="form.buttons.search").click()
+    >>> browser.getControl(name="words").value = 'Event01'
+    >>> browser.getControl(name="form.buttons.Search").click()
 
-    >>> print browser.bycss("#collective-search-event-results")
+    >>> print browser.bycss("#search-event-results")
     --- 1 ---
-    <section id="collective-search-event-results"><h1 class="documentFirstHeading">Search Results</h1>    <dl><dt>
+    <section id="search-event-results"><dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
     <span class="datetime">May 01, ... 10:00 AM - 11:00 AM</span>
     </dd>
-    </dl></section>
+    </dl><!-- Navigation --></section>
+
+    >>> print browser.bycss('#start')
+    --- 1 ---
+    <div id="start">
+    <label class="horizontal">Start Date</label>
+    <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
+
+    >>> print browser.bycss('#end')
+    --- 1 ---
+    <div id="end">
+    <label class="horizontal">End Date</label>
+    <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
+
+    >>> print browser.bycss('#words')
+    --- 1 ---
+    <div id="words">
+    <label class="horizontal">Seach Words</label>
+    <input name="words" type="text" value="Event01"></div>
+
+    >>> print browser.bycss('#tags')
+
+    >>> print browser.bycss('#paths')
 
 Search with empy fields::
 
-    >>> browser.getControl(name="form.widgets.words").value = ''
-    >>> browser.getControl(name="form.buttons.search").click()
+    >>> browser.getControl(name="words").value = ''
+    >>> browser.getControl(name="form.buttons.Search").click()
 
-    >>> print browser.bycss("#collective-search-event-results")
+    >>> print browser.bycss("#search-event-results")
     --- 1 ---
-    <section id="collective-search-event-results"><h1 class="documentFirstHeading">Search Results</h1>    <dl><dt>
+    <section id="search-event-results"><dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
@@ -294,7 +624,29 @@ Search with empy fields::
     <dd>
     <span class="datetime">May 02, ... 10:00 AM - May 03, ... 10:00 AM</span>
     </dd>
-    </dl></section>
+    </dl><!-- Navigation --></section>
+
+    >>> print browser.bycss('#start')
+    --- 1 ---
+    <div id="start">
+    <label class="horizontal">Start Date</label>
+    <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
+
+    >>> print browser.bycss('#end')
+    --- 1 ---
+    <div id="end">
+    <label class="horizontal">End Date</label>
+    <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
+
+    >>> print browser.bycss('#words')
+    --- 1 ---
+    <div id="words">
+    <label class="horizontal">Seach Words</label>
+    <input name="words" type="text" value=""></div>
+
+    >>> print browser.bycss('#tags')
+
+    >>> print browser.bycss('#paths')
 
 Create Folder01::
 
@@ -303,18 +655,18 @@ Create Folder01::
     >>> browser.getControl(name="title").value = 'Folder01'
     >>> browser.getControl(name="form.button.save").click()
 
-Create Event03 FutureYear/05/04-10:00 AM - FutureYear/05/04 11:00 AM under Folder01::
+Create Event03 next_year/05/04-10:00 AM - next_year/05/04 11:00 AM under Folder01::
 
     >>> browser.open('/folder01/createObject?type_name=Event')
 
     >>> browser.getControl(name="title").value = 'Event03'
-    >>> browser.getControl(name="startDate_year").value = [FutureYear]
+    >>> browser.getControl(name="startDate_year").value = [next_year]
     >>> browser.getControl(name="startDate_month").value = ['05']
     >>> browser.getControl(name="startDate_day").value = ['04']
     >>> browser.getControl(name="startDate_hour").value = ['10']
     >>> browser.getControl(name="startDate_minute").value = ['00']
     >>> browser.getControl(name="startDate_ampm").value = ['AM']
-    >>> browser.getControl(name="endDate_year").value = [FutureYear]
+    >>> browser.getControl(name="endDate_year").value = [next_year]
     >>> browser.getControl(name="endDate_month").value = ['05']
     >>> browser.getControl(name="endDate_day").value = ['04']
     >>> browser.getControl(name="endDate_hour").value = ['11']
@@ -345,10 +697,32 @@ Go to portlet to set tags::
 
     >>> browser.open('/')
 
-    >>> 'Tags' in browser.contents
-    True
-    >>> 'Folders' in browser.contents
-    False
+    >>> print browser.bycss('#start')
+    --- 1 ---
+    <div id="start">
+    <label class="horizontal">Start Date</label>
+    <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
+
+    >>> print browser.bycss('#end')
+    --- 1 ---
+    <div id="end">
+    <label class="horizontal">End Date</label>
+    <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
+
+    >>> print browser.bycss('#words')
+    --- 1 ---
+    <div id="words">
+    <label class="horizontal">Seach Words</label>
+    <input name="words" type="text" value=""></div>
+
+    >>> print browser.bycss('#tags')
+    --- 1 ---
+    <div id="tags">
+    <label class="horizontal">Tags</label>
+    <input name="tags" type="checkbox" value="T&#228;g01"><span class="label">T&#228;g01</span>
+    </div>
+
+    >>> print browser.bycss('#paths')
 
 Set Folder01 as path::
 
@@ -364,18 +738,45 @@ Go to '/'::
 
     >>> browser.open('/')
 
-    >>> 'Tags' in browser.contents
-    True
-    >>> 'Folders' in browser.contents
-    True
+    >>> print browser.bycss('#start')
+    --- 1 ---
+    <div id="start">
+    <label class="horizontal">Start Date</label>
+    <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
+
+    >>> print browser.bycss('#end')
+    --- 1 ---
+    <div id="end">
+    <label class="horizontal">End Date</label>
+    <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
+
+    >>> print browser.bycss('#words')
+    --- 1 ---
+    <div id="words">
+    <label class="horizontal">Seach Words</label>
+    <input name="words" type="text" value=""></div>
+
+    >>> print browser.bycss('#tags')
+    --- 1 ---
+    <div id="tags">
+    <label class="horizontal">Tags</label>
+    <input name="tags" type="checkbox" value="T&#228;g01"><span class="label">T&#228;g01</span>
+    </div>
+
+    >>> print browser.bycss('#paths')
+    --- 1 ---
+    <div id="paths">
+    <label class="horizontal">Folders</label>
+    <input name="paths" type="checkbox" value="/plone/folder01"><span class="label">Folder01</span>
+    </div>
 
 Search with empy fields::
 
-    >>> browser.getControl(name="form.buttons.search").click()
+    >>> browser.getControl(name="form.buttons.Search").click()
 
-    >>> print browser.bycss("#collective-search-event-results")
+    >>> print browser.bycss("#search-event-results")
     --- 1 ---
-    <section id="collective-search-event-results"><h1 class="documentFirstHeading">Search Results</h1>    <dl><dt>
+    <section id="search-event-results"><dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
@@ -393,22 +794,86 @@ Search with empy fields::
     <dd>
     <span class="datetime">May 04, ... 10:00 AM - 11:00 AM</span>
     </dd>
-    </dl></section>
+    </dl><!-- Navigation --></section>
+
+    >>> print browser.bycss('#start')
+    --- 1 ---
+    <div id="start">
+    <label class="horizontal">Start Date</label>
+    <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
+
+    >>> print browser.bycss('#end')
+    --- 1 ---
+    <div id="end">
+    <label class="horizontal">End Date</label>
+    <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
+
+    >>> print browser.bycss('#words')
+    --- 1 ---
+    <div id="words">
+    <label class="horizontal">Seach Words</label>
+    <input name="words" type="text" value=""></div>
+
+    >>> print browser.bycss('#tags')
+    --- 1 ---
+    <div id="tags">
+    <label class="horizontal">Tags</label>
+    <input name="tags" type="checkbox" value="T&#228;g01"><span class="label">T&#228;g01</span>
+    </div>
+
+    >>> print browser.bycss('#paths')
+    --- 1 ---
+    <div id="paths">
+    <label class="horizontal">Folders</label>
+    <input name="paths" type="checkbox" value="/plone/folder01"><span class="label">Folder01</span>
+    </div>
 
 Search with tag::
 
-    >>> browser.getControl(name="form.widgets.tags:list").value = ['Täg01']
-    >>> browser.getControl(name="form.buttons.search").click()
+    >>> browser.getControl(name="tags").value = ['Täg01']
+    >>> browser.getControl(name="form.buttons.Search").click()
 
-    >>> print browser.bycss("#collective-search-event-results")
+    >>> print browser.bycss("#search-event-results")
     --- 1 ---
-    <section id="collective-search-event-results"><h1 class="documentFirstHeading">Search Results</h1>    <dl><dt>
+    <section id="search-event-results"><dl><dt>
     <a href="http://nohost/plone/folder01/event03" title="Event03">Event03</a>
     </dt>
     <dd>
     <span class="datetime">May 04, ... 10:00 AM - 11:00 AM</span>
     </dd>
-    </dl></section>
+    </dl><!-- Navigation --></section>
+
+    >>> print browser.bycss('#start')
+    --- 1 ---
+    <div id="start">
+    <label class="horizontal">Start Date</label>
+    <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
+
+    >>> print browser.bycss('#end')
+    --- 1 ---
+    <div id="end">
+    <label class="horizontal">End Date</label>
+    <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
+
+    >>> print browser.bycss('#words')
+    --- 1 ---
+    <div id="words">
+    <label class="horizontal">Seach Words</label>
+    <input name="words" type="text" value=""></div>
+
+    >>> print browser.bycss('#tags')
+    --- 1 ---
+    <div id="tags">
+    <label class="horizontal">Tags</label>
+    <input name="tags" type="checkbox" checked value="T&#228;g01"><span class="label">T&#228;g01</span>
+    </div>
+
+    >>> print browser.bycss('#paths')
+    --- 1 ---
+    <div id="paths">
+    <label class="horizontal">Folders</label>
+    <input name="paths" type="checkbox" value="/plone/folder01"><span class="label">Folder01</span>
+    </div>
 
 Create Folder02::
 
@@ -417,18 +882,18 @@ Create Folder02::
     >>> browser.getControl(name="title").value = 'Folder02'
     >>> browser.getControl(name="form.button.save").click()
 
-Create Event04 FutureYear/05/05-10:00 AM - FutureYear/05/06 10:00 AM under Folder02::
+Create Event04 next_year/05/05-10:00 AM - next_year/05/06 10:00 AM under Folder02::
 
     >>> browser.open('/folder02/createObject?type_name=Event')
 
     >>> browser.getControl(name="title").value = 'Event04'
-    >>> browser.getControl(name="startDate_year").value = [FutureYear]
+    >>> browser.getControl(name="startDate_year").value = [next_year]
     >>> browser.getControl(name="startDate_month").value = ['05']
     >>> browser.getControl(name="startDate_day").value = ['05']
     >>> browser.getControl(name="startDate_hour").value = ['10']
     >>> browser.getControl(name="startDate_minute").value = ['00']
     >>> browser.getControl(name="startDate_ampm").value = ['AM']
-    >>> browser.getControl(name="endDate_year").value = [FutureYear]
+    >>> browser.getControl(name="endDate_year").value = [next_year]
     >>> browser.getControl(name="endDate_month").value = ['05']
     >>> browser.getControl(name="endDate_day").value = ['06']
     >>> browser.getControl(name="endDate_hour").value = ['10']
@@ -471,39 +936,110 @@ Go to '/'::
 
 Search from Folder02::
 
-    >>> browser.getControl(name="form.widgets.paths:list").value = ['/plone/folder02']
-    >>> browser.getControl(name="form.buttons.search").click()
+    >>> browser.getControl(name="paths").value = ['/plone/folder02']
+    >>> browser.getControl(name="form.buttons.Search").click()
 
-    >>> print browser.bycss("#collective-search-event-results")
+    >>> print browser.bycss("#search-event-results")
     --- 1 ---
-    <section id="collective-search-event-results"><h1 class="documentFirstHeading">Search Results</h1>    <dl><dt>
+    <section id="search-event-results"><dl><dt>
     <a href="http://nohost/plone/folder02/event04" title="Event04">Event04</a>
     </dt>
     <dd>
     <span class="datetime">May 05, ... 10:00 AM - May 06, ... 10:00 AM</span>
     </dd>
-    </dl></section>
+    </dl><!-- Navigation --></section>
+
+
+    >>> print browser.bycss('#start')
+    --- 1 ---
+    <div id="start">
+    <label class="horizontal">Start Date</label>
+    <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
+
+    >>> print browser.bycss('#end')
+    --- 1 ---
+    <div id="end">
+    <label class="horizontal">End Date</label>
+    <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
+
+    >>> print browser.bycss('#words')
+    --- 1 ---
+    <div id="words">
+    <label class="horizontal">Seach Words</label>
+    <input name="words" type="text" value=""></div>
+
+    >>> print browser.bycss('#tags')
+    --- 1 ---
+    <div id="tags">
+    <label class="horizontal">Tags</label>
+    <input name="tags" type="checkbox" value="T&#246;g02"><span class="label">T&#246;g02</span>
+    <input name="tags" type="checkbox" value="T&#228;g01"><span class="label">T&#228;g01</span>
+    </div>
+
+    >>> print browser.bycss('#paths')
+    --- 1 ---
+    <div id="paths">
+    <label class="horizontal">Folders</label>
+    <input name="paths" type="checkbox" value="/plone/folder01"><span class="label">Folder01</span>
+    <input name="paths" type="checkbox" checked value="/plone/folder02"><span class="label">Folder02</span>
+    </div>
 
 Seach from Folder02 but also with Tag01::
 
-    >>> browser.getControl(name="form.widgets.tags:list").value = ['Täg01']
-    >>> browser.getControl(name="form.widgets.paths:list").value = ['/plone/folder02']
-    >>> browser.getControl(name="form.buttons.search").click()
+    >>> browser.getControl(name="tags").value = ['Täg01']
+    >>> browser.getControl(name="paths").value = ['/plone/folder02']
+    >>> browser.getControl(name="form.buttons.Search").click()
 
-    >>> print browser.bycss("#collective-search-event-results")
+    >>> print browser.bycss("#search-event-results")
     --- 1 ---
-    <section id="collective-search-event-results"><h1 class="documentFirstHeading">Search Results</h1>    <p>There are no search results found.</p>
+    <section id="search-event-results"><p>
+    There are no search results found.
+    </p>
     </section>
+
+    >>> print browser.bycss('#start')
+    --- 1 ---
+    <div id="start">
+    <label class="horizontal">Start Date</label>
+    <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
+
+    >>> print browser.bycss('#end')
+    --- 1 ---
+    <div id="end">
+    <label class="horizontal">End Date</label>
+    <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
+
+    >>> print browser.bycss('#words')
+    --- 1 ---
+    <div id="words">
+    <label class="horizontal">Seach Words</label>
+    <input name="words" type="text" value=""></div>
+
+    >>> print browser.bycss('#tags')
+    --- 1 ---
+    <div id="tags">
+    <label class="horizontal">Tags</label>
+    <input name="tags" type="checkbox" value="T&#246;g02"><span class="label">T&#246;g02</span>
+    <input name="tags" type="checkbox" checked value="T&#228;g01"><span class="label">T&#228;g01</span>
+    </div>
+
+    >>> print browser.bycss('#paths')
+    --- 1 ---
+    <div id="paths">
+    <label class="horizontal">Folders</label>
+    <input name="paths" type="checkbox" value="/plone/folder01"><span class="label">Folder01</span>
+    <input name="paths" type="checkbox" checked value="/plone/folder02"><span class="label">Folder02</span>
+    </div>
 
 Search Event with empty field::
 
-    >>> browser.getControl(name="form.widgets.tags:list").value = []
-    >>> browser.getControl(name="form.widgets.paths:list").value = []
-    >>> browser.getControl(name="form.buttons.search").click()
+    >>> browser.getControl(name="tags").value = []
+    >>> browser.getControl(name="paths").value = []
+    >>> browser.getControl(name="form.buttons.Search").click()
 
-    >>> print browser.bycss("#collective-search-event-results")
+    >>> print browser.bycss("#search-event-results")
     --- 1 ---
-    <section id="collective-search-event-results"><h1 class="documentFirstHeading">Search Results</h1>    <dl><dt>
+    <section id="search-event-results"><dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
@@ -527,7 +1063,41 @@ Search Event with empty field::
     <dd>
     <span class="datetime">...</span>
     </dd>
-    </dl></section>
+    </dl><!-- Navigation --></section>
+
+    >>> print browser.bycss('#start')
+    --- 1 ---
+    <div id="start">
+    <label class="horizontal">Start Date</label>
+    <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
+
+    >>> print browser.bycss('#end')
+    --- 1 ---
+    <div id="end">
+    <label class="horizontal">End Date</label>
+    <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
+
+    >>> print browser.bycss('#words')
+    --- 1 ---
+    <div id="words">
+    <label class="horizontal">Seach Words</label>
+    <input name="words" type="text" value=""></div>
+
+    >>> print browser.bycss('#tags')
+    --- 1 ---
+    <div id="tags">
+    <label class="horizontal">Tags</label>
+    <input name="tags" type="checkbox" value="T&#246;g02"><span class="label">T&#246;g02</span>
+    <input name="tags" type="checkbox" value="T&#228;g01"><span class="label">T&#228;g01</span>
+    </div>
+
+    >>> print browser.bycss('#paths')
+    --- 1 ---
+    <div id="paths">
+    <label class="horizontal">Folders</label>
+    <input name="paths" type="checkbox" value="/plone/folder01"><span class="label">Folder01</span>
+    <input name="paths" type="checkbox" value="/plone/folder02"><span class="label">Folder02</span>
+    </div>
 
 Set batch size into 2::
 
@@ -547,11 +1117,10 @@ Search::
 
     >>> browser.open('/')
 
-    >>> browser.getControl(name="form.buttons.search").click()
-
-    >>> print browser.bycss("#collective-search-event-results")
+    >>> browser.getControl(name="form.buttons.Search").click()
+    >>> print browser.bycss("#search-event-results")
     --- 1 ---
-    <section id="collective-search-event-results"><h1 class="documentFirstHeading">Search Results</h1>    <dl><dt>
+    <section id="search-event-results"><dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
@@ -563,16 +1132,16 @@ Search::
     <dd>
     <span class="datetime">...</span>
     </dd>
-    </dl><div class="listingBar">
+    </dl><!-- Navigation --><div class="listingBar">
     <span class="next">
     ...
 
 Go to Next 2 items::
 
     >>> browser.getLink('Next 2 items').click()
-    >>> print browser.bycss("#collective-search-event-results")
+    >>> print browser.bycss("#search-event-results")
     --- 1 ---
-    <section id="collective-search-event-results"><h1 class="documentFirstHeading">Search Results</h1>    <dl><dt>
+    <section id="search-event-results"><dl><dt>
     <a href="http://nohost/plone/folder01/event03" title="Event03">Event03</a>
     </dt>
     <dd>
@@ -584,16 +1153,16 @@ Go to Next 2 items::
     <dd>
     <span class="datetime">...</span>
     </dd>
-    </dl><div class="listingBar">
+    </dl><!-- Navigation --><div class="listingBar">
     <span class="previous">
     ...
 
 Go to Previous 2 items::
 
     >>> browser.getLink('Previous 2 items').click()
-    >>> print browser.bycss("#collective-search-event-results")
+    >>> print browser.bycss("#search-event-results")
     --- 1 ---
-    <section id="collective-search-event-results"><h1 class="documentFirstHeading">Search Results</h1>    <dl><dt>
+    <section id="search-event-results"><dl><dt>
     <a href="http://nohost/plone/event01" title="Event01">Event01</a>
     </dt>
     <dd>
@@ -605,6 +1174,6 @@ Go to Previous 2 items::
     <dd>
     <span class="datetime">...</span>
     </dd>
-    </dl><div class="listingBar">
+    </dl><!-- Navigation --><div class="listingBar">
     <span class="next">
     ...

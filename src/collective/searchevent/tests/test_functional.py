@@ -29,12 +29,20 @@ def setUp(self):
     layer = self.globs['layer']
     portal = layer['portal']
     browser = Browser(layer['app'])
-    # Update global variables within the tests.
+
+    current_year = DateTime().year()
+    next_year = str(current_year + 1)
+    next_next_year = str(current_year + 2)
+    current_year = str(current_year)
+
     self.globs.update({
-        'portal': portal,
-        'browser': browser,
         'TEST_USER_NAME': TEST_USER_NAME,
         'TEST_USER_PASSWORD': TEST_USER_PASSWORD,
+        'browser': browser,
+        'current_year': current_year,
+        'next_next_year': next_next_year,
+        'next_year': next_year,
+        'portal': portal,
     })
 
     browser.setBaseUrl(portal.absolute_url())
@@ -54,8 +62,6 @@ def setUp(self):
         )
     ]
     folder.reindexObject()
-
-    self.globs.update({'FUTURE_YEAR': str(DateTime().year() + 1)})
 
     transaction.commit()
 

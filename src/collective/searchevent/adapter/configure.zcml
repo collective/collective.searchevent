@@ -1,0 +1,18 @@
+<configure
+  i18n_domain="collective.searchevent"
+  xmlns:i18n="http://namespaces.zope.org/i18n"
+  xmlns="http://namespaces.zope.org/zope">
+
+  <adapter
+    factory=".interface.SearchEventResults"
+    for="* zope.publisher.interfaces.browser.IBrowserRequest"
+    provides="collective.searchevent.interfaces.ISearchEventResults"
+    />
+
+  <adapter
+    factory=".listing.ItemText"
+    for="plone.app.contentlisting.interfaces.IContentListingObject"
+    provides="collective.searchevent.interfaces.IItemText"
+    />
+
+</configure>

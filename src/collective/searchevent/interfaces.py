@@ -14,12 +14,6 @@ class ISearchEventResults(Interface):
         """Returns search event results."""
 
 
-class IItemDateTime(Interface):
-
-    def __call__():  # pragma: no cover
-        """Returns localized datetime."""
-
-
 class IItemText(Interface):
 
     def __call__():  # pragma: no cover

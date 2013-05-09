@@ -1,17 +1,82 @@
-<tal:block i18n:domain="collective.searchevent">
-  <dl class="portlet collectiveSearchEventPortlet">
-    <dt class="portletHeader">
-      <span class="portletTopLeft"></span>
-      <a href="#"
-         class="tile"
-         tal:attributes="href view/search_results_url"
-         tal:content="view/title"
-         tal:condition="view/title"
-         >Events</a>
-      <span class="portletTopRight"></span>
-    </dt>
-    <dd class="portletItem">
-      <form tal:replace="structure view/form" />
-    </dd>
-  </dl>
-</tal:block>
+<dl i18n:domain="collective.searchevent" class="portlet collectiveSearchEventPortlet">
+  <dt class="portletHeader">
+    <span class="portletTopLeft"></span>
+    <a href="#"
+       class="tile"
+       tal:attributes="href view/search_results_url"
+       tal:content="view/title"
+       tal:condition="view/title"
+       >Events</a>
+    <span class="portletTopRight"></span>
+  </dt>
+  <dd class="portletItem">
+    <form method="post" tal:attributes="action view/search_results_url">
+      <div id="start" tal:define="item view/start">
+        <label class="horizontal" i18n:translate="">Start Date</label>
+        <input
+          name="start"
+          size="10"
+          tal:attributes="
+            placeholder item/placeholder;
+            value item/value"
+          type="date"
+          />
+      </div>
+      <div id="end" tal:define="item view/end">
+        <label class="horizontal" i18n:translate="">End Date</label>
+        <input
+          name="end"
+          size="10"
+          tal:attributes="
+            placeholder item/placeholder;
+            value item/value"
+          type="date"
+          />
+      </div>
+      <div id="words">
+        <label class="horizontal" i18n:translate="">Seach Words</label>
+        <input
+          name="words"
+          tal:attributes="value view/words"
+          type="text"
+          />
+      </div>
+      <div id="tags" tal:condition="view/tags" tal:define="item view/tags">
+        <label class="horizontal" tal:content="item/title" />
+        <tal:block tal:repeat="name item/names">
+          <input
+            name="tags"
+            tal:attributes="
+              checked name/checked;
+              value name/key"
+            type="checkbox"
+            />
+          <span class="label" tal:content="name/key" />
+        </tal:block>
+      </div>
+      <div id="paths" tal:condition="view/paths" tal:define="item view/paths">
+        <label class="horizontal" tal:content="item/title" />
+        <tal:block tal:repeat="name item/names">
+          <input
+            name="paths"
+            tal:attributes="
+              checked name/checked;
+              value name/key"
+            type="checkbox"
+            />
+          <span class="label" tal:content="name/title" />
+        </tal:block>
+      </div>
+      <button
+        i18n:domain="plone"
+        i18n:translate=""
+        name="form.buttons.Search"
+        type="submit">Search</button>
+      <button
+        i18n:translate=""
+        name="form.buttons.Export"
+        tal:condition="view/export_available"
+        type="submit">Export</button>
+    </form>
+  </dd>
+</dl>
