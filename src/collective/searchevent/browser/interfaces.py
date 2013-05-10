@@ -20,7 +20,6 @@ class ISearchEventResultsView(IBaseFormView):
 class ISearchEventResultsViewlet(IViewlet):
     """Viewlet interface for SearchEventResultsViewlet"""
 
-
     def batch():
         """Returns batch"""
 
