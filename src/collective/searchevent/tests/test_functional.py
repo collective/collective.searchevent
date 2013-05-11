@@ -63,6 +63,9 @@ def setUp(self):
     ]
     folder.reindexObject()
 
+    # Set the site English mode to make testing easier.
+    portal.portal_languages.manage_setLanguageSettings('en', ['en', ])
+
     transaction.commit()
 
 

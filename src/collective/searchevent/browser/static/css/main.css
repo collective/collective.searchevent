@@ -1,8 +1,12 @@
+/* Portlet */
 .collectiveSearchEventPortlet .option {
     display: block;
 }
 .collectiveSearchEventPortlet .label {
     font-weight: normal;
+}
+.collectiveSearchEventPortlet .field input[type="text"] {
+    width: 100%;
 }
 #collective-search-event-results article h1 {
     font-size: 1.2em;

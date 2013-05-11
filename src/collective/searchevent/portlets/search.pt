@@ -11,7 +11,7 @@
   </dt>
   <dd class="portletItem">
     <form method="post" tal:attributes="action view/search_results_url">
-      <div id="start" tal:define="item view/start">
+      <div class="field" id="start" tal:define="item view/start">
         <label class="horizontal" i18n:translate="">Start Date</label>
         <input
           name="start"
@@ -22,7 +22,7 @@
           type="date"
           />
       </div>
-      <div id="end" tal:define="item view/end">
+      <div class="field" id="end" tal:define="item view/end">
         <label class="horizontal" i18n:translate="">End Date</label>
         <input
           name="end"
@@ -33,7 +33,7 @@
           type="date"
           />
       </div>
-      <div id="words">
+      <div class="field" id="words">
         <label class="horizontal" i18n:translate="">Seach Words</label>
         <input
           name="words"
@@ -41,9 +41,9 @@
           type="text"
           />
       </div>
-      <div id="tags" tal:condition="view/tags" tal:define="item view/tags">
+      <div class="field" id="tags" tal:condition="view/tags" tal:define="item view/tags">
         <label class="horizontal" tal:content="item/title" />
-        <tal:block tal:repeat="name item/names">
+        <span class="option" tal:repeat="name item/names">
           <input
             name="tags"
             tal:attributes="
@@ -52,11 +52,11 @@
             type="checkbox"
             />
           <span class="label" tal:content="name/key" />
-        </tal:block>
+        </span>
       </div>
-      <div id="paths" tal:condition="view/paths" tal:define="item view/paths">
+      <div class="field" id="paths" tal:condition="view/paths" tal:define="item view/paths">
         <label class="horizontal" tal:content="item/title" />
-        <tal:block tal:repeat="name item/names">
+        <span class="option" tal:repeat="name item/names">
           <input
             name="paths"
             tal:attributes="
@@ -65,7 +65,7 @@
             type="checkbox"
             />
           <span class="label" tal:content="name/title" />
-        </tal:block>
+        </span>
       </div>
       <button
         i18n:domain="plone"

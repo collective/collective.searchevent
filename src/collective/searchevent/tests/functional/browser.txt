@@ -29,19 +29,19 @@ Got to '/'::
 
     >>> print browser.bycss('#start')
     --- 1 ---
-    <div id="start">
+    <div class="field" id="start">
     <label class="horizontal">Start Date</label>
     <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
 
     >>> print browser.bycss('#end')
     --- 1 ---
-    <div id="end">
+    <div class="field" id="end">
     <label class="horizontal">End Date</label>
     <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
 
     >>> print browser.bycss('#words')
     --- 1 ---
-    <div id="words">
+    <div class="field" id="words">
     <label class="horizontal">Seach Words</label>
     <input name="words" type="text" value=""></div>
 
@@ -88,19 +88,19 @@ Search Event with empty field::
 
     >>> print browser.bycss('#start')
     --- 1 ---
-    <div id="start">
+    <div class="field" id="start">
     <label class="horizontal">Start Date</label>
     <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
 
     >>> print browser.bycss('#end')
     --- 1 ---
-    <div id="end">
+    <div class="field" id="end">
     <label class="horizontal">End Date</label>
     <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
 
     >>> print browser.bycss('#words')
     --- 1 ---
-    <div id="words">
+    <div class="field" id="words">
     <label class="horizontal">Seach Words</label>
     <input name="words" type="text" value=""></div>
 
@@ -123,19 +123,19 @@ Input no date format value to start and end date::
 
     >>> print browser.bycss('#start')
     --- 1 ---
-    <div id="start">
+    <div class="field" id="start">
     <label class="horizontal">Start Date</label>
     <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
 
     >>> print browser.bycss('#end')
     --- 1 ---
-    <div id="end">
+    <div class="field" id="end">
     <label class="horizontal">End Date</label>
     <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
 
     >>> print browser.bycss('#words')
     --- 1 ---
-    <div id="words">
+    <div class="field" id="words">
     <label class="horizontal">Seach Words</label>
     <input name="words" type="text" value=""></div>
 
@@ -159,19 +159,19 @@ Search - next_next_year/04/30::
 
     >>> print browser.bycss('#start')
     --- 1 ---
-    <div id="start">
+    <div class="field" id="start">
     <label class="horizontal">Start Date</label>
     <input name="start" size="10" type="date" placeholder="...-01-01" value="...-04-30"></div>
 
     >>> print browser.bycss('#end')
     --- 1 ---
-    <div id="end">
+    <div class="field" id="end">
     <label class="horizontal">End Date</label>
     <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
 
     >>> print browser.bycss('#words')
     --- 1 ---
-    <div id="words">
+    <div class="field" id="words">
     <label class="horizontal">Seach Words</label>
     <input name="words" type="text" value=""></div>
 
@@ -197,19 +197,19 @@ Search - next_year/05/01::
 
     >>> print browser.bycss('#start')
     --- 1 ---
-    <div id="start">
+    <div class="field" id="start">
     <label class="horizontal">Start Date</label>
     <input name="start" size="10" type="date" placeholder="...-01-01" value="...-05-01"></div>
 
     >>> print browser.bycss('#end')
     --- 1 ---
-    <div id="end">
+    <div class="field" id="end">
     <label class="horizontal">End Date</label>
     <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
 
     >>> print browser.bycss('#words')
     --- 1 ---
-    <div id="words">
+    <div class="field" id="words">
     <label class="horizontal">Seach Words</label>
     <input name="words" type="text" value=""></div>
 
@@ -232,19 +232,19 @@ Search next_year/05/02 -::
 
     >>> print browser.bycss('#start')
     --- 1 ---
-    <div id="start">
+    <div class="field" id="start">
     <label class="horizontal">Start Date</label>
     <input name="start" size="10" type="date" placeholder="...-01-01" value="...-05-02"></div>
 
     >>> print browser.bycss('#end')
     --- 1 ---
-    <div id="end">
+    <div class="field" id="end">
     <label class="horizontal">End Date</label>
     <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
 
     >>> print browser.bycss('#words')
     --- 1 ---
-    <div id="words">
+    <div class="field" id="words">
     <label class="horizontal">Seach Words</label>
     <input name="words" type="text" value=""></div>
 
@@ -270,19 +270,19 @@ Search next_year/05/01 -::
 
     >>> print browser.bycss('#start')
     --- 1 ---
-    <div id="start">
+    <div class="field" id="start">
     <label class="horizontal">Start Date</label>
     <input name="start" size="10" type="date" placeholder="...-01-01" value="...-05-01"></div>
 
     >>> print browser.bycss('#end')
     --- 1 ---
-    <div id="end">
+    <div class="field" id="end">
     <label class="horizontal">End Date</label>
     <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
 
     >>> print browser.bycss('#words')
     --- 1 ---
-    <div id="words">
+    <div class="field" id="words">
     <label class="horizontal">Seach Words</label>
     <input name="words" type="text" value=""></div>
 
@@ -308,19 +308,19 @@ Search next_year/04/30 -::
 
     >>> print browser.bycss('#start')
     --- 1 ---
-    <div id="start">
+    <div class="field" id="start">
     <label class="horizontal">Start Date</label>
     <input name="start" size="10" type="date" placeholder="...-01-01" value="...-04-30"></div>
 
     >>> print browser.bycss('#end')
     --- 1 ---
-    <div id="end">
+    <div class="field" id="end">
     <label class="horizontal">End Date</label>
     <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
 
     >>> print browser.bycss('#words')
     --- 1 ---
-    <div id="words">
+    <div class="field" id="words">
     <label class="horizontal">Seach Words</label>
     <input name="words" type="text" value=""></div>
 
@@ -342,19 +342,19 @@ Search next_year/04/30 - next_year/04/30::
 
     >>> print browser.bycss('#start')
     --- 1 ---
-    <div id="start">
+    <div class="field" id="start">
     <label class="horizontal">Start Date</label>
     <input name="start" size="10" type="date" placeholder="...-01-01" value="...-04-30"></div>
 
     >>> print browser.bycss('#end')
     --- 1 ---
-    <div id="end">
+    <div class="field" id="end">
     <label class="horizontal">End Date</label>
     <input name="end" size="10" type="date" placeholder="...-12-31" value="...-04-30"></div>
 
     >>> print browser.bycss('#words')
     --- 1 ---
-    <div id="words">
+    <div class="field" id="words">
     <label class="horizontal">Seach Words</label>
     <input name="words" type="text" value=""></div>
 
@@ -380,19 +380,19 @@ Search next_year/04/30 - next_year/05/01::
 
     >>> print browser.bycss('#start')
     --- 1 ---
-    <div id="start">
+    <div class="field" id="start">
     <label class="horizontal">Start Date</label>
     <input name="start" size="10" type="date" placeholder="...-01-01" value="...-04-30"></div>
 
     >>> print browser.bycss('#end')
     --- 1 ---
-    <div id="end">
+    <div class="field" id="end">
     <label class="horizontal">End Date</label>
     <input name="end" size="10" type="date" placeholder="...-12-31" value="...-05-01"></div>
 
     >>> print browser.bycss('#words')
     --- 1 ---
-    <div id="words">
+    <div class="field" id="words">
     <label class="horizontal">Seach Words</label>
     <input name="words" type="text" value=""></div>
 
@@ -418,19 +418,19 @@ Search next_year/04/30 - next_year/05/02::
 
     >>> print browser.bycss('#start')
     --- 1 ---
-    <div id="start">
+    <div class="field" id="start">
     <label class="horizontal">Start Date</label>
     <input name="start" size="10" type="date" placeholder="...-01-01" value="...-04-30"></div>
 
     >>> print browser.bycss('#end')
     --- 1 ---
-    <div id="end">
+    <div class="field" id="end">
     <label class="horizontal">End Date</label>
     <input name="end" size="10" type="date" placeholder="...-12-31" value="...-05-02"></div>
 
     >>> print browser.bycss('#words')
     --- 1 ---
-    <div id="words">
+    <div class="field" id="words">
     <label class="horizontal">Seach Words</label>
     <input name="words" type="text" value=""></div>
 
@@ -452,19 +452,19 @@ Search next_year/04/30 - next_year/05/02 with words AAA::
 
     >>> print browser.bycss('#start')
     --- 1 ---
-    <div id="start">
+    <div class="field" id="start">
     <label class="horizontal">Start Date</label>
     <input name="start" size="10" type="date" placeholder="...-01-01" value="...-04-30"></div>
 
     >>> print browser.bycss('#end')
     --- 1 ---
-    <div id="end">
+    <div class="field" id="end">
     <label class="horizontal">End Date</label>
     <input name="end" size="10" type="date" placeholder="...-12-31" value="...-05-02"></div>
 
     >>> print browser.bycss('#words')
     --- 1 ---
-    <div id="words">
+    <div class="field" id="words">
     <label class="horizontal">Seach Words</label>
     <input name="words" type="text" value="AAA"></div>
 
@@ -489,19 +489,19 @@ Search next_year/04/30 - next_year/05/02 with words Event01::
 
     >>> print browser.bycss('#start')
     --- 1 ---
-    <div id="start">
+    <div class="field" id="start">
     <label class="horizontal">Start Date</label>
     <input name="start" size="10" type="date" placeholder="...-01-01" value="...-04-30"></div>
 
     >>> print browser.bycss('#end')
     --- 1 ---
-    <div id="end">
+    <div class="field" id="end">
     <label class="horizontal">End Date</label>
     <input name="end" size="10" type="date" placeholder="...-12-31" value="...-05-02"></div>
 
     >>> print browser.bycss('#words')
     --- 1 ---
-    <div id="words">
+    <div class="field" id="words">
     <label class="horizontal">Seach Words</label>
     <input name="words" type="text" value="Event01"></div>
 
@@ -528,19 +528,19 @@ Search only with words Event01::
 
     >>> print browser.bycss('#start')
     --- 1 ---
-    <div id="start">
+    <div class="field" id="start">
     <label class="horizontal">Start Date</label>
     <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
 
     >>> print browser.bycss('#end')
     --- 1 ---
-    <div id="end">
+    <div class="field" id="end">
     <label class="horizontal">End Date</label>
     <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
 
     >>> print browser.bycss('#words')
     --- 1 ---
-    <div id="words">
+    <div class="field" id="words">
     <label class="horizontal">Seach Words</label>
     <input name="words" type="text" value="Event01"></div>
 
@@ -585,19 +585,19 @@ Search only with words Event01::
 
     >>> print browser.bycss('#start')
     --- 1 ---
-    <div id="start">
+    <div class="field" id="start">
     <label class="horizontal">Start Date</label>
     <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
 
     >>> print browser.bycss('#end')
     --- 1 ---
-    <div id="end">
+    <div class="field" id="end">
     <label class="horizontal">End Date</label>
     <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
 
     >>> print browser.bycss('#words')
     --- 1 ---
-    <div id="words">
+    <div class="field" id="words">
     <label class="horizontal">Seach Words</label>
     <input name="words" type="text" value="Event01"></div>
 
@@ -628,19 +628,19 @@ Search with empy fields::
 
     >>> print browser.bycss('#start')
     --- 1 ---
-    <div id="start">
+    <div class="field" id="start">
     <label class="horizontal">Start Date</label>
     <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
 
     >>> print browser.bycss('#end')
     --- 1 ---
-    <div id="end">
+    <div class="field" id="end">
     <label class="horizontal">End Date</label>
     <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
 
     >>> print browser.bycss('#words')
     --- 1 ---
-    <div id="words">
+    <div class="field" id="words">
     <label class="horizontal">Seach Words</label>
     <input name="words" type="text" value=""></div>
 
@@ -699,27 +699,29 @@ Go to portlet to set tags::
 
     >>> print browser.bycss('#start')
     --- 1 ---
-    <div id="start">
+    <div class="field" id="start">
     <label class="horizontal">Start Date</label>
     <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
 
     >>> print browser.bycss('#end')
     --- 1 ---
-    <div id="end">
+    <div class="field" id="end">
     <label class="horizontal">End Date</label>
     <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
 
     >>> print browser.bycss('#words')
     --- 1 ---
-    <div id="words">
+    <div class="field" id="words">
     <label class="horizontal">Seach Words</label>
     <input name="words" type="text" value=""></div>
 
     >>> print browser.bycss('#tags')
     --- 1 ---
-    <div id="tags">
+    <div class="field" id="tags">
     <label class="horizontal">Tags</label>
+    <span class="option">
     <input name="tags" type="checkbox" value="T&#228;g01"><span class="label">T&#228;g01</span>
+    </span>
     </div>
 
     >>> print browser.bycss('#paths')
@@ -740,34 +742,38 @@ Go to '/'::
 
     >>> print browser.bycss('#start')
     --- 1 ---
-    <div id="start">
+    <div class="field" id="start">
     <label class="horizontal">Start Date</label>
     <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
 
     >>> print browser.bycss('#end')
     --- 1 ---
-    <div id="end">
+    <div class="field" id="end">
     <label class="horizontal">End Date</label>
     <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
 
     >>> print browser.bycss('#words')
     --- 1 ---
-    <div id="words">
+    <div class="field" id="words">
     <label class="horizontal">Seach Words</label>
     <input name="words" type="text" value=""></div>
 
     >>> print browser.bycss('#tags')
     --- 1 ---
-    <div id="tags">
+    <div class="field" id="tags">
     <label class="horizontal">Tags</label>
+    <span class="option">
     <input name="tags" type="checkbox" value="T&#228;g01"><span class="label">T&#228;g01</span>
+    </span>
     </div>
 
     >>> print browser.bycss('#paths')
     --- 1 ---
-    <div id="paths">
+    <div class="field" id="paths">
     <label class="horizontal">Folders</label>
+    <span class="option">
     <input name="paths" type="checkbox" value="/plone/folder01"><span class="label">Folder01</span>
+    </span>
     </div>
 
 Search with empy fields::
@@ -798,34 +804,38 @@ Search with empy fields::
 
     >>> print browser.bycss('#start')
     --- 1 ---
-    <div id="start">
+    <div class="field" id="start">
     <label class="horizontal">Start Date</label>
     <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
 
     >>> print browser.bycss('#end')
     --- 1 ---
-    <div id="end">
+    <div class="field" id="end">
     <label class="horizontal">End Date</label>
     <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
 
     >>> print browser.bycss('#words')
     --- 1 ---
-    <div id="words">
+    <div class="field" id="words">
     <label class="horizontal">Seach Words</label>
     <input name="words" type="text" value=""></div>
 
     >>> print browser.bycss('#tags')
     --- 1 ---
-    <div id="tags">
+    <div class="field" id="tags">
     <label class="horizontal">Tags</label>
+    <span class="option">
     <input name="tags" type="checkbox" value="T&#228;g01"><span class="label">T&#228;g01</span>
+    </span>
     </div>
 
     >>> print browser.bycss('#paths')
     --- 1 ---
-    <div id="paths">
+    <div class="field" id="paths">
     <label class="horizontal">Folders</label>
+    <span class="option">
     <input name="paths" type="checkbox" value="/plone/folder01"><span class="label">Folder01</span>
+    </span>
     </div>
 
 Search with tag::
@@ -845,34 +855,38 @@ Search with tag::
 
     >>> print browser.bycss('#start')
     --- 1 ---
-    <div id="start">
+    <div class="field" id="start">
     <label class="horizontal">Start Date</label>
     <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
 
     >>> print browser.bycss('#end')
     --- 1 ---
-    <div id="end">
+    <div class="field" id="end">
     <label class="horizontal">End Date</label>
     <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
 
     >>> print browser.bycss('#words')
     --- 1 ---
-    <div id="words">
+    <div class="field" id="words">
     <label class="horizontal">Seach Words</label>
     <input name="words" type="text" value=""></div>
 
     >>> print browser.bycss('#tags')
     --- 1 ---
-    <div id="tags">
+    <div class="field" id="tags">
     <label class="horizontal">Tags</label>
+    <span class="option">
     <input name="tags" type="checkbox" checked value="T&#228;g01"><span class="label">T&#228;g01</span>
+    </span>
     </div>
 
     >>> print browser.bycss('#paths')
     --- 1 ---
-    <div id="paths">
+    <div class="field" id="paths">
     <label class="horizontal">Folders</label>
+    <span class="option">
     <input name="paths" type="checkbox" value="/plone/folder01"><span class="label">Folder01</span>
+    </span>
     </div>
 
 Create Folder02::
@@ -952,36 +966,44 @@ Search from Folder02::
 
     >>> print browser.bycss('#start')
     --- 1 ---
-    <div id="start">
+    <div class="field" id="start">
     <label class="horizontal">Start Date</label>
     <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
 
     >>> print browser.bycss('#end')
     --- 1 ---
-    <div id="end">
+    <div class="field" id="end">
     <label class="horizontal">End Date</label>
     <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
 
     >>> print browser.bycss('#words')
     --- 1 ---
-    <div id="words">
+    <div class="field" id="words">
     <label class="horizontal">Seach Words</label>
     <input name="words" type="text" value=""></div>
 
     >>> print browser.bycss('#tags')
     --- 1 ---
-    <div id="tags">
+    <div class="field" id="tags">
     <label class="horizontal">Tags</label>
+    <span class="option">
     <input name="tags" type="checkbox" value="T&#246;g02"><span class="label">T&#246;g02</span>
+    </span>
+    <span class="option">
     <input name="tags" type="checkbox" value="T&#228;g01"><span class="label">T&#228;g01</span>
+    </span>
     </div>
 
     >>> print browser.bycss('#paths')
     --- 1 ---
-    <div id="paths">
+    <div class="field" id="paths">
     <label class="horizontal">Folders</label>
+    <span class="option">
     <input name="paths" type="checkbox" value="/plone/folder01"><span class="label">Folder01</span>
+    </span>
+    <span class="option">
     <input name="paths" type="checkbox" checked value="/plone/folder02"><span class="label">Folder02</span>
+    </span>
     </div>
 
 Seach from Folder02 but also with Tag01::
@@ -999,36 +1021,44 @@ Seach from Folder02 but also with Tag01::
 
     >>> print browser.bycss('#start')
     --- 1 ---
-    <div id="start">
+    <div class="field" id="start">
     <label class="horizontal">Start Date</label>
     <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
 
     >>> print browser.bycss('#end')
     --- 1 ---
-    <div id="end">
+    <div class="field" id="end">
     <label class="horizontal">End Date</label>
     <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
 
     >>> print browser.bycss('#words')
     --- 1 ---
-    <div id="words">
+    <div class="field" id="words">
     <label class="horizontal">Seach Words</label>
     <input name="words" type="text" value=""></div>
 
     >>> print browser.bycss('#tags')
     --- 1 ---
-    <div id="tags">
+    <div class="field" id="tags">
     <label class="horizontal">Tags</label>
+    <span class="option">
     <input name="tags" type="checkbox" value="T&#246;g02"><span class="label">T&#246;g02</span>
+    </span>
+    <span class="option">
     <input name="tags" type="checkbox" checked value="T&#228;g01"><span class="label">T&#228;g01</span>
+    </span>
     </div>
 
     >>> print browser.bycss('#paths')
     --- 1 ---
-    <div id="paths">
+    <div class="field" id="paths">
     <label class="horizontal">Folders</label>
+    <span class="option">
     <input name="paths" type="checkbox" value="/plone/folder01"><span class="label">Folder01</span>
+    </span>
+    <span class="option">
     <input name="paths" type="checkbox" checked value="/plone/folder02"><span class="label">Folder02</span>
+    </span>
     </div>
 
 Search Event with empty field::
@@ -1067,36 +1097,44 @@ Search Event with empty field::
 
     >>> print browser.bycss('#start')
     --- 1 ---
-    <div id="start">
+    <div class="field" id="start">
     <label class="horizontal">Start Date</label>
     <input name="start" size="10" type="date" placeholder="...-01-01" value=""></div>
 
     >>> print browser.bycss('#end')
     --- 1 ---
-    <div id="end">
+    <div class="field" id="end">
     <label class="horizontal">End Date</label>
     <input name="end" size="10" type="date" placeholder="...-12-31" value=""></div>
 
     >>> print browser.bycss('#words')
     --- 1 ---
-    <div id="words">
+    <div class="field" id="words">
     <label class="horizontal">Seach Words</label>
     <input name="words" type="text" value=""></div>
 
     >>> print browser.bycss('#tags')
     --- 1 ---
-    <div id="tags">
+    <div class="field" id="tags">
     <label class="horizontal">Tags</label>
+    <span class="option">
     <input name="tags" type="checkbox" value="T&#246;g02"><span class="label">T&#246;g02</span>
+    </span>
+    <span class="option">
     <input name="tags" type="checkbox" value="T&#228;g01"><span class="label">T&#228;g01</span>
+    </span>
     </div>
 
     >>> print browser.bycss('#paths')
     --- 1 ---
-    <div id="paths">
+    <div class="field" id="paths">
     <label class="horizontal">Folders</label>
+    <span class="option">
     <input name="paths" type="checkbox" value="/plone/folder01"><span class="label">Folder01</span>
+    </span>
+    <span class="option">
     <input name="paths" type="checkbox" value="/plone/folder02"><span class="label">Folder02</span>
+    </span>
     </div>
 
 Set batch size into 2::

@@ -118,20 +118,22 @@ class SearchEventResultsView(BaseFormView):
         super(SearchEventResultsView, self).__call__()
         if self.request.form.get('form.buttons.Export', None) is not None:
             defaults_name = [
-                PloneMessageFactory(u'Title'),
-                PloneMessageFactory(u'Date'),
-                PloneMessageFactory(u'Description'),
-                PloneMessageFactory(u'Text'),
-                PloneMessageFactory(u'URL')]
+                self.context.translate(PloneMessageFactory(u'Title')),
+                self.context.translate(_(u'Date')),
+                self.context.translate(PloneMessageFactory(u'Description')),
+                self.context.translate(PloneMessageFactory(u'Text')),
+                self.context.translate(PloneMessageFactory(u'URL'))]
             extras = ['location', 'attendees', 'eventUrl', 'contactName', 'contactEmail', 'contactPhone', 'subject']
             extras_name = [self.context.translate(ATCTMessageFactory(ATEvent.schema.get(extra).widget.label)) for extra in extras]
-            headers = tuple(defaults_name + extras_name)
+
+            plone = getMultiAdapter((self.context, self.request), name="plone")
+            encoding = plone.site_encoding()
+
+            headers = tuple([header.encode(encoding) for header in (defaults_name + extras_name)])
             out = StringIO()
             writer = csv.writer(out, delimiter='|', quoting=csv.QUOTE_MINIMAL)
             writer.writerow(headers)
 
-            plone = getMultiAdapter((self.context, self.request), name="plone")
-            encoding = plone.site_encoding()
             adapter = IAdapter(self.context)
             for item in getMultiAdapter((self.context, self.request), ISearchEventResults)(b_size=None):
                 values = [
@@ -143,9 +145,12 @@ class SearchEventResultsView(BaseFormView):
                 obj = item.getObject()
                 for extra in extras:
                     if extra == 'attendees' or extra == 'subject':
-                        values.append(u', '.join(getattr(obj, extra)))
+                        value = u', '.join(getattr(obj, extra)).encode(encoding)
                     else:
-                        values.append(getattr(obj, extra))
+                        value = getattr(obj, extra).encode(encoding)
+
+                    values.append(value)
+
                 writer.writerow(tuple(values))
 
             filename = 'search-event-results-{}.csv'.format(datetime.now().isoformat())

@@ -20,4 +20,4 @@ The separation of each values are done by '``|``'.
 Currently tested with
 ---------------------
 
-* Plone-4.2.4 [taito]
+* Plone-4.3 [taito]
