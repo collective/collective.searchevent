@@ -50,3 +50,9 @@ class TestUpgrades(IntegrationTestCase):
         reimport_cssregistry(self.portal)
         getToolByName().runImportStepFromProfile.assert_called_with('profile-collective.searchevent:default',
             'cssregistry', run_dependencies=False, purge_old=False)
+
+    @mock.patch('collective.searchevent.upgrades.unregister_layer')
+    def test_unregister_browserlayer(self, unregister_layer):
+        from collective.searchevent.upgrades import unregister_browserlayer
+        unregister_browserlayer(self.portal)
+        unregister_layer.assert_called_with('collective.searchevent')

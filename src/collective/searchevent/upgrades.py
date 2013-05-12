@@ -1,4 +1,5 @@
 from Products.CMFCore.utils import getToolByName
+from plone.browserlayer.utils import unregister_layer
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 
@@ -54,3 +55,8 @@ def reimport_cssregistry(context):
     setup = getToolByName(context, 'portal_setup')
     logger.info('Reimporting cssregistry.')
     setup.runImportStepFromProfile(PROFILE_ID, 'cssregistry', run_dependencies=False, purge_old=False)
+
+
+def unregister_browserlayer(context):
+    """Unregister browser layer"""
+    unregister_layer('collective.searchevent')

@@ -9,17 +9,9 @@ def get_css_resource(obj, name):
 class TestCase(IntegrationTestCase):
     """TestCase for Plone setup."""
 
-    def setUp(self):
-        self.portal = self.layer['portal']
-
     def test_package_installed(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         self.failUnless(installer.isProductInstalled('collective.searchevent'))
-
-    def test_browserlayer(self):
-        from collective.searchevent.browser.interfaces import ISearchEventLayer
-        from plone.browserlayer import utils
-        self.failUnless(ISearchEventLayer in utils.registered_layers())
 
     def test_cssregistry__main__applyPrefix(self):
         resource = get_css_resource(self.portal, '++resource++collective.searchevent/css/main.css')
@@ -81,7 +73,7 @@ class TestCase(IntegrationTestCase):
         setup = getToolByName(self.portal, 'portal_setup')
         self.assertEqual(
             setup.getVersionForProfile('profile-collective.searchevent:default'),
-            u'3')
+            u'4')
 
     def get_record(self, name):
         from zope.component import getUtility
@@ -137,13 +129,6 @@ class TestCase(IntegrationTestCase):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         installer.uninstallProducts(['collective.searchevent'])
         self.failIf(installer.isProductInstalled('collective.searchevent'))
-
-    def test_uninstall__browserlayer(self):
-        installer = getToolByName(self.portal, 'portal_quickinstaller')
-        installer.uninstallProducts(['collective.searchevent'])
-        from collective.searchevent.browser.interfaces import ISearchEventLayer
-        from plone.browserlayer import utils
-        self.failIf(ISearchEventLayer in utils.registered_layers())
 
     def test_uninstall__controlpanel(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')

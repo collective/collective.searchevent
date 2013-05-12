@@ -23,4 +23,14 @@
     title="Reimport cssregistry"
     />
 
+  <genericsetup:upgradeStep
+    description=""
+    destination="4"
+    handler="collective.searchevent.upgrades.unregister_browserlayer"
+    profile="collective.searchevent:default"
+    sortkey="1"
+    source="3"
+    title="Unregister browser layer"
+    />
+
 </configure>

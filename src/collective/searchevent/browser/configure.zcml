@@ -6,7 +6,6 @@
   <browser:resourceDirectory
     name="collective.searchevent"
     directory="static"
-    layer=".interfaces.ISearchEventLayer"
     />
 
   <!-- View -->
@@ -14,7 +13,6 @@
   <browser:page
     class=".template.SearchEventResultsView"
     for="*"
-    layer=".interfaces.ISearchEventLayer"
     name="search-event-results"
     permission="zope2.View"
     />
@@ -22,7 +20,6 @@
   <browser:page
     class=".template.SearchEventControlPanelView"
     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    layer=".interfaces.ISearchEventLayer"
     name="searchevent-controlpanel"
     permission="cmf.ManagePortal"
     />
@@ -32,7 +29,6 @@
   <browser:viewlet
     class=".viewlet.SearchEventResultsViewlet"
     for="*"
-    layer=".interfaces.ISearchEventLayer"
     manager="collective.base.interfaces.IBaseFormViewletManager"
     name="collective.searchevent.viewlets.search-event-results"
     permission="zope2.View"

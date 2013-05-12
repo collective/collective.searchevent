@@ -59,7 +59,7 @@ Go to search results::
 
     >>> browser.getControl(name="form.buttons.Export").click()
     >>> browser.contents
-    'Title|Date|Description|Text|URL|label_event_location|label_event_attendees|label_event_url|label_contact_name|label_contact_email|label_contact_phone|label_event_type\r\nEvent01|...01... 10:00 ... - 11:00...|Descripti\xc3\xb6n of Event01| S\xc3\xb6me Text of Event01. |http://nohost/plone/event01|||||||\r\nEvent02|...02... 10:00 ... - ...03... 10:00...|Descripti\xc3\xb6n of Event02| S\xc3\xb6me Text of Event02. |http://nohost/plone/event02|||||||\r\n'
+    'Title|Date|Description|Text|URL|label_event_location|label_event_attendees|label_event_url|label_contact_name|label_contact_email|label_contact_phone|label_event_type\r\nEvent01|...01... 10:00 ... - 11:...|Descripti\xc3\xb6n of Event01| S\xc3\xb6me Text of Event01. |http://nohost/plone/event01|||||||\r\nEvent02|...02... 10:00 ... - ...03... 10:...|Descripti\xc3\xb6n of Event02| S\xc3\xb6me Text of Event02. |http://nohost/plone/event02|||||||\r\n'
 
 Anonymous should not see export button::
 

@@ -1,6 +1,0 @@
-<layers>
-  <layer
-    name="collective.searchevent"
-    interface="collective.searchevent.browser.interfaces.ISearchEventLayer"
-    />
-</layers>
