@@ -20,5 +20,5 @@ The separation of each values are done by '``|``'.
 Currently tested with
 ---------------------
 
-* Plone-4.3
+* Plone-4.3.2
 * Python-2.7.x
